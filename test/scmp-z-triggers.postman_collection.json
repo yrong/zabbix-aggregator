@@ -1,0 +1,57 @@
+{
+	"id": "35463725-de8e-842f-e36c-64c569375b5b",
+	"name": "scmp-z-triggers",
+	"description": "",
+	"order": [
+		"400ce64a-416a-56e7-9341-23d6127782fe",
+		"149e133d-f7e2-5466-6c06-25cc23607da6"
+	],
+	"folders": [],
+	"timestamp": 1487743455617,
+	"owner": "1361564",
+	"remoteLink": "https://www.getpostman.com/collections/ec14a51c696b74d298c9",
+	"public": false,
+	"published": false,
+	"requests": [
+		{
+			"id": "149e133d-f7e2-5466-6c06-25cc23607da6",
+			"headers": "",
+			"url": "{{url}}/triggers/group",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "35463725-de8e-842f-e36c-64c569375b5b",
+			"data": null,
+			"dataMode": "params",
+			"name": "triggers/group",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1487743483834,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "400ce64a-416a-56e7-9341-23d6127782fe",
+			"headers": "",
+			"url": "{{url}}/triggers/active",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "35463725-de8e-842f-e36c-64c569375b5b",
+			"data": null,
+			"dataMode": "params",
+			"name": "triggers/active",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1487743455616,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}
