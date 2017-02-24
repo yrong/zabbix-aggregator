@@ -1,0 +1,29 @@
+{
+  "config": {
+    "port":3003,
+    "logger":{
+      "appenders": [
+        {
+          "type": "console"
+        },
+        {
+          "type": "file",
+          "filename": "scmp-z.log",
+          "maxLogSize": 20480,
+          "numBackups": 5,
+          "category": "scmp-z"
+        }
+      ],
+      "replaceConsole": true,
+      "defaultLevel":"DEBUG",
+      "defaultCategory": "scmp-z"
+    },
+    "mysql": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "root",
+      "password": "root",
+      "database": "zabbix"
+    }
+  }
+}
