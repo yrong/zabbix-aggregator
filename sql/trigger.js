@@ -1,3 +1,5 @@
+import * as sqlGenerator from './index'
+
 const Trigger_Table_Name='triggers',Status_Problem = 1,Zabbix_Group_Name_Templates='Templates',Zabbix_Group_Name_Keyword='zabbix',group_name_alias = 'gpname',count_alias = 'cnt'
 
 const joinPart = `inner join functions on triggers.triggerid=functions.triggerid
@@ -9,14 +11,9 @@ const joinPart = `inner join functions on triggers.triggerid=functions.triggerid
 const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keyword}%" and groups.name != "${Zabbix_Group_Name_Templates}"`
 
 
-const sqlFindWithFieldsAndWhere = (fields,table,join,where)=> `select ${fields} from ${table}
-    ${join}
-    where ${where}`
-
-
 const sqlFindTriggers = (active)=>{
     let fields = `priority,lastchange,functions.itemid,groups.name as ${group_name_alias}`
-    let sql = sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePartExcludeZabbix)
+    let sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePartExcludeZabbix)
     if(active)
         sql = `${sql} and value=${Status_Problem}`
     return sql
@@ -25,7 +22,7 @@ const sqlFindTriggers = (active)=>{
 const sqlFindTriggersActiveInGroup = (group)=>{
     let fields = `hosts.host,triggers.description,items.itemid,groups.name as groupName,priority,lastchange`
     let where_with_active = `${wherePartExcludeZabbix} and value=${Status_Problem}`
-    let sql = sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,where_with_active)
+    let sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,where_with_active)
     if(group)
         sql = `${sql} and groups.name="${group}"`
     return sql
@@ -54,7 +51,7 @@ const sqlCountTriggers = ()=> {
 const sqlFindTriggersWithCondition = (groupName,priority) => {
     let fields = `hosts.host, triggers.description, lastchange, items.itemid`
     let wherePart = `value=${Status_Problem} and groups.name="${groupName}" and priority=${priority}`
-    let sql = sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePart)
+    let sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePart)
     return sql
 }
 
