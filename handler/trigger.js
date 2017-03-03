@@ -23,14 +23,15 @@ triggers.get('/group', async (ctx, next)=>{
     ctx.body={status:'ok',data:{all,groupList,priorityList,stat}}
 });
 
-triggers.get('/active', async(ctx,next)=>{
-    let [rows] = await db.query(sqlGenerator.sqlFindTriggersActiveInGroup())
-    ctx.body={status:'ok',data:rows}
-})
-
-triggers.get('/active/:group', async(ctx,next)=>{
+const activeTriggerHandler = async(ctx,next)=>{
     let [rows] = await db.query(sqlGenerator.sqlFindTriggersActiveInGroup(ctx.params.group))
     ctx.body={status:'ok',data:rows}
-})
+}
+
+triggers.get('/', activeTriggerHandler)
+
+triggers.get('/active', activeTriggerHandler)
+
+triggers.get('/active/:group', activeTriggerHandler)
 
 export default triggers
