@@ -88,4 +88,16 @@ describe('scmp-z test cases', function() {
             })
         });
     })
+    describe('/api/items/history/:itemId/:since-:until', function() {
+        it('23766', function (done) {
+            let since = 1463808199,until = 1463809199,itemId = 23766
+            let body = {
+                since:since,
+                until:until
+            }
+            Promise.all([apiPost(url,`/items/history/${itemId}`,body),apiGet(legacy_url, `/history/${itemId}/${since}-${until}`)]).then(values=>{
+                compare(values,done)
+            })
+        });
+    })
 });

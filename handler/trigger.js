@@ -20,12 +20,12 @@ triggers.get('/group', async (ctx, next)=>{
         stat[groupName] = stat[groupName]||{}
         stat[groupName][priority] = rows
     }
-    ctx.body={status:'ok',data:{all,groupList,priorityList,stat}}
+    ctx.body={all,groupList,priorityList,stat}
 });
 
 const activeTriggerHandler = async(ctx,next)=>{
     let [rows] = await db.query(sqlGenerator.sqlFindTriggersActiveInGroup(ctx.params.group))
-    ctx.body={status:'ok',data:rows}
+    ctx.body=rows
 }
 
 triggers.get('/', activeTriggerHandler)

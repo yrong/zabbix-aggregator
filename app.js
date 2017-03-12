@@ -6,7 +6,7 @@ import log4js from 'log4js'
 import path from 'path'
 import logger from './logger'
 import router from './routes'
-
+import _ from 'lodash'
 const app = new Koa()
 const appDir = path.resolve(__dirname, '.')
 const logDir = path.join(appDir, 'logs')
@@ -19,6 +19,8 @@ app
             const start = new Date()
             await next();
             const ms = new Date() - start
+            if(ctx.type === 'application/json')
+                ctx.body = {status: 'ok',data:ctx.body}
             logger.info('%s %s - %s ms', ctx.method,ctx.url, ms)
         } catch (error) {
             ctx.body = JSON.stringify({

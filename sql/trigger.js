@@ -1,6 +1,6 @@
 import * as sqlGenerator from './index'
 
-const Trigger_Table_Name='triggers',Status_Problem = 1,Zabbix_Group_Name_Templates='Templates',Zabbix_Group_Name_Keyword='zabbix',group_name_alias = 'gpname',count_alias = 'cnt'
+const Trigger_Table_Name='triggers',Status_Problem = 1,Zabbix_Template_Name_keyword='Templates',Zabbix_Group_Name_Keyword='zabbix',group_name_alias = 'gpname',count_alias = 'cnt'
 
 const joinPart = `inner join functions on triggers.triggerid=functions.triggerid
         inner join items on functions.itemid=items.itemid
@@ -8,7 +8,7 @@ const joinPart = `inner join functions on triggers.triggerid=functions.triggerid
         inner join hosts_groups on hosts.hostid=hosts_groups.hostid
         inner join groups on hosts_groups.groupid=groups.groupid`
 
-const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keyword}%" and groups.name != "${Zabbix_Group_Name_Templates}"`
+const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keyword}%" and groups.name != "${Zabbix_Template_Name_keyword}"`
 
 
 const sqlFindTriggers = (active)=>{
