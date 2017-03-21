@@ -5,7 +5,7 @@ const getHistoryTableName = (type)=>HistoryTable[type]
 
 const sqlGetLatestItemValueInHistory = (type,itemid)=>{
     let tableName = getHistoryTableName(type)
-    let sql = `SELECT value FROM ${tableName} h WHERE h.itemid=${itemid} ORDER BY h.clock DESC limit 1;`
+    let sql = `SELECT value as ${alias.history_value_alias} FROM ${tableName} h WHERE h.itemid=${itemid} ORDER BY h.clock DESC limit 1;`
     return sql
 }
 
@@ -17,7 +17,7 @@ const sqlGetItemTimeSpan = (type, itemid) =>{
 
 const sqlGetValuesWithinTimeRange = (type,itemid,since,until) =>{
     let tableName = getHistoryTableName(type)
-    let sql = `SELECT value,clock FROM ${tableName} h WHERE h.itemid=${itemid} and h.clock>${since} and h.clock<${until}`
+    let sql = `SELECT value as ${alias.history_value_alias},clock as ${alias.history_clock_alias} FROM ${tableName} h WHERE h.itemid=${itemid} and h.clock>${since} and h.clock<${until}`
     return sql
 }
 

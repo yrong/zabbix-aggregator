@@ -30,7 +30,7 @@ const sqlSearchItems = (appName,hostList,itemList)=>{
 }
 
 const sqlGetItem = (itemId)=>{
-    let sql = `select items.itemid,value_type as ${alias.item_value_type_alias},units,
+    let sql = `select items.itemid,value_type as ${alias.item_value_type_alias},units as ${alias.item_units_alias},
               functions.function ${alias.function_function_alias},triggers.expression ${alias.trigger_expression_alias},
               triggers.description ${alias.trigger_description_alias} from items
             left join functions on functions.itemid=items.itemid

@@ -75,8 +75,12 @@ const getDataTypeDesc = (type)=>{
     return type_description
 }
 
-items.post('/history/:itemId', async(ctx,next)=>{
-    let params = _.assign({},ctx.params,ctx.request.body),result
+items.get('/history/:itemId', async(ctx,next)=>{
+    let params = _.assign({},ctx.params,ctx.query,ctx.request.body),result
+    if(!_.isString(params.since)||!_.isString(params.until)){
+        ctx.throw("missing params!")
+    }
+    params.since = parseInt(params.since),params.until = parseInt(params.until)
     let [item] = await db.query(itemSqlGenerator.sqlGetItem(params.itemId))
     item = item[0]
     let threshhold = item[alias.trigger_expression_alias].match(TriggerThreshholdRegex)
@@ -90,13 +94,22 @@ items.post('/history/:itemId', async(ctx,next)=>{
         result = await db.query(trendValueSqlGenerator.sqlGetValuesWithinTimeRange(item[alias.item_value_type_alias],params.itemId,params.since,params.until))
     }
     item.type = getDataTypeDesc(item[alias.item_value_type_alias])
-    item.unit = item['units']
-    item = _.omit(item,[alias.item_id_alias,alias.item_value_type_alias,'units',alias.trigger_expression_alias])
+    item = _.omit(item,[alias.item_id_alias,alias.item_value_type_alias,alias.trigger_expression_alias])
     result = result[0]
     result = _.map(result,(rec)=>{
-        return [rec.clock,rec.value]
+        return [rec[alias.history_clock_alias],rec[alias.history_value_alias]]
     })
     ctx.body=_.assign(item,{data:result})
+})
+
+items.get('/host', async(ctx,next)=>{
+    let params = _.assign({},ctx.params,ctx.query,ctx.request.body)
+    if(!_.isString(params.name)){
+        ctx.throw("missing param!")
+    }
+    let sql = `select hosts.hostid,items.itemid,items.name from hosts inner join items on hosts.hostid=items.hostid where hosts.name="${params.name}";`
+    let [items] = await db.query(sql)
+    ctx.body= items
 })
 
 export default items

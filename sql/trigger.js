@@ -1,7 +1,7 @@
 import * as sqlGenerator from './index'
+import alias from './alias'
 
-const Trigger_Table_Name='triggers',Status_Problem = 1,Zabbix_Template_Name_keyword='Templates',Zabbix_Group_Name_Keyword='zabbix',group_name_alias = 'gpname',count_alias = 'cnt'
-
+const Trigger_Table_Name='triggers',Status_Problem = 1,Zabbix_Template_Name_keyword='Templates',Zabbix_Group_Name_Keyword='zabbix'
 const joinPart = `inner join functions on triggers.triggerid=functions.triggerid
         inner join items on functions.itemid=items.itemid
         inner join hosts on items.hostid=hosts.hostid
@@ -12,7 +12,7 @@ const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keywo
 
 
 const sqlFindTriggers = (active)=>{
-    let fields = `priority,lastchange,functions.itemid,groups.name as ${group_name_alias}`
+    let fields = `priority,lastchange,functions.itemid,groups.name as ${alias.group_name_alias}`
     let sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePartExcludeZabbix)
     if(active)
         sql = `${sql} and value=${Status_Problem}`
@@ -30,17 +30,17 @@ const sqlFindTriggersActiveInGroup = (group)=>{
 
 const sqlGroupTriggersActiveByGroupName = ()=> {
     let innerSql = sqlFindTriggers(Status_Problem)
-    let sql = `select ${group_name_alias}, priority, count(*) as cnt
+    let sql = `select ${alias.group_name_alias}, ${alias.trigger_priority_alias}, count(*) as ${alias.count_alias}
     from (
          ${innerSql}
         )
-    as triggers_withProblem group by ${group_name_alias}, priority;`
+    as triggers_withProblem group by ${alias.group_name_alias}, ${alias.trigger_priority_alias}`
     return sql
 }
 
 const sqlCountTriggers = ()=> {
     let innerSql = sqlFindTriggers()
-    let sql = `select count(*) as ${count_alias}
+    let sql = `select count(*) as ${alias.count_alias}
     from (
          ${innerSql}
         )
@@ -55,4 +55,4 @@ const sqlFindTriggersWithCondition = (groupName,priority) => {
     return sql
 }
 
-export {sqlGroupTriggersActiveByGroupName,sqlCountTriggers,sqlFindTriggersWithCondition,sqlFindTriggersActiveInGroup,group_name_alias,count_alias}
+export {sqlGroupTriggersActiveByGroupName,sqlCountTriggers,sqlFindTriggersWithCondition,sqlFindTriggersActiveInGroup}

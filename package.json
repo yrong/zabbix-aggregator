@@ -4,8 +4,9 @@
   "description": "scmp-z",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=development mocha ",
-    "start": "./node_modules/.bin/nodemon"
+    "test": "NODE_ENV=development mocha",
+    "start": "./node_modules/.bin/nodemon",
+    "generate_simplified_postman_collection": "postman_simplify ./test/scmp-z-triggers.postman_collection.json ./test/scmp-z.postman_environment_all.json"
   },
   "repository": {
     "type": "git",
@@ -46,6 +47,7 @@
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
     "should": "^8.2.0",
-    "supertest": "^1.1.0"
+    "supertest": "^1.1.0",
+    "postman_simplify": "^1.0.3"
   }
 }
