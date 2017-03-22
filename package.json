@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=development mocha",
     "start": "./node_modules/.bin/nodemon",
-    "generate_simplified_postman_collection": "postman_simplify ./test/scmp-z-triggers.postman_collection.json ./test/scmp-z.postman_environment_all.json"
+    "generate_simplified_postman_collection": "postman_simplify ./test/scmp-z.postman_collection.json ./test/scmp-z.postman_environment_all.json"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,9 @@
     "koa-router": "^7.0.1",
     "lodash": "^4.17.4",
     "log4js": "^1.1.0",
-    "mysql2": "^1.2.0"
+    "mysql2": "^1.2.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
   },
   "devDependencies": {
     "babel-plugin-syntax-async-functions": "^6.8.0",
@@ -44,8 +46,6 @@
     "mocha": "^2.3.4",
     "nodemon": "^1.8.1",
     "query-string": "^4.3.2",
-    "request": "^2.79.0",
-    "request-promise": "^4.1.1",
     "should": "^8.2.0",
     "supertest": "^1.1.0",
     "postman_simplify": "^1.0.3"

@@ -2,7 +2,7 @@
   {
     "name": "items/search/Exchange Mailbox Services",
     "method": "POST",
-    "url": "http://w1657247f4.imwork.net/api/items/search",
+    "url": "http://localhost:3003/api/items/search",
     "body": {
       "appName": "Exchange Mailbox Services"
     }
@@ -10,12 +10,21 @@
   {
     "name": "groups",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/groups"
+    "url": "http://localhost:3003/api/groups"
+  },
+  {
+    "name": "login",
+    "method": "POST",
+    "url": "http://localhost:3002/auth/login",
+    "body": {
+      "username": "{{username}}",
+      "password": "098f6bcd4621d373cade4e832627b4f6"
+    }
   },
   {
     "name": "items/search/storageDisk",
     "method": "POST",
-    "url": "http://w1657247f4.imwork.net/api/items/search",
+    "url": "http://localhost:3003/api/items/search",
     "body": {
       "appName": "storageDisk"
     }
@@ -23,7 +32,7 @@
   {
     "name": "items/search/Windows Server",
     "method": "POST",
-    "url": "http://w1657247f4.imwork.net/api/items/search",
+    "url": "http://localhost:3003/api/items/search",
     "body": {
       "appName": "Windows Servers"
     }
@@ -31,37 +40,37 @@
   {
     "name": "items/history/",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/items/history/23766?since=1463808199&until=1465808199"
+    "url": "http://localhost:3003/api/items/history/23766?since=1463808199&until=1465808199"
   },
   {
     "name": "triggers/group",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/triggers/group"
+    "url": "http://localhost:3003/api/triggers/group"
   },
   {
     "name": "groups filter by name",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/groups?name=Storage"
+    "url": "http://localhost:3003/api/groups?name=Storage"
   },
   {
     "name": "group/host",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/groups/host?name=Storage"
+    "url": "http://localhost:3003/api/groups/host?name=Storage"
   },
   {
     "name": "hosts",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/hosts"
+    "url": "http://localhost:3003/api/hosts"
   },
   {
     "name": "hosts filter by name",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/hosts?name=Router_ASB"
+    "url": "http://localhost:3003/api/hosts?name=Router_ASB"
   },
   {
     "name": "items/search/Exchange Mailbox Database",
     "method": "POST",
-    "url": "http://w1657247f4.imwork.net/api/items/search",
+    "url": "http://localhost:3003/api/items/search",
     "body": {
       "appName": "Exchange Mailbox Database",
       "hosts": [
@@ -84,11 +93,11 @@
   {
     "name": "triggers/active",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/triggers/active"
+    "url": "http://localhost:3003/api/triggers/active"
   },
   {
     "name": "items/host",
     "method": "GET",
-    "url": "http://w1657247f4.imwork.net/api/items/host?name=Router_ASB"
+    "url": "http://localhost:3003/api/items/host?name=Router_ASB"
   }
 ]
