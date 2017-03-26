@@ -4,9 +4,10 @@
   "description": "scmp-z",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=development mocha",
+    "compare": "NODE_ENV=development mocha ./test/compare.js",
+    "test": "NODE_ENV=development mocha ./test/index.js",
     "start": "./node_modules/.bin/nodemon",
-    "generate_simplified_postman_collection": "postman_simplify ./test/scmp-z.postman_collection.json ./test/scmp-z.postman_environment_all.json"
+    "generate_simplified_postman_collection": "postman_simplify ./test/scmp-z.postman_collection.json ./test/scmp-z.postman_environment.json"
   },
   "repository": {
     "type": "git",
@@ -44,10 +45,11 @@
     "babel-register": "^6.4.3",
     "chai": "^3.5.0",
     "mocha": "^2.3.4",
+    "newman": "^3.5.2",
     "nodemon": "^1.8.1",
+    "postman_simplify": "^1.0.3",
     "query-string": "^4.3.2",
     "should": "^8.2.0",
-    "supertest": "^1.1.0",
-    "postman_simplify": "^1.0.3"
+    "supertest": "^1.1.0"
   }
 }
