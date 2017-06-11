@@ -1,10 +1,10 @@
 'use strict';
 
-import compose from 'koa-compose';
-import checkToken from './checkToken';
-import responseWrapper from './responseWrapper';
+const compose = require('koa-compose')
+const checkToken = require('./checkToken')
+const responseWrapper = require('./responseWrapper')
 
-export default function middleware() {
+module.exports = function middleware() {
     return compose(
         [
             responseWrapper(),

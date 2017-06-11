@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import * as sqlGenerator from './index'
-import alias from './alias'
+const _ = require('lodash')
+const sqlGenerator = require('./index')
+const alias = require('./alias')
 
 const Item_Table_Name='items',Host_Monitored = 0
 
@@ -40,4 +40,4 @@ const sqlGetItem = (itemId)=>{
 }
 
 
-export {sqlSearchItems,sqlGetItem}
+module.exports = {sqlSearchItems,sqlGetItem}

@@ -1,4 +1,4 @@
-import alias from './alias'
+const alias = require('./alias')
 const HistoryTable = ['history','history_str','history_log','history_uint','history_text']
 
 const getHistoryTableName = (type)=>HistoryTable[type]
@@ -21,4 +21,4 @@ const sqlGetValuesWithinTimeRange = (type,itemid,since,until) =>{
     return sql
 }
 
-export {sqlGetLatestItemValueInHistory,sqlGetItemTimeSpan,sqlGetValuesWithinTimeRange}
+module.exports = {sqlGetLatestItemValueInHistory,sqlGetItemTimeSpan,sqlGetValuesWithinTimeRange}

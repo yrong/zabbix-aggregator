@@ -1,8 +1,8 @@
 'use strict';
 
-import Router from 'koa-router';
-import _ from 'lodash'
-import db from '../lib/db'
+const Router = require('koa-router')
+const _ = require('lodash')
+const db = require('../lib/db')
 
 let groups = new Router();
 
@@ -29,4 +29,4 @@ groups.get('/host', async (ctx, next)=>{
     ctx.body = group_hosts
 });
 
-export default groups
+module.exports = groups

@@ -9,4 +9,4 @@ const sqlGetValuesWithinTimeRange = (type, itemid, since, until)=>{
     return sql
 }
 
-export {sqlGetValuesWithinTimeRange}
+module.exports = {sqlGetValuesWithinTimeRange}

@@ -1,8 +1,8 @@
 'use strict';
 
-import Router from 'koa-router';
-import _ from 'lodash'
-import db from '../lib/db'
+const Router = require('koa-router')
+const _ = require('lodash')
+const db = require('../lib/db')
 
 let hosts = new Router();
 hosts.get('/', async (ctx, next)=>{
@@ -15,4 +15,4 @@ hosts.get('/', async (ctx, next)=>{
     ctx.body = hosts
 });
 
-export default hosts
+module.exports = hosts

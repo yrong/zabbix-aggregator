@@ -25,4 +25,4 @@ const alias = {
     //global alias
     count_alias:'cnt'
 }
-export default alias
+module.exports = alias

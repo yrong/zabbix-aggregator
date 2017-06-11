@@ -1,12 +1,12 @@
 'use strict';
 
-import Router from 'koa-router';
-import db from '../lib/db'
-import * as itemSqlGenerator from '../sql/item'
-import * as historyValueSqlGenerator from '../sql/history'
-import _ from 'lodash'
-import alias from '../sql/alias'
-import * as trendValueSqlGenerator from '../sql/trends'
+const Router = require('koa-router')
+const db = require('../lib/db')
+const _ = require('lodash')
+const alias = require('../sql/alias')
+const itemSqlGenerator = require('../sql/item')
+const historyValueSqlGenerator = require('../sql/history')
+const trendValueSqlGenerator = require('../sql/trends')
 
 let items = new Router();
 const DiskSpaceUsageItem = 'Free disk space on $1 (percentage)'
@@ -112,4 +112,4 @@ items.get('/host', async(ctx,next)=>{
     ctx.body= items
 })
 
-export default items
+module.exports = items

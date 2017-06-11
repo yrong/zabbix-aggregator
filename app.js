@@ -1,15 +1,18 @@
-import Koa from 'koa'
-import config from 'config'
-import cors from 'kcors';
-import bodyParser from 'koa-bodyparser';
-import log4js from 'log4js'
-import path from 'path'
-import router from './routes'
-import middleware from './middleware'
+const Koa = require('koa')
+const config = require('config')
+const cors = require('kcors')
+const bodyParser = require('koa-bodyparser')
+const log4js = require('log4js')
+const path = require('path')
+const router = require('./routes')
+const middleware = require('./middleware')
 const app = new Koa()
-const appDir = path.resolve(__dirname, '.')
-const logDir = path.join(appDir, 'logs')
-log4js.configure(config.get('config.logger'), { cwd: logDir })
+const fs = require('fs')
+const logDir = path.join('./logs')
+if (!fs.existsSync(logDir)){
+    fs.mkdirSync(logDir);
+}
+log4js.configure(config.get('logger'), { cwd: logDir })
 
 app
     .use(cors({credentials: true}))
@@ -21,7 +24,7 @@ app
     .use(middleware())
     .use(router.routes());
 
-app.listen(config.get('config.port'), () => console.log('server started'))
+app.listen(config.get('port'), () => console.log('server started'))
 
-export default app
+module.exports = app
 

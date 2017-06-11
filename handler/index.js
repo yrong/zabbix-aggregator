@@ -1,8 +1,8 @@
 'use strict';
 
-import triggers from './trigger'
-import items from './item'
-import hosts from './host'
-import groups from './group'
+const triggers = require('./trigger')
+const items = require('./item')
+const hosts = require('./host')
+const groups = require('./group')
 
-export {triggers,items,hosts,groups}
+module.exports = {triggers,items,hosts,groups}

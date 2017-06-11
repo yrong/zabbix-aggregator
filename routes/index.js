@@ -1,7 +1,7 @@
 'use strict';
 
-import Router from 'koa-router';
-import {triggers,items,hosts,groups} from '../handler';
+const Router = require('koa-router')
+const {triggers,items,hosts,groups} = require('../handler')
 
 const router = new Router();
 
@@ -17,4 +17,4 @@ router.get('*', async (ctx, next) => {
     ctx.body = { status : 404 }
 })
 
-export default router
+module.exports = router

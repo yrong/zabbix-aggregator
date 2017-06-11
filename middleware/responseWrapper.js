@@ -1,8 +1,8 @@
 'use strict';
 
-import logger from '../logger'
+const logger = require('../logger')
 
-export default function responseWrapper() {
+module.exports = function responseWrapper() {
     return async function (ctx, next) {
         try {
             const start = new Date()

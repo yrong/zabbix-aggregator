@@ -1,33 +1,33 @@
 {
-  "config": {
-    "port":3003,
-    "logger":{
-      "appenders": [
-        {
-          "type": "console"
-        },
-        {
-          "type": "file",
-          "filename": "scmp-z.log",
-          "maxLogSize": 20480,
-          "numBackups": 5,
-          "category": "scmp-z"
-        }
-      ],
-      "replaceConsole": true,
-      "defaultLevel":"DEBUG",
-      "defaultCategory": "scmp-z"
-    },
-    "mysql": {
-      "host": "localhost",
-      "port": 3306,
-      "user": "root",
-      "password": "root",
-      "database": "zabbix"
-    },
-    "auth":{
-      "base_url":"http://localhost:3002/auth",
-      "token_check_path":"/check"
-    }
+  "port":3003,
+  "logger":{
+    "appenders": [
+      {
+        "type": "console"
+      },
+      {
+        "type": "file",
+        "filename": "scmp-z.log",
+        "maxLogSize": 20480,
+        "numBackups": 5
+      }
+    ],
+    "replaceConsole": true,
+    "defaultLevel":"DEBUG",
+    "defaultCategory": "scmp-z"
+  },
+  "mysql": {
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "root",
+    "database": "zabbix"
+  },
+  "auth":{
+    "base_url":"http://localhost:3002/auth",
+    "token_check_path":"/check"
+  },
+  "cmdb":{
+    "base_url":"http://localhost:3001"
   }
 }

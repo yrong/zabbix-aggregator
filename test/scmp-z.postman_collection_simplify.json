@@ -28,6 +28,11 @@
     }
   },
   {
+    "name": "triggers/history",
+    "method": "GET",
+    "url": "http://localhost:3003/api/triggers/history?since=1453808199&until=1465808199"
+  },
+  {
     "name": "items/history/",
     "method": "GET",
     "url": "http://localhost:3003/api/items/history/23766?since=1463808199&until=1465808199"
@@ -45,10 +50,10 @@
   {
     "name": "login",
     "method": "POST",
-    "url": "{{auth_url}}/auth/login",
+    "url": "http://localhost:3002/auth/login",
     "body": {
-      "username": "{{username}}",
-      "password": "{{password}}"
+      "username": "admin",
+      "password": "admin"
     }
   },
   {

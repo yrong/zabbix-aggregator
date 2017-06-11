@@ -1,8 +1,8 @@
 'use strict';
 
-import log4js from 'log4js'
-import config from 'config'
-const logger = log4js.getLogger(config.get('config.logger.defaultCategory'))
-const level = config.get('config.logger.defaultLevel')
+const log4js = require('log4js')
+const config = require('config')
+const logger = log4js.getLogger(config.get('logger.defaultCategory'))
+const level = config.get('logger.defaultLevel')
 logger.setLevel(level)
-export default logger
+module.exports = logger
