@@ -5,6 +5,8 @@ const _ = require('lodash')
 const db = require('../lib/db')
 const triggerSqlGenerator = require('../sql/trigger')
 const alias = require('../sql/alias')
+const rp = require('request-promise')
+const config = require('config')
 
 const groupList = ["Network","Windows Servers","Linux servers","Virtual machines","Exchange Servers","Out of Band","ESX","Storage","TSM Backup Jobs"]
 
@@ -28,15 +30,25 @@ triggers.all('/group', async (ctx, next)=>{
 });
 
 triggers.all('/history',async (ctx,next)=>{
-    let params = _.assign({},ctx.params,ctx.query,ctx.request.body),since,until,abnormal,normal,result
-    if(!_.isString(params.since)||!_.isString(params.until)){
-        ctx.throw("missing params!")
+    let params = _.assign({},ctx.params,ctx.query,ctx.request.body),since,until,abnormal,normal,results,
+        itservicegroup_hosts_url,options,hosts
+    if(_.isString(params.since)){
+        since = parseInt(params.since)
     }
-    since = parseInt(params.since),until = parseInt(params.until)
-    result = await db.query(triggerSqlGenerator.sqlCountTriggers(Status_Problem,since,until))
-    abnormal = result[0][0][alias.count_alias]
-    result = await db.query(triggerSqlGenerator.sqlCountTriggers(Status_Normal,since,until))
-    normal = result[0][0][alias.count_alias]
+    if(_.isString(params.until)){
+        until = parseInt(params.until)
+    }
+    if(_.isString(params.itservicegroup)){
+        itservicegroup_hosts_url = config.get('cmdb.base_url') + '/api/cfgItems/assoc/group?group_names=' + params.itservicegroup
+        options = {uri:itservicegroup_hosts_url,method:'GET',json:true}
+        results = await rp(options)
+        hosts = _.map(results.data,(result)=>{return '"' + result.name + '"'})
+        hosts = '(' + hosts.join() + ')'
+    }
+    results = await db.query(triggerSqlGenerator.sqlCountTriggers(Status_Problem,since,until,hosts))
+    abnormal = results[0][0][alias.count_alias]
+    results = await db.query(triggerSqlGenerator.sqlCountTriggers(Status_Normal,since,until,hosts))
+    normal = results[0][0][alias.count_alias]
     ctx.body={abnormal,normal}
 })
 

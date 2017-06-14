@@ -12,15 +12,17 @@ const joinPart = `inner join functions on triggers.triggerid=functions.triggerid
 const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keyword}%" and groups.name != "${Zabbix_Template_Name_keyword}"`
 
 
-const sqlFindTriggers = (status,since,until)=>{
+const sqlFindTriggers = (status,since,until,hosts)=>{
     let fields = `priority,lastchange,functions.itemid,groups.name as ${alias.group_name_alias}`
     let sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePartExcludeZabbix)
     if(status)
-        sql = `${sql} and value=${status}`
+        sql = `${sql} and triggers.value=${status}`
     if(since)
-        sql = `${sql} and lastchange>=${since}`
+        sql = `${sql} and triggers.lastchange>=${since}`
     if(until)
-        sql = `${sql} and lastchange<=${until}`
+        sql = `${sql} and triggers.lastchange<=${until}`
+    if(hosts)
+        sql = `${sql} and hosts.name in ${hosts}`
     return sql
 }
 
@@ -43,8 +45,8 @@ const sqlGroupTriggersByGroupName = (status)=> {
     return sql
 }
 
-const sqlCountTriggers = (status,since,until)=> {
-    let innerSql = sqlFindTriggers(status,since,until)
+const sqlCountTriggers = (status,since,until,hosts)=> {
+    let innerSql = sqlFindTriggers(status,since,until,hosts)
     let sql = `select count(*) as ${alias.count_alias}
     from (
          ${innerSql}

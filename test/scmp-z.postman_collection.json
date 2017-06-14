@@ -79,7 +79,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{url}}/triggers/history?since=1453808199&until=1465808199",
+			"url": "{{url}}/triggers/history?since=1453808199&until=1465808199&itservicegroup=Messaging,Infrastructure",
 			"queryParams": [
 				{
 					"key": "since",
@@ -94,6 +94,13 @@
 					"equals": true,
 					"description": "",
 					"enabled": true
+				},
+				{
+					"key": "itservicegroup",
+					"value": "Messaging,Infrastructure",
+					"equals": true,
+					"description": "",
+					"enabled": true
 				}
 			],
 			"preRequestScript": null,
@@ -105,7 +112,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497018101153,
+			"time": 1497357669565,
 			"name": "triggers/history",
 			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
@@ -133,25 +140,36 @@
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "494e8d5b-6dce-f9c8-5efb-60f7aec51a24",
-			"name": "triggers/active",
-			"dataMode": "params",
-			"data": null,
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Cookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
+			"headers": "token: {{token}}\nContent-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
 			"url": "{{url}}/triggers/active",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497359671151,
+			"name": "triggers/active",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
@@ -255,25 +273,36 @@
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "ba7f095c-c73f-c3f9-7e2e-39ba7779bbb0",
-			"name": "groups",
-			"dataMode": "params",
-			"data": [],
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
 			"url": "{{url}}/groups",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497359738546,
+			"name": "groups",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
@@ -321,25 +350,44 @@
 			"rawModeData": "\n  {\n    \"appName\":\"Exchange Mailbox Services\"\n   }\n\n"
 		},
 		{
-			"folder": null,
 			"id": "e46dae1d-58c1-e991-b19a-b9c5ec1a91ae",
-			"name": "groups filter by name",
-			"dataMode": "params",
-			"data": [],
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
 			"url": "{{url}}/groups?name=Storage",
+			"queryParams": [
+				{
+					"key": "name",
+					"value": "Storage",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497359788224,
+			"name": "groups filter by name",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{

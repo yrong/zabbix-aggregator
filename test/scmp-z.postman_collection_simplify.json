@@ -2,12 +2,12 @@
   {
     "name": "items/host",
     "method": "GET",
-    "url": "http://localhost:3003/api/items/host?name=Router_ASB"
+    "url": "{{url}}/items/host?name=Router_ASB"
   },
   {
     "name": "items/search/Exchange Mailbox Database",
     "method": "POST",
-    "url": "http://localhost:3003/api/items/search",
+    "url": "{{url}}/items/search",
     "body": {
       "appName": "Exchange Mailbox Database",
       "hosts": [
@@ -30,27 +30,27 @@
   {
     "name": "triggers/history",
     "method": "GET",
-    "url": "http://localhost:3003/api/triggers/history?since=1453808199&until=1465808199"
+    "url": "{{url}}/triggers/history?since=1453808199&until=1465808199&itservicegroup=Messaging,Infrastructure"
   },
   {
     "name": "items/history/",
     "method": "GET",
-    "url": "http://localhost:3003/api/items/history/23766?since=1463808199&until=1465808199"
+    "url": "{{url}}/items/history/23766?since=1463808199&until=1465808199"
   },
   {
     "name": "triggers/active",
     "method": "GET",
-    "url": "http://localhost:3003/api/triggers/active"
+    "url": "{{url}}/triggers/active"
   },
   {
     "name": "hosts filter by name",
     "method": "GET",
-    "url": "http://localhost:3003/api/hosts?name=Router_ASB"
+    "url": "{{url}}/hosts?name=Router_ASB"
   },
   {
     "name": "login",
     "method": "POST",
-    "url": "http://localhost:3002/auth/login",
+    "url": "{{auth_url}}/auth/login",
     "body": {
       "username": "admin",
       "password": "admin"
@@ -59,7 +59,7 @@
   {
     "name": "items/search/Windows Server",
     "method": "POST",
-    "url": "http://localhost:3003/api/items/search",
+    "url": "{{url}}/items/search",
     "body": {
       "appName": "Windows Servers"
     }
@@ -67,22 +67,22 @@
   {
     "name": "triggers/group",
     "method": "GET",
-    "url": "http://localhost:3003/api/triggers/group"
+    "url": "{{url}}/triggers/group"
   },
   {
     "name": "groups",
     "method": "GET",
-    "url": "http://localhost:3003/api/groups"
+    "url": "{{url}}/groups"
   },
   {
     "name": "hosts",
     "method": "GET",
-    "url": "http://localhost:3003/api/hosts"
+    "url": "{{url}}/hosts"
   },
   {
     "name": "items/search/Exchange Mailbox Services",
     "method": "POST",
-    "url": "http://localhost:3003/api/items/search",
+    "url": "{{url}}/items/search",
     "body": {
       "appName": "Exchange Mailbox Services"
     }
@@ -90,17 +90,17 @@
   {
     "name": "groups filter by name",
     "method": "GET",
-    "url": "http://localhost:3003/api/groups?name=Storage"
+    "url": "{{url}}/groups?name=Storage"
   },
   {
     "name": "group/host",
     "method": "GET",
-    "url": "http://localhost:3003/api/groups/host?name=Storage"
+    "url": "{{url}}/groups/host?name=Storage"
   },
   {
     "name": "items/search/storageDisk",
     "method": "POST",
-    "url": "http://localhost:3003/api/items/search",
+    "url": "{{url}}/items/search",
     "body": {
       "appName": "storageDisk"
     }
