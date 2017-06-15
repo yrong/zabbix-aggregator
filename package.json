@@ -47,7 +47,7 @@
     "mocha": "^2.3.4",
     "newman": "^3.5.2",
     "nodemon": "^1.8.1",
-    "postman_simplify": "^1.0.4",
+    "postman_simplify": "^1.0.5",
     "query-string": "^4.3.2",
     "should": "^8.2.0",
     "supertest": "^1.1.0"

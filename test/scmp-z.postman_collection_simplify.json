@@ -2,13 +2,14 @@
   {
     "name": "items/host",
     "method": "GET",
-    "url": "{{url}}/items/host?name=Router_ASB"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/host?name=Router_ASB"
   },
   {
     "name": "items/search/Exchange Mailbox Database",
     "method": "POST",
-    "url": "{{url}}/items/search",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
     "body": {
+      "token": "{{token}}",
       "appName": "Exchange Mailbox Database",
       "hosts": [
         "AS-3650-EXCDB-1",
@@ -30,36 +31,36 @@
   {
     "name": "triggers/history",
     "method": "GET",
-    "url": "{{url}}/triggers/history?since=1453808199&until=1465808199&itservicegroup=Messaging,Infrastructure"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/history?since=1453808199&until=1465808199&itservicegroup=Messaging,Infrastructure"
   },
   {
     "name": "items/history/",
     "method": "GET",
-    "url": "{{url}}/items/history/23766?since=1463808199&until=1465808199"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/history/23766?since=1463808199&until=1465808199"
   },
   {
     "name": "triggers/active",
     "method": "GET",
-    "url": "{{url}}/triggers/active"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/active"
   },
   {
     "name": "hosts filter by name",
     "method": "GET",
-    "url": "{{url}}/hosts?name=Router_ASB"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts?name=Router_ASB"
   },
   {
     "name": "login",
     "method": "POST",
-    "url": "{{auth_url}}/auth/login",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
     "body": {
-      "username": "admin",
-      "password": "admin"
+      "username": "{{auth_user}}",
+      "password": "{{auth_passwd}}"
     }
   },
   {
     "name": "items/search/Windows Server",
     "method": "POST",
-    "url": "{{url}}/items/search",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
     "body": {
       "appName": "Windows Servers"
     }
@@ -67,22 +68,22 @@
   {
     "name": "triggers/group",
     "method": "GET",
-    "url": "{{url}}/triggers/group"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/group"
   },
   {
     "name": "groups",
     "method": "GET",
-    "url": "{{url}}/groups"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups"
   },
   {
     "name": "hosts",
     "method": "GET",
-    "url": "{{url}}/hosts"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts"
   },
   {
     "name": "items/search/Exchange Mailbox Services",
     "method": "POST",
-    "url": "{{url}}/items/search",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
     "body": {
       "appName": "Exchange Mailbox Services"
     }
@@ -90,17 +91,17 @@
   {
     "name": "groups filter by name",
     "method": "GET",
-    "url": "{{url}}/groups?name=Storage"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups?name=Storage"
   },
   {
     "name": "group/host",
     "method": "GET",
-    "url": "{{url}}/groups/host?name=Storage"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups/host?name=Storage"
   },
   {
     "name": "items/search/storageDisk",
     "method": "POST",
-    "url": "{{url}}/items/search",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
     "body": {
       "appName": "storageDisk"
     }

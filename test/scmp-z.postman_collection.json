@@ -25,48 +25,73 @@
 	"public": false,
 	"requests": [
 		{
-			"folder": null,
 			"id": "07b7e588-9003-4a73-3541-baa9c01ea6e4",
-			"name": "items/host",
-			"dataMode": "params",
-			"data": [],
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
-			"url": "{{url}}/items/host?name=Router_ASB",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Cookie",
+					"value": "token={{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/host?name=Router_ASB",
+			"queryParams": [
+				{
+					"key": "name",
+					"value": "Router_ASB",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515866735,
+			"name": "items/host",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "1659d862-ac86-f648-2103-c99c7c4aac7d",
-			"name": "items/search/Exchange Mailbox Database",
-			"dataMode": "raw",
-			"data": [],
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "{{url}}/items/search",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515692591,
+			"name": "items/search/Exchange Mailbox Database",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259",
-			"rawModeData": "\n  {\n    \"appName\":\"Exchange Mailbox Database\",\n    \"hosts\":[\"AS-3650-EXCDB-1\",\"AS-3650-EXCDB-2\",\"AS-VME-EXCCAS-1\",\"BJ-X3650-EXC-1\"],\n    \"items\":[\"Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency\",\n                \"Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency\",\n                \"Exchange Mailbox Database Log Bytes Write/sec\",\"Exchange Mailbox Database Log Record Stalls/sec\",\n                \"Exchange Mailbox Database Log Threads Waiting\"],\n    \"transposed\":0,\n    \"title\": null\n   }\n\n"
+			"rawModeData": "\n  {\n  \t\"token\":\"{{token}}\",\n    \"appName\":\"Exchange Mailbox Database\",\n    \"hosts\":[\"AS-3650-EXCDB-1\",\"AS-3650-EXCDB-2\",\"AS-VME-EXCCAS-1\",\"BJ-X3650-EXC-1\"],\n    \"items\":[\"Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency\",\n                \"Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency\",\n                \"Exchange Mailbox Database Log Bytes Write/sec\",\"Exchange Mailbox Database Log Record Stalls/sec\",\n                \"Exchange Mailbox Database Log Threads Waiting\"],\n    \"transposed\":0,\n    \"title\": null\n   }\n\n"
 		},
 		{
 			"id": "1d7f99f9-5f5e-c2c4-f03a-68264b55cc98",
@@ -79,7 +104,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{url}}/triggers/history?since=1453808199&until=1465808199&itservicegroup=Messaging,Infrastructure",
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/history?since=1453808199&until=1465808199&itservicegroup=Messaging,Infrastructure",
 			"queryParams": [
 				{
 					"key": "since",
@@ -112,31 +137,57 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497357669565,
+			"time": 1497515641805,
 			"name": "triggers/history",
 			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "42a72e25-24c1-0b81-c1fb-55568b40664d",
-			"name": "items/history/",
-			"dataMode": "params",
-			"data": [],
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
-			"url": "{{url}}/items/history/23766?since=1463808199&until=1465808199",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/history/23766?since=1463808199&until=1465808199",
+			"queryParams": [
+				{
+					"key": "since",
+					"value": "1463808199",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "until",
+					"value": "1465808199",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515818765,
+			"name": "items/history/",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
@@ -156,7 +207,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{url}}/triggers/active",
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/active",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -167,31 +218,50 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497359671151,
+			"time": 1497515630154,
 			"name": "triggers/active",
 			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "5c730ef4-0019-586d-1288-b9792f371075",
-			"name": "hosts filter by name",
-			"dataMode": "params",
-			"data": [],
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
-			"url": "{{url}}/hosts?name=Router_ASB",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Cookie",
+					"value": "token={{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts?name=Router_ASB",
+			"queryParams": [
+				{
+					"key": "name",
+					"value": "Router_ASB",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515857952,
+			"name": "hosts filter by name",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
@@ -211,7 +281,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{auth_url}}/auth/login",
+			"url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
 			"queryParams": [],
 			"preRequestScript": "",
 			"pathVariables": {},
@@ -222,54 +292,71 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"token found\"] = jsonData.data.token;\npostman.setEnvironmentVariable(\"token\", jsonData.data.token);\n",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497018525013,
+			"time": 1497515498077,
 			"name": "login",
 			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259",
-			"rawModeData": "{\n  \"username\":\"admin\",\n  \"password\":\"admin\"\n}"
+			"rawModeData": "{\n  \"username\":\"{{auth_user}}\",\n  \"password\":\"{{auth_passwd}}\"\n}"
 		},
 		{
-			"folder": null,
 			"id": "7bb6a63f-2601-10a4-4159-205916c49ebc",
-			"name": "items/search/Windows Server",
-			"dataMode": "raw",
-			"data": [],
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "{{url}}/items/search",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515737882,
+			"name": "items/search/Windows Server",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259",
 			"rawModeData": "\n  {\n    \"appName\":\"Windows Servers\"\n   }\n\n"
 		},
 		{
-			"folder": null,
 			"id": "b91c7e0d-d225-b26e-43b1-70d7773aa694",
-			"name": "triggers/group",
-			"dataMode": "params",
-			"data": null,
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Cookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
-			"url": "{{url}}/triggers/group",
+			"headerData": [
+				{
+					"key": "Cookie",
+					"value": "token={{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/group",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515653727,
+			"name": "triggers/group",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
@@ -289,7 +376,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{url}}/groups",
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -300,52 +387,75 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497359738546,
+			"time": 1497515875641,
 			"name": "groups",
 			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "c44e9b5a-c440-61e3-14bd-f52848e04619",
-			"name": "hosts",
-			"dataMode": "params",
-			"data": [],
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
-			"url": "{{url}}/hosts",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Cookie",
+					"value": "token={{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515840339,
+			"name": "hosts",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "dca3586d-b24c-799f-e8a5-0ae9d84b9e68",
-			"name": "items/search/Exchange Mailbox Services",
-			"dataMode": "raw",
-			"data": [],
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "{{url}}/items/search",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515764983,
+			"name": "items/search/Exchange Mailbox Services",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259",
 			"rawModeData": "\n  {\n    \"appName\":\"Exchange Mailbox Services\"\n   }\n\n"
 		},
@@ -366,7 +476,7 @@
 					"enabled": true
 				}
 			],
-			"url": "{{url}}/groups?name=Storage",
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups?name=Storage",
 			"queryParams": [
 				{
 					"key": "name",
@@ -385,52 +495,83 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497359788224,
+			"time": 1497515883893,
 			"name": "groups filter by name",
 			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "f115ae53-f3c4-7bfe-0b50-6ad9707cb981",
-			"name": "group/host",
-			"dataMode": "params",
-			"data": [],
-			"rawModeData": null,
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "GET",
-			"pathVariables": {},
-			"url": "{{url}}/groups/host?name=Storage",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Cookie",
+					"value": "token={{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups/host?name=Storage",
+			"queryParams": [
+				{
+					"key": "name",
+					"value": "Storage",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515891490,
+			"name": "group/host",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
 		},
 		{
-			"folder": null,
 			"id": "ff0053b3-f8f9-bcdd-026b-f66237d09ea5",
-			"name": "items/search/storageDisk",
-			"dataMode": "raw",
-			"data": [],
-			"descriptionFormat": null,
-			"description": "",
-			"headers": "Content-Type: application/json\nCookie: token={{token}}\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "{{url}}/items/search",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+			"queryParams": [],
 			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"queryParams": null,
-			"headerData": null,
-			"pathVariableData": null,
+			"time": 1497515783132,
+			"name": "items/search/storageDisk",
+			"description": "",
 			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259",
 			"rawModeData": "\n  {\n    \"appName\":\"storageDisk\"\n   }\n\n"
 		}
