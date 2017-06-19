@@ -31,11 +31,9 @@
     "koa": "^2.0.0-alpha.3",
     "koa-bodyparser": "^3.2.0",
     "koa-router": "^7.0.1",
-    "koa-response-wrapper": "^1.0.2",
+    "koa-response-wrapper": "^1.0.3",
     "koa-token-checker": "^1.0.1",
     "lodash": "^4.17.4",
-    "log4js": "^1.1.0",
-    "log4js_wrapper": "^1.0.1",
     "mysql2": "^1.2.0",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
