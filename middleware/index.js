@@ -1,14 +1,15 @@
 'use strict';
 
 const compose = require('koa-compose')
-const checkToken = require('./checkToken')
-const responseWrapper = require('./responseWrapper')
+const config = require('config')
+const responseWrapper = require('koa-response-wrapper')
+const checkToken = require('koa-token-checker')
 
 module.exports = function middleware() {
     return compose(
         [
             responseWrapper(),
-            checkToken()
+            checkToken(config.get('auth'))
         ]
     )
 }
