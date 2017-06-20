@@ -95,52 +95,37 @@
 		},
 		{
 			"id": "1d7f99f9-5f5e-c2c4-f03a-68264b55cc98",
-			"headers": "Cookie: token={{token}}\n",
+			"headers": "Cookie: token={{token}}\nContent-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "Cookie",
 					"value": "token={{token}}",
 					"description": "",
 					"enabled": true
-				}
-			],
-			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/history?since=1453808199&until=1465808199&itservicegroup=Messaging,Infrastructure",
-			"queryParams": [
-				{
-					"key": "since",
-					"value": "1453808199",
-					"equals": true,
-					"description": "",
-					"enabled": true
 				},
 				{
-					"key": "until",
-					"value": "1465808199",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				},
-				{
-					"key": "itservicegroup",
-					"value": "Messaging,Infrastructure",
-					"equals": true,
+					"key": "Content-Type",
+					"value": "application/json",
 					"description": "",
 					"enabled": true
 				}
 			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497515641805,
-			"name": "triggers/history",
+			"time": 1497939405121,
+			"name": "triggers/count",
 			"description": "",
-			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
+			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259",
+			"rawModeData": "{\n\t\"filter\":{\n\t\t\"since\": 1453808199,\n\t\t\"until\": 1465808199,\n\t\t\"itservicegroup\": [\"Messaging\",\"Infrastructure\"]\n\t}\n}"
 		},
 		{
 			"id": "42a72e25-24c1-0b81-c1fb-55568b40664d",
@@ -207,21 +192,22 @@
 					"enabled": true
 				}
 			],
-			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/active",
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/search",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497515630154,
-			"name": "triggers/active",
+			"time": 1497939419819,
+			"name": "triggers/search",
 			"description": "",
-			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
+			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259",
+			"rawModeData": "{\n\t\"filter\":{\n\t\t\"status\": 1\n\t}\n}"
 		},
 		{
 			"id": "5c730ef4-0019-586d-1288-b9792f371075",
@@ -334,11 +320,17 @@
 		},
 		{
 			"id": "b91c7e0d-d225-b26e-43b1-70d7773aa694",
-			"headers": "Cookie: token={{token}}\n",
+			"headers": "Cookie: token={{token}}\nContent-Type: application/json\n",
 			"headerData": [
 				{
 					"key": "Cookie",
 					"value": "token={{token}}",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "Content-Type",
+					"value": "application/json",
 					"description": "",
 					"enabled": true
 				}
@@ -348,16 +340,17 @@
 			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1497515653727,
+			"time": 1497939853205,
 			"name": "triggers/group",
 			"description": "",
-			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259"
+			"collectionId": "a9e44229-b022-2dab-6751-56b098da1259",
+			"rawModeData": "{\n\t\"filter\":{\n\t\t\"status\": 1\n\t}\n}"
 		},
 		{
 			"id": "ba7f095c-c73f-c3f9-7e2e-39ba7779bbb0",
