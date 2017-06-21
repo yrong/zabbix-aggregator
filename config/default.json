@@ -14,7 +14,7 @@
       }
     ],
     "replaceConsole": true,
-    "defaultLevel":"INFO"
+    "defaultLevel":"DEBUG"
   },
   "mysql": {
     "host": "localhost",

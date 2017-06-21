@@ -35,7 +35,7 @@ const dataWrapper = (items,transposed,title)=>{
     let metaData = transposed?{rows:itemNames,columns:hostNames,transposed}:{rows:hostNames,columns:itemNames,transposed}
     let stat = {}
     _.each(items,(item=>{
-        let obj = {id:item[alias.item_id_alias],type:item[alias.item_value_type_alias],triggered:item[alias.trigger_status_alias]?item[alias.trigger_priority_alias]:0,value:item.value}
+        let obj = {id:item[alias.item_id_alias],type:item[alias.item_value_type_alias],triggered:item[alias.trigger_value_alias]?item[alias.trigger_priority_alias]:0,value:item.value}
         let row = item[alias.host_name_alias],col = item[alias.item_name_alias]
         if(transposed)
             [row,col] = [col,row]

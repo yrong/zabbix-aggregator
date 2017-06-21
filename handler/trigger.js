@@ -30,33 +30,43 @@ const buildConfig = async (ctx)=>{
     return filter;
 }
 
-triggers.post('/group', async (ctx)=>{
-    let stat = {},all,filter = buildConfig(ctx)
-    let [groups] = await db.query(triggerSqlGenerator.sqlGroupTriggersByGroup(filter))
+triggers.post('/groupBy/HostGroupAndPriority', async (ctx)=>{
+    let stat = {},all,filter = await buildConfig(ctx),groupby = [alias.group_name_alias,alias.trigger_priority_alias].join()
+    let [groups] = await db.query(triggerSqlGenerator.sqlGroupTriggers(filter,groupby))
     let [rows] = await db.query(triggerSqlGenerator.sqlCountTriggers(filter))
     all = rows[0][alias.count_alias]
     for(let group of groups){
-        filter.group  = group[alias.group_name_alias],filter.priority  = group[alias.trigger_priority_alias]
+        filter[alias.group_name_alias]  = group[alias.group_name_alias], filter[alias.trigger_priority_alias] = group[alias.trigger_priority_alias]
         let [rows] = await db.query(triggerSqlGenerator.sqlFindTriggers(filter))
-        stat[filter.group] = stat[filter.group]||{}
-        stat[filter.group][filter.priority] = rows
+        stat[filter[alias.group_name_alias]] = stat[filter[alias.group_name_alias]]||{}
+        stat[filter[alias.group_name_alias]][filter[alias.trigger_priority_alias]] = rows
     }
     ctx.body={all,groupList,priorityList,stat}
 });
 
+triggers.post('/groupBy/LastChangeAndValue', async (ctx)=>{
+    let filter = await buildConfig(ctx),groupby = [alias.trigger_lastchange_date_alias,alias.trigger_value_alias].join(),result = {}
+    let [groups] = await db.query(triggerSqlGenerator.sqlGroupTriggers(filter,groupby))
+    for(let group of groups){
+        result[group[alias.trigger_lastchange_date_alias]] = result[group[alias.trigger_lastchange_date_alias]]||{}
+        result[group[alias.trigger_lastchange_date_alias]][group[alias.trigger_value_alias]] = group[alias.count_alias]
+    }
+    ctx.body= result
+});
+
 triggers.post('/count',async (ctx)=>{
     let abnormal,normal,results,filter = await buildConfig(ctx)
-    filter.status = Status_Problem
+    filter.value = Status_Problem
     results = await db.query(triggerSqlGenerator.sqlCountTriggers(filter))
     abnormal = results[0][0][alias.count_alias]
-    filter.status = Status_Normal
+    filter.value = Status_Normal
     results = await db.query(triggerSqlGenerator.sqlCountTriggers(filter))
     normal = results[0][0][alias.count_alias]
     ctx.body={abnormal,normal}
 })
 
 const activeTriggerHandler = async(ctx)=>{
-    let filter = buildConfig(ctx)
+    let filter = await buildConfig(ctx)
     let [rows] = await db.query(triggerSqlGenerator.sqlFindTriggers(filter))
     ctx.body=rows
 }

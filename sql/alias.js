@@ -11,12 +11,13 @@ const alias = {
     item_value_type_alias:'value_type',
     item_units_alias:'unit',
     //trigger
-    trigger_status_alias:'trigger_status',
     trigger_priority_alias:'priority',
-    trigger_expression_alias:'triggerExp',
-    trigger_description_alias:'triggerDesc',
+    trigger_expression_alias:'expression',
+    trigger_description_alias:'description',
+    trigger_lastchange_date_alias:"lastchange",
+    trigger_value_alias:'value',
     //function
-    function_function_alias:'triggerFunc',
+    function_function_alias:'function',
     //history
     history_clock_alias:'clock',
     history_value_alias:'value',

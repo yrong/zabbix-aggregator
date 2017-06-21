@@ -29,6 +29,20 @@
     }
   },
   {
+    "name": "triggers/group by lastchange and value",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/groupBy/LastChangeAndValue",
+    "body": {
+      "filter": {
+        "since": 1453808199,
+        "until": 1465808199,
+        "itservicegroup": [
+          "test"
+        ]
+      }
+    }
+  },
+  {
     "name": "triggers/count",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
@@ -54,7 +68,7 @@
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/search",
     "body": {
       "filter": {
-        "status": 1
+        "value": 1
       }
     }
   },
@@ -81,12 +95,12 @@
     }
   },
   {
-    "name": "triggers/group",
+    "name": "triggers/group by group and priority",
     "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/group",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/groupBy/HostGroupAndPriority",
     "body": {
       "filter": {
-        "status": 1
+        "value": 1
       }
     }
   },
