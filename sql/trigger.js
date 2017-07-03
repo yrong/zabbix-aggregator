@@ -12,42 +12,40 @@ const joinPart = `inner join functions on triggers.triggerid=functions.triggerid
 const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keyword}%" and groups.name != "${Zabbix_Template_Name_keyword}"`
 
 
-const sqlFindTriggers = (config)=>{
+const sqlFindTriggers = (filter)=>{
     let fields = `hosts.host,triggers.description,triggers.priority as ${alias.trigger_priority_alias},triggers.value as ${alias.trigger_value_alias},DATE_FORMAT(FROM_UNIXTIME(lastchange),'%Y-%m-%d') as ${alias.trigger_lastchange_date_alias},items.itemid,groups.name as ${alias.group_name_alias}`
     let sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePartExcludeZabbix)
-    if(config.value)
-        sql = `${sql} and triggers.value=${config.value}`
-    if(config.since)
-        sql = `${sql} and triggers.lastchange>=${config.since}`
-    if(config.until)
-        sql = `${sql} and triggers.lastchange<=${config.until}`
-    if(config.hosts)
-        sql = `${sql} and hosts.name in ${config.hosts}`
-    if(config[alias.group_name_alias])
-        sql = `${sql} and groups.name="${config[alias.group_name_alias]}"`
-    if(config.priority)
-        sql = `${sql} and triggers.priority="${config.priority}"`
+    if(filter.value)
+        sql = `${sql} and triggers.value=${filter.value}`
+    if(filter.since)
+        sql = `${sql} and triggers.lastchange>=${filter.since}`
+    if(filter.until)
+        sql = `${sql} and triggers.lastchange<=${filter.until}`
+    if(filter.hosts)
+        sql = `${sql} and hosts.name in ${filter.hosts}`
+    if(filter[alias.group_name_alias])
+        sql = `${sql} and groups.name="${filter[alias.group_name_alias]}"`
+    if(filter.priority)
+        sql = `${sql} and triggers.priority="${filter.priority}"`
     return sql
 }
 
-const sqlGroupTriggers = (filter,groupBy)=> {
-    let innerSql = sqlFindTriggers(filter)
-    let sql = `select ${groupBy}, count(*) as ${alias.count_alias}
-    from (
-         ${innerSql}
-        )
-    as ${InnerJoin_Table_Name} group by ${groupBy}`
+const sqlCountTriggersByGroup = (filter,groupBy)=> {
+    let innerSql = sqlFindTriggers(filter),sql
+    if(groupBy){
+        sql = `select count(*) as ${alias.count_alias},${groupBy}
+            from (
+                 ${innerSql}
+                )
+            as ${InnerJoin_Table_Name} group by ${groupBy}`
+    }else{
+        sql = `select count(*) as ${alias.count_alias}
+            from (
+                 ${innerSql}
+                )
+            as ${InnerJoin_Table_Name}`
+    }
     return sql
 }
 
-const sqlCountTriggers = (config)=> {
-    let innerSql = sqlFindTriggers(config)
-    let sql = `select count(*) as ${alias.count_alias}
-    from (
-         ${innerSql}
-        )
-    as ${InnerJoin_Table_Name}`
-    return sql
-}
-
-module.exports = {sqlGroupTriggers,sqlCountTriggers,sqlFindTriggers,Status_Problem,Status_Normal}
+module.exports = {sqlCountTriggersByGroup,sqlFindTriggers,Status_Problem,Status_Normal}

@@ -56,12 +56,9 @@
     "body": {
       "filter": {
         "since": 1453808199,
-        "until": 1465808199,
-        "itservicegroup": [
-          "Messaging",
-          "Infrastructure"
-        ]
-      }
+        "until": 1465808199
+      },
+      "depth": 2
     }
   },
   {
@@ -83,7 +80,7 @@
         "since": 1453808199,
         "until": 1465808199,
         "itservicegroup": [
-          "test"
+          "Messaging"
         ]
       }
     }
@@ -104,7 +101,10 @@
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/search",
     "body": {
       "filter": {
-        "value": 1
+        "value": 1,
+        "itservice": [
+          "email"
+        ]
       }
     }
   },
