@@ -12,6 +12,9 @@ const priorityList=["Information","Warning","Average","High","Disaster"]
 const HostsNotExist = `("NOTEXIST")`
 const moment = require('moment')
 
+const categories_by_value = ['value'],categories_by_itservice_value = ['itservice','value'].sort(),
+    categories_by_hostgroup_priority = ['gpname','priority'].sort(),categories_by_lastchange_value =['lastchange','value'].sort()
+
 let triggers = new Router();
 
 const buildHostFilter = async (filter)=>{
@@ -96,29 +99,28 @@ const countTriggerByITService = async (filter)=>{
 }
 
 triggers.post('/count', async (ctx)=>{
-    let groupBy = ctx.request.body.groupBy,filter = ctx.request.body.filter||{}
-    let result = await countTriggerByValue(filter),result_depth_1,result_depth_2
-    if(!groupBy||!groupBy.category)
+    let groupBy = ctx.request.body.groupBy,filter = ctx.request.body.filter||{},result,result_depth,category_list
+    result = await countTriggerByValue(filter)
+    if(!groupBy||!groupBy.category||!groupBy.category.length)
         throw new Error('count missing groupBy field!')
-    if(groupBy.category === 'Value'){
-        ctx.body = result
-    }else if(groupBy.category === 'HostGroupAndPriority'){
-        ctx.body = await groupByHostGroupAndPriority(filter,groupBy)
-    }else if(groupBy.category === 'LastChangeAndValue'){
+    category_list = groupBy.category.sort()
+    if(_.isEqual(category_list,categories_by_value)){
+    }else if(_.isEqual(category_list,categories_by_hostgroup_priority)){
+        result = await groupByHostGroupAndPriority(filter,groupBy)
+    }else if(_.isEqual(category_list,categories_by_lastchange_value)){
         if(groupBy.period&&(groupBy.period!=='years'&&groupBy.period!=='months')&&groupBy.period!=='days')
             throw new Error('groupBy period unknown!')
-        ctx.body = await groupByLastChangeAndValue(filter,groupBy)
-    }else if(groupBy.category === 'ITServiceGroupAndValue'){
-        result_depth_1 = await countTriggerByITServiceGroup(filter)
-        ctx.body = _.assign(result,result_depth_1)
-    }else if(groupBy.category === 'ITServiceAndValue'){
-        result_depth_1 = await countTriggerByITServiceGroup(filter)
-        filter = _.omit(filter,['hosts','itservicegroup'])
-        result_depth_2 = await countTriggerByITService(filter)
-        ctx.body = _.assign(result,result_depth_1,result_depth_2)
+        result = await groupByLastChangeAndValue(filter,groupBy)
+    }else if(_.isEqual(category_list,categories_by_itservice_value)){
+        if(groupBy.depth === 0)
+            result_depth = await countTriggerByITServiceGroup(filter)
+        else if(groupBy.depth === 1)
+            result_depth = _.assign({},await countTriggerByITServiceGroup(filter),await countTriggerByITService(filter))
+        result = _.assign(result,result_depth)
     }else{
         throw new Error('groupBy category unknown!')
     }
+    ctx.body = result
 })
 
 const activeTriggerHandler = async(ctx)=>{

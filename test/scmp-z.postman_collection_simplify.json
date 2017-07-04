@@ -9,7 +9,11 @@
         "until": 1465808199
       },
       "groupBy": {
-        "category": "ITServiceAndValue"
+        "category": [
+          "itservice",
+          "value"
+        ],
+        "depth": 1
       }
     }
   },
@@ -73,7 +77,9 @@
         "until": 1465808199
       },
       "groupBy": {
-        "category": "Value"
+        "category": [
+          "value"
+        ]
       }
     }
   },
@@ -86,7 +92,10 @@
         "value": 1
       },
       "groupBy": {
-        "category": "HostGroupAndPriority"
+        "category": [
+          "gpname",
+          "priority"
+        ]
       }
     }
   },
@@ -101,7 +110,10 @@
         ]
       },
       "groupBy": {
-        "category": "LastChangeAndValue",
+        "category": [
+          "lastchange",
+          "value"
+        ],
         "period": "months",
         "latest": 20
       }
@@ -140,7 +152,11 @@
         "until": 1465808199
       },
       "groupBy": {
-        "category": "ITServiceGroupAndValue"
+        "category": [
+          "itservice",
+          "value"
+        ],
+        "depth": 0
       }
     }
   },

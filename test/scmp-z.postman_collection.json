@@ -56,12 +56,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499138095632,
+			"time": 1499155937386,
 			"name": "triggers/count by ITService and value",
 			"description": "",
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
-			"rawModeData": "{\n  \"filter\":{\n    \"since\": 1453808199,\n    \"until\": 1465808199\n  },\n  \"groupBy\":{\n  \t\"category\":\"ITServiceAndValue\"\n  }\n}"
+			"rawModeData": "{\n  \"filter\":{\n    \"since\": 1453808199,\n    \"until\": 1465808199\n  },\n  \"groupBy\":{\n  \t\"category\":[\"itservice\",\"value\"],\n  \t\"depth\":1\n  }\n}"
 		},
 		{
 			"folder": null,
@@ -273,12 +273,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499138008950,
+			"time": 1499152168257,
 			"name": "triggers/count by value",
 			"description": "",
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
-			"rawModeData": "{\n  \"filter\":{\n    \"since\": 1453808199,\n    \"until\": 1465808199\n  },\n  \"groupBy\":{\n  \t\"category\":\"Value\"\n  }\n}"
+			"rawModeData": "{\n  \"filter\":{\n    \"since\": 1453808199,\n    \"until\": 1465808199\n  },\n  \"groupBy\":{\n  \t\"category\":[\"value\"]\n  }\n}"
 		},
 		{
 			"id": "9063f4be-2731-c47b-db28-e73e517f61da",
@@ -308,12 +308,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499133663200,
+			"time": 1499155958089,
 			"name": "triggers/count by hostgroup and priority",
 			"description": "",
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
-			"rawModeData": "{\n  \"filter\":{\n    \"value\": 1\n  },\n  \"groupBy\":{\n  \t \"category\":\"HostGroupAndPriority\"\n  }\n}"
+			"rawModeData": "{\n  \"filter\":{\n    \"value\": 1\n  },\n  \"groupBy\":{\n  \t \"category\":[\"gpname\",\"priority\"]\n  }\n}"
 		},
 		{
 			"id": "930a15f5-2e4a-9204-9b82-e42c601732f8",
@@ -343,12 +343,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499138982722,
+			"time": 1499155983075,
 			"name": "triggers/count by lastchange and value",
 			"description": "",
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
-			"rawModeData": "{\n  \"filter\":{\n  \t\"itservicegroup\": [\"Messaging\"]\n  },\n  \"groupBy\":{\n  \t\"category\":\"LastChangeAndValue\",\n  \t\"period\":\"months\",\n  \t\"latest\":20\n  }\n}"
+			"rawModeData": "{\n  \"filter\":{\n  \t\"itservicegroup\": [\"Messaging\"]\n  },\n  \"groupBy\":{\n  \t\"category\":[\"lastchange\",\"value\"],\n  \t\"period\":\"months\",\n  \t\"latest\":20\n  }\n}"
 		},
 		{
 			"folder": null,
@@ -493,14 +493,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499137974628,
+			"time": 1499155907746,
 			"name": "triggers/count by ITServiceGroup and value",
 			"description": "",
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
-			"isFromCollection": true,
-			"collectionRequestId": "7bdf9062-ddc1-e020-a554-7b459b655187",
-			"rawModeData": "{\n  \"filter\":{\n    \"since\": 1453808199,\n    \"until\": 1465808199\n  },\n  \"groupBy\":{\n  \t\"category\":\"ITServiceGroupAndValue\"\n  }\n}"
+			"rawModeData": "{\n  \"filter\":{\n    \"since\": 1453808199,\n    \"until\": 1465808199\n  },\n  \"groupBy\":{\n  \t\"category\":[\"itservice\",\"value\"],\n  \t\"depth\":0\n  }\n}"
 		},
 		{
 			"folder": null,
