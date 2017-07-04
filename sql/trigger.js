@@ -13,7 +13,12 @@ const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keywo
 
 
 const sqlFindTriggers = (filter)=>{
-    let fields = `hosts.host,triggers.description,triggers.priority as ${alias.trigger_priority_alias},triggers.value as ${alias.trigger_value_alias},DATE_FORMAT(FROM_UNIXTIME(lastchange),'%Y-%m-%d') as ${alias.trigger_lastchange_date_alias},items.itemid,groups.name as ${alias.group_name_alias}`
+    let date_format="'%Y-%m-%d'",fields = `hosts.host,triggers.description,triggers.priority as ${alias.trigger_priority_alias},triggers.value as ${alias.trigger_value_alias},items.itemid,groups.name as ${alias.group_name_alias}`
+    if(filter.lastchange_period === 'months')
+        date_format = "'%Y-%m'"
+    else if(filter.lastchange_period === 'years')
+        date_format = "'%Y'"
+    fields = `${fields},DATE_FORMAT(FROM_UNIXTIME(lastchange),${date_format}) as ${alias.trigger_lastchange_date_alias}`
     let sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePartExcludeZabbix)
     if(filter.value)
         sql = `${sql} and triggers.value=${filter.value}`

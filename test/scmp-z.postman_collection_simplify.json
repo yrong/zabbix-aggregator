@@ -1,5 +1,19 @@
 [
   {
+    "name": "triggers/count by ITService and value",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+    "body": {
+      "filter": {
+        "since": 1453808199,
+        "until": 1465808199
+      },
+      "groupBy": {
+        "category": "ITServiceAndValue"
+      }
+    }
+  },
+  {
     "name": "groups filter by name",
     "method": "GET",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups?name=Storage"
@@ -50,7 +64,7 @@
     }
   },
   {
-    "name": "triggers/count",
+    "name": "triggers/count by value",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
     "body": {
@@ -58,30 +72,38 @@
         "since": 1453808199,
         "until": 1465808199
       },
-      "depth": 2
-    }
-  },
-  {
-    "name": "triggers/group by group and priority",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/groupBy/HostGroupAndPriority",
-    "body": {
-      "filter": {
-        "value": 1
+      "groupBy": {
+        "category": "Value"
       }
     }
   },
   {
-    "name": "triggers/group by lastchange and value",
+    "name": "triggers/count by hostgroup and priority",
     "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/groupBy/LastChangeAndValue",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
     "body": {
       "filter": {
-        "since": 1453808199,
-        "until": 1465808199,
+        "value": 1
+      },
+      "groupBy": {
+        "category": "HostGroupAndPriority"
+      }
+    }
+  },
+  {
+    "name": "triggers/count by lastchange and value",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+    "body": {
+      "filter": {
         "itservicegroup": [
           "Messaging"
         ]
+      },
+      "groupBy": {
+        "category": "LastChangeAndValue",
+        "period": "months",
+        "latest": 20
       }
     }
   },
@@ -105,6 +127,20 @@
         "itservice": [
           "email"
         ]
+      }
+    }
+  },
+  {
+    "name": "triggers/count by ITServiceGroup and value",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+    "body": {
+      "filter": {
+        "since": 1453808199,
+        "until": 1465808199
+      },
+      "groupBy": {
+        "category": "ITServiceGroupAndValue"
       }
     }
   },
