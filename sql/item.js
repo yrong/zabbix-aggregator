@@ -5,8 +5,10 @@ const alias = require('./alias')
 const Item_Table_Name='items',Host_Monitored = 0
 
 
-const sqlSearchItems = (appName,hostList,itemList)=>{
+const sqlSearchItems = (appName,hostList,itemList,groupName)=>{
     let joinPart = `inner join hosts on hosts.hostid=items.hostid
+        inner join hosts_groups on hosts_groups.hostid=hosts.hostid
+        inner join groups on groups.groupid=hosts_groups.groupid
         inner join items_applications on items_applications.itemid=items.itemid
         inner join applications on applications.applicationid=items_applications.applicationid
         inner join functions on items.itemid=functions.itemid
@@ -25,6 +27,8 @@ const sqlSearchItems = (appName,hostList,itemList)=>{
         itemList = _.map(itemList,(item)=>`"${item}"`).join()
         wherePart = wherePart + ` and items.name in (${itemList})`
     }
+    if(groupName)
+        wherePart = wherePart + ` and groups.name="${groupName}"`
     let sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Item_Table_Name,joinPart,wherePart)
     return sql
 }

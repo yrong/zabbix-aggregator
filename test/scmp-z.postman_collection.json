@@ -56,7 +56,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499155937386,
+			"time": 1499226725313,
 			"name": "triggers/count by ITService and value",
 			"description": "",
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
@@ -180,23 +180,8 @@
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b"
 		},
 		{
-			"folder": null,
 			"id": "665a9a5d-38b0-3067-247b-13c884a2a350",
-			"name": "items/search/Exchange Mailbox Services",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "\n  {\n    \"appName\":\"Exchange Mailbox Services\"\n   }\n\n",
-			"descriptionFormat": null,
-			"description": "",
 			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
-			"method": "POST",
-			"pathVariables": {},
-			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
-			"preRequestScript": null,
-			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
-			"currentHelper": "normal",
-			"helperAttributes": "{}",
-			"queryParams": null,
 			"headerData": [
 				{
 					"key": "Content-Type",
@@ -211,9 +196,23 @@
 					"enabled": true
 				}
 			],
-			"pathVariableData": null,
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499234372321,
+			"name": "items/search/Exchange Mailbox Services",
+			"description": "",
+			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
-			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b"
+			"rawModeData": "\n  {\n    \"appName\":\"Exchange Mailbox Services\",\n     \"groupName\": \"Windows Servers\"\n   }\n\n"
 		},
 		{
 			"folder": null,

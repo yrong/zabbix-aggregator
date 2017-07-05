@@ -40,7 +40,8 @@
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
     "body": {
-      "appName": "Exchange Mailbox Services"
+      "appName": "Exchange Mailbox Services",
+      "groupName": "Windows Servers"
     }
   },
   {

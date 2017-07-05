@@ -49,7 +49,7 @@ const dataWrapper = (items,transposed,title)=>{
 
 items.post('/search', async(ctx,next)=>{
     let params = ctx.request.body
-    let [item_rows] = await db.query(itemSqlGenerator.sqlSearchItems(params.appName,params.hosts,params.items))
+    let [item_rows] = await db.query(itemSqlGenerator.sqlSearchItems(params.appName,params.hosts,params.items,params.groupName))
     for (let item of item_rows){
         let [history_value_rows] = await db.query(historyValueSqlGenerator.sqlGetLatestItemValueInHistory(item[alias.item_value_type_alias],item[alias.item_id_alias]))
         if(history_value_rows.length)
