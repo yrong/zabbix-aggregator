@@ -100,26 +100,6 @@
     }
   },
   {
-    "name": "triggers/count by lastchange and value",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
-    "body": {
-      "filter": {
-        "itservicegroup": [
-          "Messaging"
-        ]
-      },
-      "groupBy": {
-        "category": [
-          "lastchange",
-          "value"
-        ],
-        "period": "months",
-        "latest": 20
-      }
-    }
-  },
-  {
     "name": "hosts compare with cmdb",
     "method": "GET",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts/compare_with_cmdb"
@@ -128,6 +108,22 @@
     "name": "items/host",
     "method": "GET",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/host?name=Router_ASB"
+  },
+  {
+    "name": "triggers/count by lastchange and value new",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+    "body": {
+      "groupBy": {
+        "category": [
+          "lastchange",
+          "value"
+        ],
+        "time_unit": "month",
+        "granularity": 2,
+        "latest": 10
+      }
+    }
   },
   {
     "name": "triggers/search",

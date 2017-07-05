@@ -15,6 +15,7 @@ const alias = {
     trigger_expression_alias:'expression',
     trigger_description_alias:'description',
     trigger_lastchange_date_alias:"lastchange",
+    trigger_lastchange_timespan_alias:"lastchange_timespan",
     trigger_value_alias:'value',
     //function
     function_function_alias:'function',

@@ -52,17 +52,22 @@ const groupByHostGroupAndPriority = async (filter,groupBy)=>{
 
 const groupByLastChangeAndValue = async (filter,groupBy)=>{
     filter = await buildHostFilter(filter)
-    filter.lastchange_period = groupBy.period = groupBy.period || 'days'
-    if(groupBy.latest){
-        filter.since = moment().subtract(groupBy.latest, filter.lastchange_period).unix()
+    let time_unit = groupBy.time_unit || 'day',granularity = groupBy.granularity || 1,latest = groupBy.latest,interval,format,date
+    filter.time_unit = time_unit ==='year'?'years':time_unit === 'month'?'months':'days'
+    format = time_unit ==='year'?'YYYY':time_unit === 'month'?'YYYY-MM':'YYYY-MM-DD'
+    filter.granularity = granularity
+    if(latest){
+        filter.since = moment().subtract(latest*granularity, filter.time_unit).unix()
         filter.until = moment().unix()
     }
-    groupBy = [alias.trigger_lastchange_date_alias,alias.trigger_value_alias].join()
+    groupBy = [alias.trigger_lastchange_timespan_alias,alias.trigger_value_alias].join()
     let result = {}
     let [groups] = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter,groupBy))
     for(let group of groups){
-        result[group[alias.trigger_lastchange_date_alias]] = result[group[alias.trigger_lastchange_date_alias]]||{}
-        result[group[alias.trigger_lastchange_date_alias]][group[alias.trigger_value_alias]] = group[alias.count_alias]
+        interval = group[alias.trigger_lastchange_timespan_alias]
+        date = moment.unix(filter.until).subtract((interval)*granularity,filter.time_unit).format(format)
+        result[date] = result[date]||{}
+        result[date][group[alias.trigger_value_alias]] = group[alias.count_alias]
     }
     return result
 }
@@ -87,6 +92,7 @@ const countTriggerByITServiceGroup = async (filter)=>{
 
 const countTriggerByITService = async (filter)=>{
     let results = await cmdb_api_helper.getITServiceGroups(),result={}
+    filter = _.omit(filter,['hosts','itservicegroup'])
     for(let group of results.data){
         for(let service of group.members){
             result[group.name] = result[group.name] || {}
@@ -108,14 +114,22 @@ triggers.post('/count', async (ctx)=>{
     }else if(_.isEqual(category_list,categories_by_hostgroup_priority)){
         result = await groupByHostGroupAndPriority(filter,groupBy)
     }else if(_.isEqual(category_list,categories_by_lastchange_value)){
-        if(groupBy.period&&(groupBy.period!=='years'&&groupBy.period!=='months')&&groupBy.period!=='days')
-            throw new Error('groupBy period unknown!')
+        if(groupBy.time_unit&&(groupBy.time_unit!=='year'&&groupBy.time_unit!=='month')&&groupBy.time_unit!=='day')
+            throw new Error('groupBy time_unit unknown,only year|month|day support')
+        if(groupBy.granularity&&!(_.isInteger(groupBy.granularity)))
+            throw new Error('groupBy granularity should be integer')
+        if(groupBy.latest&&!(_.isInteger(groupBy.latest)))
+            throw new Error('groupBy latest should be integer')
         result = await groupByLastChangeAndValue(filter,groupBy)
     }else if(_.isEqual(category_list,categories_by_itservice_value)){
-        if(groupBy.depth === 0)
-            result_depth = await countTriggerByITServiceGroup(filter)
-        else if(groupBy.depth === 1)
-            result_depth = _.assign({},await countTriggerByITServiceGroup(filter),await countTriggerByITService(filter))
+        result_depth = await countTriggerByITServiceGroup(filter)
+        if(groupBy.depth === 0){
+        }
+        else if(groupBy.depth === 1){
+            result_depth = _.assign(result_depth,await countTriggerByITService(filter))
+        }else{
+            throw new Error('depth only support 0|1')
+        }
         result = _.assign(result,result_depth)
     }else{
         throw new Error('groupBy category unknown!')
