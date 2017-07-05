@@ -15,7 +15,7 @@ const sqlSearchItems = (appName,hostList,itemList)=>{
     let wherePart = `hosts.status=${Host_Monitored} and hosts.name not like "Template%"`
     if(appName === 'WinOS'||appName === 'Windows Servers')
         wherePart = wherePart + ` and applications.name="os-rpt" or applications.name="fs-rpt"`
-    else
+    else if(appName)
         wherePart = wherePart + ` and applications.name="${appName}"`
     if(hostList){
         hostList = _.map(hostList,(host)=>`"${host}"`).join()
