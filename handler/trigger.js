@@ -138,8 +138,15 @@ triggers.post('/count', async (ctx)=>{
 })
 
 const activeTriggerHandler = async(ctx)=>{
-    let filter = await buildHostFilter(ctx.request.body.filter)
-    let [rows] = await db.query(triggerSqlGenerator.sqlFindTriggers(filter))
+    let filter = await buildHostFilter(ctx.request.body.filter),from,to,page,per_page,pagination
+    if(ctx.request.body.page){
+        page = parseInt(ctx.request.body.page)-1
+        per_page = parseInt(ctx.request.body.per_page) || 1000
+        from = page * per_page
+        to = (page + 1) * per_page
+        pagination = _.assign({},{from},{to})
+    }
+    let [rows] = await db.query(triggerSqlGenerator.sqlFindTriggers(filter,pagination))
     ctx.body=rows
 }
 

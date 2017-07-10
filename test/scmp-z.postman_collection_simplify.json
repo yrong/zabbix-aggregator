@@ -85,6 +85,14 @@
     }
   },
   {
+    "name": "items/search/Network",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+    "body": {
+      "groupName": "Network"
+    }
+  },
+  {
     "name": "triggers/count by hostgroup and priority",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
@@ -132,11 +140,10 @@
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/search",
     "body": {
       "filter": {
-        "value": 1,
-        "itservice": [
-          "email"
-        ]
-      }
+        "value": 1
+      },
+      "page": 1,
+      "per_page": 5
     }
   },
   {

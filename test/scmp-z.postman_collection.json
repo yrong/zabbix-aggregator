@@ -13,6 +13,7 @@
 		"72754568-f3eb-1e02-4b04-4905ef678345",
 		"5a14bd6e-8342-3d1c-c521-ada9ac8ae28d",
 		"665a9a5d-38b0-3067-247b-13c884a2a350",
+		"8172248f-29ae-a6ad-18bd-670410eb4f6f",
 		"d3df3ede-1c88-55b2-8548-7e4cfcd4fd7e",
 		"ff2cf9fe-09fd-18a3-6d8f-43a7970006d3",
 		"491b39e4-46c7-2506-0248-9a6d0308b84b",
@@ -280,6 +281,41 @@
 			"rawModeData": "{\n  \"filter\":{\n    \"since\": 1453808199,\n    \"until\": 1465808199\n  },\n  \"groupBy\":{\n  \t\"category\":[\"value\"]\n  }\n}"
 		},
 		{
+			"id": "8172248f-29ae-a6ad-18bd-670410eb4f6f",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499235055504,
+			"name": "items/search/Network",
+			"description": "",
+			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
+			"responses": [],
+			"rawModeData": "\n  {\n     \"groupName\": \"Network\"\n   }\n\n"
+		},
+		{
 			"id": "9063f4be-2731-c47b-db28-e73e517f61da",
 			"headers": "token: {{token}}\nContent-Type: application/json\n",
 			"headerData": [
@@ -457,12 +493,12 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1499066053433,
+			"time": 1499666863430,
 			"name": "triggers/search",
 			"description": "",
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
-			"rawModeData": "{\n  \"filter\":{\n    \"value\": 1,\n    \"itservice\":[\"email\"]\n  }\n}"
+			"rawModeData": "{\n  \"filter\":{\n    \"value\": 1\n  },\n  \"page\":1,\n  \"per_page\":5\n}"
 		},
 		{
 			"id": "b5b97c43-2a1d-eee6-ee31-4c4f5c086a98",

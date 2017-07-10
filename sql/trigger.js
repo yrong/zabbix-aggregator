@@ -1,5 +1,6 @@
 const sqlGenerator = require('./index')
 const alias = require('./alias')
+const _ = require('lodash')
 
 const Trigger_Table_Name='triggers',Status_Problem = 1,Status_Normal = 0,Zabbix_Template_Name_keyword='Templates',Zabbix_Group_Name_Keyword='zabbix',
     InnerJoin_Table_Name = 'triggers_function_items_hosts_groups';
@@ -12,7 +13,7 @@ const joinPart = `inner join functions on triggers.triggerid=functions.triggerid
 const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keyword}%" and groups.name != "${Zabbix_Template_Name_keyword}"`
 
 
-const sqlFindTriggers = (filter)=>{
+const sqlFindTriggers = (filter,pagination)=>{
     let date_format="'%Y%m%d'",until,sql,field_timespan,
         fields = `hosts.host,triggers.description,triggers.priority as ${alias.trigger_priority_alias},triggers.value as ${alias.trigger_value_alias},items.itemid,groups.name as ${alias.group_name_alias}`
     if(filter.time_unit === 'months')
@@ -36,6 +37,8 @@ const sqlFindTriggers = (filter)=>{
         sql = `${sql} and groups.name="${filter[alias.group_name_alias]}"`
     if(filter.priority)
         sql = `${sql} and triggers.priority="${filter.priority}"`
+    if(!_.isEmpty(pagination))
+        sql = `${sql} LIMIT ${pagination.from},${pagination.to}`
     return sql
 }
 
