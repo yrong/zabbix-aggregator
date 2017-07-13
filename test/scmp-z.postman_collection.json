@@ -22,13 +22,54 @@
 		"9b767e09-dae1-4195-d71a-76e99b40ab54",
 		"ff3165b8-cad9-a726-47ae-cd3e5bc2fa16",
 		"31a76ca7-0c5c-274f-5de9-ab0712287891",
-		"b97de680-14f7-7b18-004c-9dbf8ef74bf2"
+		"b97de680-14f7-7b18-004c-9dbf8ef74bf2",
+		"0c2b6342-bf74-f3ff-403e-1c5a67629fe0",
+		"2b8aeeda-3e25-a33b-79e2-fc767bab3957",
+		"952ee7a7-7cdc-fafd-29b6-d90c78238013",
+		"dc56cdee-2d5c-a160-0199-e83a2b57c3ee",
+		"fb81faa1-f7af-63b9-6661-717f8901292e",
+		"76632f29-88f6-5213-76c3-b07b3f522991"
 	],
 	"folders": [],
 	"timestamp": 0,
 	"owner": "2263720",
 	"public": false,
 	"requests": [
+		{
+			"id": "0c2b6342-bf74-f3ff-403e-1c5a67629fe0",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'\npostman.setEnvironmentVariable(\"template_id\", jsonData.data.template_id);",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499871932871,
+			"name": "add template",
+			"description": "",
+			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
+			"responses": [],
+			"rawModeData": "\n  {\n    \"appName\":\"Exchange Mailbox Database\",\n    \"hosts\":[\"AS-3650-EXCDB-1\",\"AS-3650-EXCDB-2\",\"AS-VME-EXCCAS-1\",\"BJ-X3650-EXC-1\"],\n    \"items\":[\"Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency\",\n                \"Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency\",\n                \"Exchange Mailbox Database Log Bytes Write/sec\",\"Exchange Mailbox Database Log Record Stalls/sec\",\n                \"Exchange Mailbox Database Log Threads Waiting\"],\n    \"transposed\":0,\n    \"title\": \"test\"\n   }\n\n"
+		},
 		{
 			"id": "28fbc679-6ce1-9351-50c6-9a3ec2990374",
 			"headers": "token: {{token}}\nContent-Type: application/json\n",
@@ -63,6 +104,40 @@
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
 			"rawModeData": "{\n  \"filter\":{\n    \"since\": 1453808199,\n    \"until\": 1465808199\n  },\n  \"groupBy\":{\n  \t\"category\":[\"itservice\",\"value\"],\n  \t\"depth\":1\n  }\n}"
+		},
+		{
+			"id": "2b8aeeda-3e25-a33b-79e2-fc767bab3957",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499871905387,
+			"name": "get template",
+			"description": "",
+			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
+			"responses": []
 		},
 		{
 			"folder": null,
@@ -246,6 +321,41 @@
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b"
 		},
 		{
+			"id": "76632f29-88f6-5213-76c3-b07b3f522991",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'\npostman.setEnvironmentVariable(\"template_id\", jsonData.data.template_id);",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499875857884,
+			"name": "delete template",
+			"description": "",
+			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
+			"responses": [],
+			"rawModeData": "\n  {\n    \"appName\":\"Exchange Mailbox Database\",\n    \"hosts\":[\"AS-3650-EXCDB-1\",\"AS-3650-EXCDB-2\",\"AS-VME-EXCCAS-1\",\"BJ-X3650-EXC-1\"],\n    \"items\":[\"Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency\",\n                \"Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency\",\n                \"Exchange Mailbox Database Log Bytes Write/sec\",\"Exchange Mailbox Database Log Record Stalls/sec\",\n                \"Exchange Mailbox Database Log Threads Waiting\"],\n    \"transposed\":0,\n    \"title\": \"test\"\n   }\n\n"
+		},
+		{
 			"id": "7bdf9062-ddc1-e020-a554-7b459b655187",
 			"headers": "token: {{token}}\nContent-Type: application/json\n",
 			"headerData": [
@@ -349,6 +459,40 @@
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
 			"responses": [],
 			"rawModeData": "{\n  \"filter\":{\n    \"value\": 1\n  },\n  \"groupBy\":{\n  \t \"category\":[\"gpname\",\"priority\"]\n  }\n}"
+		},
+		{
+			"id": "952ee7a7-7cdc-fafd-29b6-d90c78238013",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499870907964,
+			"name": "get all template",
+			"description": "",
+			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
+			"responses": []
 		},
 		{
 			"folder": null,
@@ -660,6 +804,35 @@
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b"
 		},
 		{
+			"id": "dc56cdee-2d5c-a160-0199-e83a2b57c3ee",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499873180457,
+			"name": "items/search/Exchange Mailbox Database by Template",
+			"description": "",
+			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
+			"responses": [],
+			"rawModeData": "\n  {\n    \"token\":\"{{token}}\",\n    \"template_id\":{{template_id}}\n   }\n\n"
+		},
+		{
 			"folder": null,
 			"id": "dea90ffd-9a7c-1267-e293-7a5c2b65cd8c",
 			"name": "login",
@@ -694,6 +867,41 @@
 			"pathVariableData": null,
 			"responses": [],
 			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b"
+		},
+		{
+			"id": "fb81faa1-f7af-63b9-6661-717f8901292e",
+			"headers": "Content-Type: application/json\ntoken: {{token}}\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "token",
+					"value": "{{token}}",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"ok\"] = jsonData.status === 'ok'",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1499876733226,
+			"name": "update template",
+			"description": "",
+			"collectionId": "8b075207-b7e5-e551-f64c-785bab9c506b",
+			"responses": [],
+			"rawModeData": "\n  {\n    \"appName\":\"Exchange Mailbox Database\",\n    \"hosts\":[\"AS-3650-EXCDB-1\",\"AS-3650-EXCDB-2\",\"AS-VME-EXCCAS-1\",\"BJ-X3650-EXC-1\"],\n    \"items\":[\"Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency\",\n                \"Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency\",\n                \"Exchange Mailbox Database Log Bytes Write/sec\",\"Exchange Mailbox Database Log Record Stalls/sec\",\n                \"Exchange Mailbox Database Log Threads Waiting\"],\n    \"transposed\":1,\n    \"title\": \"test1\"\n   }\n\n"
 		},
 		{
 			"folder": null,

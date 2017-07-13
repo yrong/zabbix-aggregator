@@ -1,5 +1,28 @@
 [
   {
+    "name": "add template",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates",
+    "body": {
+      "appName": "Exchange Mailbox Database",
+      "hosts": [
+        "AS-3650-EXCDB-1",
+        "AS-3650-EXCDB-2",
+        "AS-VME-EXCCAS-1",
+        "BJ-X3650-EXC-1"
+      ],
+      "items": [
+        "Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency",
+        "Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency",
+        "Exchange Mailbox Database Log Bytes Write/sec",
+        "Exchange Mailbox Database Log Record Stalls/sec",
+        "Exchange Mailbox Database Log Threads Waiting"
+      ],
+      "transposed": 0,
+      "title": "test"
+    }
+  },
+  {
     "name": "triggers/count by ITService and value",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
@@ -16,6 +39,11 @@
         "depth": 1
       }
     }
+  },
+  {
+    "name": "get template",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}"
   },
   {
     "name": "groups filter by name",
@@ -69,6 +97,29 @@
     }
   },
   {
+    "name": "delete template",
+    "method": "DELETE",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
+    "body": {
+      "appName": "Exchange Mailbox Database",
+      "hosts": [
+        "AS-3650-EXCDB-1",
+        "AS-3650-EXCDB-2",
+        "AS-VME-EXCCAS-1",
+        "BJ-X3650-EXC-1"
+      ],
+      "items": [
+        "Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency",
+        "Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency",
+        "Exchange Mailbox Database Log Bytes Write/sec",
+        "Exchange Mailbox Database Log Record Stalls/sec",
+        "Exchange Mailbox Database Log Threads Waiting"
+      ],
+      "transposed": 0,
+      "title": "test"
+    }
+  },
+  {
     "name": "triggers/count by value",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
@@ -107,6 +158,11 @@
         ]
       }
     }
+  },
+  {
+    "name": "get all template",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates"
   },
   {
     "name": "hosts compare with cmdb",
@@ -183,12 +239,44 @@
     }
   },
   {
+    "name": "items/search/Exchange Mailbox Database by Template",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+    "body": {
+      "token": "{{token}}",
+      "template_id": "{{template_id}}"
+    }
+  },
+  {
     "name": "login",
     "method": "POST",
     "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
     "body": {
       "username": "{{auth_user}}",
       "password": "{{auth_passwd}}"
+    }
+  },
+  {
+    "name": "update template",
+    "method": "PUT",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
+    "body": {
+      "appName": "Exchange Mailbox Database",
+      "hosts": [
+        "AS-3650-EXCDB-1",
+        "AS-3650-EXCDB-2",
+        "AS-VME-EXCCAS-1",
+        "BJ-X3650-EXC-1"
+      ],
+      "items": [
+        "Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency",
+        "Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency",
+        "Exchange Mailbox Database Log Bytes Write/sec",
+        "Exchange Mailbox Database Log Record Stalls/sec",
+        "Exchange Mailbox Database Log Threads Waiting"
+      ],
+      "transposed": 1,
+      "title": "test1"
     }
   },
   {

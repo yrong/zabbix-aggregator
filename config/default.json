@@ -28,5 +28,9 @@
   },
   "cmdb":{
     "base_url":"http://localhost:3001"
+  },
+  "redis": {
+    "host": "localhost",
+    "port": 6379
   }
 }

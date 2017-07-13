@@ -7,6 +7,8 @@ const alias = require('../sql/alias')
 const itemSqlGenerator = require('../sql/item')
 const historyValueSqlGenerator = require('../sql/history')
 const trendValueSqlGenerator = require('../sql/trends')
+const Model = require('redis-crud-fork')
+const TemplateModel = Model('Template')
 
 let items = new Router();
 const DiskSpaceUsageItem = 'Free disk space on $1 (percentage)'
@@ -49,6 +51,9 @@ const dataWrapper = (items,transposed,title)=>{
 
 items.post('/search', async(ctx,next)=>{
     let params = ctx.request.body
+    if(params.template_id){
+        params = _.assign(params,await TemplateModel.get(params.template_id))
+    }
     let [item_rows] = await db.query(itemSqlGenerator.sqlSearchItems(params.appName,params.hosts,params.items,params.groupName))
     for (let item of item_rows){
         let [history_value_rows] = await db.query(historyValueSqlGenerator.sqlGetLatestItemValueInHistory(item[alias.item_value_type_alias],item[alias.item_id_alias]))
