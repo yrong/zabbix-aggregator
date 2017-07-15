@@ -1,6 +1,6 @@
 'use strict'
 
-let auth_host='localhost',username='admin',password='admin'
+let auth_host='dev.scirichon.com',username='demo',password='fe01ce2a7fbac8fafaed7c982a04e229'
 
 $.ajax({
     url: `http://${auth_host}:3002/auth/login`,
