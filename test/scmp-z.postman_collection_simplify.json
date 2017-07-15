@@ -23,6 +23,11 @@
     }
   },
   {
+    "name": "get nodes/links in sysmap",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/sysmaps?sysmapid=2"
+  },
+  {
     "name": "triggers/count by ITService and value",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
@@ -49,6 +54,11 @@
     "name": "groups filter by name",
     "method": "GET",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups?name=Storage"
+  },
+  {
+    "name": "get all sysmap",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/sysmaps"
   },
   {
     "name": "hosts",
