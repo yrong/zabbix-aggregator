@@ -23,6 +23,25 @@
     }
   },
   {
+    "name": "events/search host array match",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/events/search",
+    "body": {
+      "filter": {
+        "since": 0,
+        "until": 1465808199,
+        "host": [
+          "AS-3250-AD08R-2"
+        ],
+        "gpname": "Windows Servers"
+      },
+      "pagination": {
+        "page": 1,
+        "per_page": 20
+      }
+    }
+  },
+  {
     "name": "get nodes/links in sysmap",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/sysmaps?sysmapid=2"
@@ -211,10 +230,13 @@
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/search",
     "body": {
       "filter": {
-        "value": 1
+        "value": 1,
+        "host": "*AS*"
       },
-      "page": 1,
-      "per_page": 5
+      "pagination": {
+        "page": 1,
+        "per_page": 2
+      }
     }
   },
   {
@@ -251,6 +273,22 @@
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
     "body": {
       "appName": "storageDisk"
+    }
+  },
+  {
+    "name": "events/search host wildcard match",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/events/search",
+    "body": {
+      "filter": {
+        "since": 0,
+        "until": 1465808199,
+        "host": "AS*"
+      },
+      "pagination": {
+        "page": 3,
+        "per_page": 20
+      }
     }
   },
   {

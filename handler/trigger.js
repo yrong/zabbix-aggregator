@@ -21,20 +21,20 @@ const buildHostFilter = async (filter)=>{
     let hosts,results;
     if(_.isArray(filter.itservicegroup)&&filter.itservicegroup.length){
         results = await cmdb_api_helper.apiInvokeFromCmdb('/api/cfgItems',{cfgHostsByITServiceGroup:filter.itservicegroup.join()})
-        filter.hosts = HostsNotExist
+        filter.host = HostsNotExist
     }else if(_.isArray(filter.itservice)&&filter.itservice.length){
         results = await cmdb_api_helper.apiInvokeFromCmdb('/api/cfgItems',{cfgHostsByITService:filter.itservice.join()})
-        filter.hosts = HostsNotExist
+        filter.host = HostsNotExist
     }
     if(results&&results.data&&results.data.length){
-        hosts = _.map(results.data,(result)=>{return '"' + result.name + '"'})
+        hosts = _.map(results.data,(result)=>result.name)
         filter = filter || {}
-        filter.hosts = '(' + hosts.join() + ')'
+        filter.host = hosts
     }
     return filter
 }
 
-const groupByHostGroupAndPriority = async (filter,groupBy)=>{
+const countByHostGroupAndPriority = async (filter,groupBy)=>{
     filter = await buildHostFilter(filter)
     groupBy = [alias.group_name_alias,alias.trigger_priority_alias].join()
     let stat = {},all;
@@ -50,7 +50,7 @@ const groupByHostGroupAndPriority = async (filter,groupBy)=>{
     return {all,groupList,priorityList,stat}
 }
 
-const groupByLastChangeAndValue = async (filter,groupBy)=>{
+const countByLastChangeAndValue = async (filter,groupBy)=>{
     filter = await buildHostFilter(filter)
     let time_unit = groupBy.time_unit || 'day',granularity = groupBy.granularity || 1,latest = groupBy.latest,interval,format,date
     filter.time_unit = time_unit ==='year'?'years':time_unit === 'month'?'months':'days'
@@ -92,7 +92,7 @@ const countTriggerByITServiceGroup = async (filter)=>{
 
 const countTriggerByITService = async (filter)=>{
     let results = await cmdb_api_helper.getITServiceGroups(),result={}
-    filter = _.omit(filter,['hosts','itservicegroup'])
+    filter = _.omit(filter,['host','itservicegroup'])
     for(let group of results.data){
         for(let service of group.members){
             result[group.name] = result[group.name] || {}
@@ -112,7 +112,7 @@ triggers.post('/count', async (ctx)=>{
     category_list = groupBy.category.sort()
     if(_.isEqual(category_list,categories_by_value)){
     }else if(_.isEqual(category_list,categories_by_hostgroup_priority)){
-        result = await groupByHostGroupAndPriority(filter,groupBy)
+        result = await countByHostGroupAndPriority(filter,groupBy)
     }else if(_.isEqual(category_list,categories_by_lastchange_value)){
         if(groupBy.time_unit&&(groupBy.time_unit!=='year'&&groupBy.time_unit!=='month')&&groupBy.time_unit!=='day')
             throw new Error('groupBy time_unit unknown,only year|month|day support')
@@ -120,7 +120,7 @@ triggers.post('/count', async (ctx)=>{
             throw new Error('groupBy granularity should be integer')
         if(groupBy.latest&&!(_.isInteger(groupBy.latest)))
             throw new Error('groupBy latest should be integer')
-        result = await groupByLastChangeAndValue(filter,groupBy)
+        result = await countByLastChangeAndValue(filter,groupBy)
     }else if(_.isEqual(category_list,categories_by_itservice_value)){
         result_depth = await countTriggerByITServiceGroup(filter)
         if(groupBy.depth === 0){
@@ -138,15 +138,8 @@ triggers.post('/count', async (ctx)=>{
 })
 
 const activeTriggerHandler = async(ctx)=>{
-    let filter = await buildHostFilter(ctx.request.body.filter),from,to,page,per_page,pagination
-    if(ctx.request.body.page){
-        page = parseInt(ctx.request.body.page)-1
-        per_page = parseInt(ctx.request.body.per_page) || 1000
-        from = page * per_page
-        to = (page + 1) * per_page
-        pagination = _.assign({},{from},{to})
-    }
-    let [rows] = await db.query(triggerSqlGenerator.sqlFindTriggers(filter,pagination))
+    let params = _.assign({},ctx.params,ctx.query,ctx.request.body),filter = await buildHostFilter(ctx.request.body.filter)
+    let [rows] = await db.query(triggerSqlGenerator.sqlFindTriggers(filter,params.pagination))
     ctx.body=rows
 }
 

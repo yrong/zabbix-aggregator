@@ -14,7 +14,7 @@ const wherePartExcludeZabbix = `groups.name not like "%${Zabbix_Group_Name_Keywo
 
 
 const sqlFindTriggers = (filter,pagination)=>{
-    let date_format="'%Y%m%d'",until,sql,field_timespan,
+    let date_format="'%Y%m%d'",until,sql,field_timespan,wherePart,
         fields = `hosts.host,triggers.description,triggers.priority as ${alias.trigger_priority_alias},triggers.value as ${alias.trigger_value_alias},items.itemid,groups.name as ${alias.group_name_alias}`
     if(filter.time_unit === 'months')
         date_format = "'%Y%m'"
@@ -24,21 +24,26 @@ const sqlFindTriggers = (filter,pagination)=>{
     field_timespan = `FLOOR(PERIOD_DIFF(DATE_FORMAT(${until}, ${date_format}), DATE_FORMAT(FROM_UNIXTIME(lastchange), ${date_format})) / ${filter.granularity}) as ${alias.trigger_lastchange_timespan_alias}`
     if(filter.time_unit&&filter.granularity)
         fields = `${fields},${field_timespan}`
-    sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePartExcludeZabbix)
+    wherePart = sqlGenerator.wherePartExcludeZabbixGroup
     if(filter.value)
-        sql = `${sql} and triggers.value=${filter.value}`
+        wherePart = `${wherePart} and triggers.value=${filter.value}`
     if(filter.since)
-        sql = `${sql} and triggers.lastchange>=${filter.since}`
+        wherePart = `${wherePart} and triggers.lastchange>=${filter.since}`
     if(filter.until)
-        sql = `${sql} and triggers.lastchange<=${filter.until}`
-    if(filter.hosts)
-        sql = `${sql} and hosts.name in ${filter.hosts}`
+        wherePart = `${wherePart} and triggers.lastchange<=${filter.until}`
+    if(filter.host){
+        if(_.isArray(filter.host)&&filter.host.length){
+            filter.host = _.map(filter.host,(host)=>'"' + host + '"')
+            wherePart = `${wherePart} and hosts.host in (${filter.host.join()})`
+        }else if(_.isString(filter.host)){
+            wherePart = `${wherePart} and hosts.host like '${filter.host.replace(/\*/g,'%')}'`
+        }
+    }
     if(filter[alias.group_name_alias])
-        sql = `${sql} and groups.name="${filter[alias.group_name_alias]}"`
+        wherePart = `${wherePart} and groups.name="${filter[alias.group_name_alias]}"`
     if(filter.priority)
-        sql = `${sql} and triggers.priority="${filter.priority}"`
-    if(!_.isEmpty(pagination))
-        sql = `${sql} LIMIT ${pagination.from},${pagination.to}`
+        wherePart = `${wherePart} and triggers.priority="${filter.priority}"`
+    sql = sqlGenerator.sqlFindWithFieldsAndWhere(fields,Trigger_Table_Name,joinPart,wherePart,pagination)
     return sql
 }
 

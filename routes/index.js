@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('koa-router')
-const {triggers,items,hosts,groups,template,sysmap} = require('../handler')
+const {triggers,items,hosts,groups,template,sysmap,event} = require('../handler')
 
 const router = new Router();
 
@@ -17,8 +17,7 @@ router.use('/api/templates',  template.routes(),template.allowedMethods())
 
 router.use('/api/sysmaps',  sysmap.routes(),sysmap.allowedMethods())
 
-router.get('*', async (ctx, next) => {
-    ctx.body = { status : 404 }
-})
+router.use('/api/events',  event.routes(),event.allowedMethods())
+
 
 module.exports = router
