@@ -56,6 +56,11 @@
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups?name=Storage"
   },
   {
+    "name": "items/trends",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/history/23766?since=0&until=1465808199"
+  },
+  {
     "name": "get all sysmap",
     "method": "GET",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/sysmaps"
@@ -290,7 +295,7 @@
     }
   },
   {
-    "name": "items/history/",
+    "name": "items/history",
     "method": "GET",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/history/23766?since=1463808199&until=1465808199"
   },
