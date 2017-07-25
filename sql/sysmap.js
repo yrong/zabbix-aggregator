@@ -4,7 +4,7 @@ const sqlGetSysMaps = ()=>{
 }
 
 const sqlGetHostElementsInSysMap = (sysmapid)=>{
-    return `SELECT hosts.host,se.* FROM sysmaps_elements se inner join hosts where hosts.hostid=se.elementid and elementtype=0 and se.sysmapid=${sysmapid}`
+    return `SELECT hosts.hostid,hosts.name,se.* FROM sysmaps_elements se inner join hosts where hosts.hostid=se.elementid and elementtype=0 and se.sysmapid=${sysmapid}`
 }
 
 const sqlGetLinksInSysMap = (sysmapid)=>{

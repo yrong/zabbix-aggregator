@@ -43,5 +43,11 @@ const sqlGetItem = (itemId)=>{
     return sql
 }
 
+const sqlGetItemFromItemKeyandHostName = (key,host)=>{
+    let sql = `select items.itemid,value_type as ${alias.item_value_type_alias} from items
+    inner join hosts on hosts.hostid=items.hostid where items.key_="${key}" and hosts.host="${host}"`
+    return sql
+}
 
-module.exports = {sqlSearchItems,sqlGetItem}
+
+module.exports = {sqlSearchItems,sqlGetItem,sqlGetItemFromItemKeyandHostName}
