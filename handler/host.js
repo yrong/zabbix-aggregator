@@ -3,9 +3,7 @@
 const Router = require('koa-router')
 const _ = require('lodash')
 const db = require('../lib/db')
-
-const rp = require('request-promise')
-const config = require('config')
+const cmdb_api_helper = require('../helper/cmdb_api_helper')
 
 let hosts = new Router();
 hosts.get('/', async (ctx, next)=>{
@@ -19,10 +17,8 @@ hosts.get('/', async (ctx, next)=>{
 });
 
 hosts.get('/compare_with_cmdb', async (ctx, next)=>{
-    let params = _.assign({},ctx.params,ctx.query,ctx.request.body),results,cmdb_hosts=[],zabbix_hosts=[]
-    let cmdb_hosts_url = config.get('cmdb.base_url') + '/api/cfgItems?subcategory=PhysicalServer,VirtualServer',
-        options = {uri:cmdb_hosts_url,method:'GET',json:true}
-    results = await rp(options)
+    let results,cmdb_hosts=[],zabbix_hosts=[]
+    results = await cmdb_api_helper.apiInvokeFromCmdb('/api/cfgItems',{subcategory:'PhysicalServer,VirtualServer'})
     if(results.data&&results.data.length){
         cmdb_hosts = _.map(results.data,(result)=>result.name)
     }

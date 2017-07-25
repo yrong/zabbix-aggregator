@@ -11,6 +11,8 @@ const groupList = ["Network","Windows Servers","Linux servers","Virtual machines
 const priorityList=["Information","Warning","Average","High","Disaster"]
 const HostsNotExist = `("NOTEXIST")`
 const moment = require('moment')
+const common = require('scirichon-common')
+const cmdb_api_config = config.get('cmdb');
 
 const categories_by_value = ['value'],categories_by_itservice_value = ['itservice','value'].sort(),
     categories_by_hostgroup_priority = ['gpname','priority'].sort(),categories_by_lastchange_value =['lastchange','value'].sort()
@@ -20,10 +22,10 @@ let triggers = new Router();
 const buildHostFilter = async (filter)=>{
     let hosts,results;
     if(_.isArray(filter.itservicegroup)&&filter.itservicegroup.length){
-        results = await cmdb_api_helper.apiInvokeFromCmdb('/api/cfgItems',{cfgHostsByITServiceGroup:filter.itservicegroup.join()})
+        results = await common.apiInvoker('GET',cmdb_api_config.base_url,'/api/cfgItems',{cfgHostsByITServiceGroup:filter.itservicegroup.join()})
         filter.host = HostsNotExist
     }else if(_.isArray(filter.itservice)&&filter.itservice.length){
-        results = await cmdb_api_helper.apiInvokeFromCmdb('/api/cfgItems',{cfgHostsByITService:filter.itservice.join()})
+        results = await common.apiInvoker('GET',cmdb_api_config.base_url,'/api/cfgItems',{cfgHostsByITService:filter.itservice.join()})
         filter.host = HostsNotExist
     }
     if(results&&results.data&&results.data.length){

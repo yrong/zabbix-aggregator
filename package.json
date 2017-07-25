@@ -7,7 +7,7 @@
     "compare": "NODE_ENV=development mocha ./test/compare.js",
     "test": "NODE_ENV=development mocha ./test/index.js",
     "start": "./node_modules/.bin/nodemon",
-    "generate_simplified_postman_collection": "postman_simplify ./test/scmp-z.postman_collection.json ./test/scmp-z.postman_environment.json"
+    "generate_simplified_postman_collection": "postman_simplify ./test/scmp-z.postman_collection.json"
   },
   "repository": {
     "type": "git",
@@ -35,13 +35,10 @@
     "koa-response-wrapper": "1.0.3-beta.4",
     "koa-router": "^7.0.1",
     "koa-static": "^2.1.0",
-    "koa-token-checker": "1.0.1-beta.1",
-    "lodash": "^4.17.4",
-    "moment": "^2.18.1",
+    "koa-token-checker": "1.0.2-beta.4",
     "mysql2": "^1.2.0",
     "redis-crud-fork": "1.0.0-beta.2",
-    "request": "^2.79.0",
-    "request-promise": "^4.1.1"
+    "scirichon-common": "1.0.0-beta.7"
   },
   "devDependencies": {
     "babel-plugin-syntax-async-functions": "^6.8.0",
@@ -53,9 +50,11 @@
     "mocha": "^2.3.4",
     "newman": "^3.5.2",
     "nodemon": "^1.8.1",
-    "postman_simplify": "^1.0.5",
+    "postman_simplify": "1.0.0-beta.1",
     "query-string": "^4.3.2",
     "should": "^8.2.0",
-    "supertest": "^1.1.0"
+    "supertest": "^1.1.0",
+    "webpack": "^2.3.2",
+    "webpack-shell-plugin": "^0.5.0"
   }
 }
