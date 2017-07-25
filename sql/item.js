@@ -13,7 +13,7 @@ const sqlSearchItems = (appName,hostList,itemList,groupName)=>{
         inner join applications on applications.applicationid=items_applications.applicationid
         inner join functions on items.itemid=functions.itemid
         inner join triggers on functions.triggerid=triggers.triggerid`
-    let fields = `hosts.name as ${alias.host_name_alias}, items.name as ${alias.item_name_alias}, items.key_ as ${alias.item_key_alias}, items.itemid as ${alias.item_id_alias}, items.value_type as ${alias.item_value_type_alias}, triggers.value as ${alias.trigger_value_alias}, triggers.priority as ${alias.trigger_priority_alias}`
+    let fields = `hosts.name as ${alias.host_name_alias}, items.name as ${alias.item_name_alias}, items.key_ as ${alias.item_key_alias}, items.itemid as ${alias.item_id_alias}, items.value_type as ${alias.item_value_type_alias}, triggers.value as ${alias.trigger_prefix_value_alias}, triggers.priority as ${alias.trigger_priority_alias}`
     let wherePart = `hosts.status=${Host_Monitored} and hosts.name not like "Template%"`
     if(appName === 'WinOS'||appName === 'Windows Servers')
         wherePart = wherePart + ` and applications.name="os-rpt" or applications.name="fs-rpt"`
