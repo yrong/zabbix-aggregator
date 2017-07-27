@@ -19,7 +19,7 @@
         "Exchange Mailbox Database Log Threads Waiting"
       ],
       "transposed": 0,
-      "title": "test"
+      "name": "test"
     }
   },
   {
@@ -134,24 +134,7 @@
     "name": "delete template",
     "method": "DELETE",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
-    "body": {
-      "appName": "Exchange Mailbox Database",
-      "hosts": [
-        "AS-3650-EXCDB-1",
-        "AS-3650-EXCDB-2",
-        "AS-VME-EXCCAS-1",
-        "BJ-X3650-EXC-1"
-      ],
-      "items": [
-        "Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency",
-        "Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency",
-        "Exchange Mailbox Database Log Bytes Write/sec",
-        "Exchange Mailbox Database Log Record Stalls/sec",
-        "Exchange Mailbox Database Log Threads Waiting"
-      ],
-      "transposed": 0,
-      "title": "test"
-    }
+    "body": {}
   },
   {
     "name": "triggers/count by value",
@@ -202,6 +185,12 @@
     "name": "hosts compare with cmdb",
     "method": "GET",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts/compare_with_cmdb"
+  },
+  {
+    "name": "delete all templates",
+    "method": "DELETE",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/",
+    "body": {}
   },
   {
     "name": "items/host",
@@ -329,7 +318,7 @@
         "Exchange Mailbox Database Log Threads Waiting"
       ],
       "transposed": 1,
-      "title": "test1"
+      "title": "test2"
     }
   },
   {

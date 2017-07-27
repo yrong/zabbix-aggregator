@@ -37,7 +37,7 @@
     "koa-static": "^2.1.0",
     "koa-token-checker": "1.0.2-beta.4",
     "mysql2": "^1.2.0",
-    "redis-crud-fork": "1.0.0-beta.2",
+    "redis-crud-fork": "1.0.0-beta.3",
     "scirichon-common": "1.0.0-beta.7"
   },
   "devDependencies": {

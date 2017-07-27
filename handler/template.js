@@ -26,8 +26,13 @@ template.get('/:template_id', async (ctx)=>{
 });
 
 template.del('/:template_id', async (ctx)=>{
-    let template_id = ctx.params.template_id
-    let result = await TemplateModel.delete(template_id)
+    let template_id = ctx.params.template_id,result
+    result = await TemplateModel.delete(template_id)
+    ctx.body = result
+});
+
+template.del('/', async (ctx)=>{
+    let result = await TemplateModel.deleteAll()
     ctx.body = result
 });
 
