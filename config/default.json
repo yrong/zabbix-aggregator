@@ -17,11 +17,11 @@
     "defaultLevel":"DEBUG"
   },
   "mysql": {
-    "host": "localhost",
+    "host": "dev.scirichon.com",
     "port": 3306,
-    "user": "root",
-    "password": "root",
-    "database": "zabbix"
+    "user": "ron",
+    "password": "ForDev",
+    "database": "zabbix_20170710"
   },
   "auth":{
     "check_token_url":"http://localhost:3002/auth/check"
