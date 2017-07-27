@@ -1,6 +1,7 @@
 'use strict'
 
-let auth_host='dev.scirichon.com',username='demo',password='fe01ce2a7fbac8fafaed7c982a04e229'
+let auth_host='dev.scirichon.com'//'localhost'
+let username='demo',password='fe01ce2a7fbac8fafaed7c982a04e229'
 
 $.ajax({
     url: `http://${auth_host}:3002/auth/login`,
@@ -42,8 +43,6 @@ $.ajax({
                             {
                                 selector: 'node',
                                 style: {
-                                    shape: 'hexagon',
-                                    'background-color': 'red',
                                     label: 'data(label)'
                                 }
                             },
@@ -59,11 +58,12 @@ $.ajax({
                     });
                     let elements = result.data.elements
                     _.each(elements,(element)=>{
-                        cy.add({
+                        var node = cy.add({
                                 data: { id: element.selementid,label:element.host },
                                 position:{x:element.x,y:element.y}
                             }
                         );
+                        node.css("background-image", `url(${element.iconid_off})`)
                     })
                     let links = result.data.links
                     _.each(links,(link)=>{

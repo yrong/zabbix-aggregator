@@ -16,9 +16,12 @@ sysmaps.get('/', async (ctx)=>{
     ctx.body = maps
 });
 
-const replaceElementLabel = (element)=>{
-    element.label = element.name
+const replaceElementLabelAndImage = (element)=>{
+    if(element.elementtype ==0)
+        element.label = element.name
     delete element.name
+    if(element.iconid_off)
+        element.iconid_off = `/images/${element.iconid_off}.png`
     return element
 }
 
@@ -57,9 +60,9 @@ sysmaps.post('/', async (ctx)=>{
     let params = _.assign({},ctx.params,ctx.query,ctx.request.body),sql,sysmapid=params.sysmapid
     if(!sysmapid)
         throw new Error('missing sysmapid as parameter')
-    sql = sysmapSqlGenerator.sqlGetHostElementsInSysMap(sysmapid)
+    sql = sysmapSqlGenerator.sqlGetElementsInSysMap(sysmapid)
     let [elements] = await db.query(sql)
-    elements = _.map(elements,(element)=>replaceElementLabel(element))
+    elements = _.map(elements,(element)=>{return replaceElementLabelAndImage(element)})
     sql = sysmapSqlGenerator.sqlGetLinksInSysMap(sysmapid)
     let [links] = await db.query(sql)
     for (let link of links){
