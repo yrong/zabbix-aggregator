@@ -30,7 +30,8 @@ $.ajax({
         $('#map_select').change(function() {
             var opt_sel = $(this).find('option:selected');
             var map_sel = _.find(maps.data,function(map){return map.sysmapid==opt_sel.val()});
-            $('#cy').width(map_sel.width).height(map_sel.height);
+            // $('#cy').width(map_sel.width).height(map_sel.height);
+            $('#cy').width(1600).height(1200);
             $.ajax({
                 method: "POST",
                 url: `/api/sysmaps?sysmapid=${map_sel.sysmapid}&token=${auth_res.data.token}`,
@@ -43,7 +44,9 @@ $.ajax({
                             {
                                 selector: 'node',
                                 style: {
-                                    label: 'data(label)'
+                                    label: 'data(label)',
+                                    width: 60,
+                                    height: 60
                                 }
                             }],
                     });
