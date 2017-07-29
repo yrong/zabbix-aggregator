@@ -30,8 +30,7 @@ $.ajax({
         $('#map_select').change(function() {
             var opt_sel = $(this).find('option:selected');
             var map_sel = _.find(maps.data,function(map){return map.sysmapid==opt_sel.val()});
-            // $('#cy').width(map_sel.width).height(map_sel.height);
-            $('#cy').width(1600).height(1200);
+            $('#cy').width(map_sel.width).height(map_sel.height);
             $.ajax({
                 method: "POST",
                 url: `/api/sysmaps?sysmapid=${map_sel.sysmapid}&token=${auth_res.data.token}`,
@@ -45,8 +44,17 @@ $.ajax({
                                 selector: 'node',
                                 style: {
                                     label: 'data(label)',
+                                    'text-wrap': 'wrap',
+                                    'text-max-width': '100px',
+                                    'font-size': '10',
                                     width: 60,
                                     height: 60
+                                }
+                            },
+                            {
+                                selector: 'edge[value=1]',
+                                style: {
+                                    'line-color': 'red'
                                 }
                             }],
                     });
@@ -60,11 +68,23 @@ $.ajax({
                         node.css("background-image", `url(${element.iconid_off})`)
                     })
                     let links = result.data.links
+                    let triggers = result.data.triggers
+                    var mergeLinkWithTrigger = (link)=>{
+                        let link_trigger = _.find(triggers,(trigger)=>{
+                            return trigger.linkid == link.linkid
+                        })
+                        if(link_trigger){
+                            link.triggerid = link_trigger.triggerid
+                            link.value = link_trigger.value
+                        }
+                        return link
+                    }
                     const LINK_ID_OFFSET=10000
                     _.each(links,(link)=>{
+                        link = mergeLinkWithTrigger(link)
                         link.linkid += LINK_ID_OFFSET
                         cy.add({
-                            data:{id:(link.linkid).toString(),source:link.selementid1.toString(),target:link.selementid2.toString()}
+                            data:{id:(link.linkid).toString(),source:link.selementid1.toString(),target:link.selementid2.toString(),value:link.value}
                         })
                     })
                     var layout = cy.layout({

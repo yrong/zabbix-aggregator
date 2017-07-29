@@ -13,7 +13,7 @@ const sqlGetLinksInSysMap = (sysmapid)=>{
 }
 
 const sqlGetLinkTriggersInSysMap = (sysmapid)=>{
-    return `SELECT * FROM sysmaps_link_triggers slt inner join triggers where triggers.triggerid=slt.triggerid`
+    return `SELECT triggers.value,slt.* FROM sysmaps_link_triggers slt inner join triggers where triggers.triggerid=slt.triggerid`
 }
 
 module.exports = {sqlGetSysMaps,sqlGetElementsInSysMap,sqlGetLinksInSysMap,sqlGetLinkTriggersInSysMap}
