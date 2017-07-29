@@ -28,3 +28,4 @@ node_modules
 logs
 wheels
 public/images
+dump.rdb

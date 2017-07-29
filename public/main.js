@@ -1,10 +1,10 @@
 'use strict'
 
-let auth_host='dev.scirichon.com'//'localhost'
+let host = window.location.hostname
 let username='demo',password='fe01ce2a7fbac8fafaed7c982a04e229'
 
 $.ajax({
-    url: `http://${auth_host}:3002/auth/login`,
+    url: `http://${host}:3002/auth/login`,
     type: 'POST',
     dataType: 'json',
     contentType: 'application/json; charset=utf-8',
@@ -45,30 +45,23 @@ $.ajax({
                                 style: {
                                     label: 'data(label)'
                                 }
-                            },
-                            {
-                                selector: 'edge',
-                                style: {
-                                    label: 'data(label)',
-                                    'font-size': '4px',
-                                    'font-weight': 'lighter',
-                                    'font-style': 'italic'
-                                }
                             }],
                     });
                     let elements = result.data.elements
                     _.each(elements,(element)=>{
                         var node = cy.add({
-                                data: { id: element.selementid,label:element.host },
+                                data: { id: element.selementid.toString(),label:element.label },
                                 position:{x:element.x,y:element.y}
                             }
                         );
                         node.css("background-image", `url(${element.iconid_off})`)
                     })
                     let links = result.data.links
+                    const LINK_ID_OFFSET=10000
                     _.each(links,(link)=>{
+                        link.linkid += LINK_ID_OFFSET
                         cy.add({
-                            data:{id:link.linkid,label:link.label,source:link.selementid1,target:link.selementid2}
+                            data:{id:(link.linkid).toString(),source:link.selementid1.toString(),target:link.selementid2.toString()}
                         })
                     })
                     var layout = cy.layout({
