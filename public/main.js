@@ -37,36 +37,35 @@ $.ajax({
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(result){
-                    const font_size = 1
+                    const font_size = 1,size=60,text_outline_width=4
                     var cy = cytoscape({
                         container: $('#cy'),
-                        style: [
-                            {
-                                selector: 'node',
-                                style: {
-                                    label: 'data(label)',
-                                    'text-wrap': 'wrap',
-                                    'font-size': font_size,
-                                    'text-outline-width':4,
-                                    'color': 'white',
-                                    width: 60,
-                                    height: 60
-                                }
-                            },
-                            {
-                                selector: 'edge[value=1]',
-                                style: {
-                                    'line-color': 'red'
-                                }
-                            },
-                            {
-                                selector: 'edge',
-                                style: {
-                                    label: 'data(label)',
-                                    'text-wrap': 'wrap',
-                                    'font-size': font_size,
-                                }
-                            }],
+                        style:
+                            [
+                                {
+                                    selector: 'node,edge',
+                                    style: {
+                                        label: 'data(label)',
+                                        'text-wrap': 'wrap',
+                                        'font-size': font_size
+                                    }
+                                },
+                                {
+                                    selector: 'node',
+                                    style: {
+                                        'text-outline-width': text_outline_width,
+                                        'color': 'white',
+                                        width: size,
+                                        height: size
+                                    }
+                                },
+                                {
+                                    selector: 'edge[value=1]',
+                                    style: {
+                                        'line-color': 'red'
+                                    }
+                                },
+                            ],
                     });
                     let elements = result.data.elements
                     _.each(elements,(element)=>{
@@ -90,15 +89,9 @@ $.ajax({
                         return link
                     }
                     const replaceLinkLabelWithUnknown = (link)=>{
-                        let curly_bracket_re = /{([^}]+)}/g,macro,zabbix_macros =[]
-                        if(link.label){
-                            while(macro = curly_bracket_re.exec(link.label)) {
-                                zabbix_macros.push(macro[1]);
-                            }
-                            for(let zabbix_macro of zabbix_macros){
-                                link.label = link.label.replace(`{${zabbix_macro}}`,`*UNKNOWN*`)
-                            }
-                        }
+                        let curly_bracket_re = /(\{.+?\})/g
+                        if(link.label)
+                            link.label = link.label.replace(curly_bracket_re,`*UNKNOWN*`)
                         return link
                     }
                     const LINK_ID_OFFSET=10000
