@@ -37,6 +37,7 @@ $.ajax({
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(result){
+                    const font_size = 1
                     var cy = cytoscape({
                         container: $('#cy'),
                         style: [
@@ -45,8 +46,9 @@ $.ajax({
                                 style: {
                                     label: 'data(label)',
                                     'text-wrap': 'wrap',
-                                    'text-max-width': '100px',
-                                    'font-size': '10',
+                                    'font-size': font_size,
+                                    'text-outline-width':4,
+                                    'color': 'white',
                                     width: 60,
                                     height: 60
                                 }
@@ -55,6 +57,14 @@ $.ajax({
                                 selector: 'edge[value=1]',
                                 style: {
                                     'line-color': 'red'
+                                }
+                            },
+                            {
+                                selector: 'edge',
+                                style: {
+                                    label: 'data(label)',
+                                    'text-wrap': 'wrap',
+                                    'font-size': font_size,
                                 }
                             }],
                     });
@@ -69,7 +79,7 @@ $.ajax({
                     })
                     let links = result.data.links
                     let triggers = result.data.triggers
-                    var mergeLinkWithTrigger = (link)=>{
+                    const mergeLinkWithTrigger = (link)=>{
                         let link_trigger = _.find(triggers,(trigger)=>{
                             return trigger.linkid == link.linkid
                         })
@@ -79,12 +89,25 @@ $.ajax({
                         }
                         return link
                     }
+                    const replaceLinkLabelWithUnknown = (link)=>{
+                        let curly_bracket_re = /{([^}]+)}/g,macro,zabbix_macros =[]
+                        if(link.label){
+                            while(macro = curly_bracket_re.exec(link.label)) {
+                                zabbix_macros.push(macro[1]);
+                            }
+                            for(let zabbix_macro of zabbix_macros){
+                                link.label = link.label.replace(`{${zabbix_macro}}`,`*UNKNOWN*`)
+                            }
+                        }
+                        return link
+                    }
                     const LINK_ID_OFFSET=10000
                     _.each(links,(link)=>{
                         link = mergeLinkWithTrigger(link)
+                        link = replaceLinkLabelWithUnknown(link)
                         link.linkid += LINK_ID_OFFSET
                         cy.add({
-                            data:{id:(link.linkid).toString(),source:link.selementid1.toString(),target:link.selementid2.toString(),value:link.value}
+                            data:{id:(link.linkid).toString(),source:link.selementid1.toString(),target:link.selementid2.toString(),value:link.value,label:link.label}
                         })
                     })
                     var layout = cy.layout({
