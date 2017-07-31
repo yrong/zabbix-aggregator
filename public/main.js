@@ -37,7 +37,7 @@ $.ajax({
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function(result){
-                    const font_size = 1,size=60,text_outline_width=4
+                    const font_size = '14%',node_shape_size=60,label_padding=10
                     var cy = cytoscape({
                         container: $('#cy'),
                         style:
@@ -47,16 +47,16 @@ $.ajax({
                                     style: {
                                         label: 'data(label)',
                                         'text-wrap': 'wrap',
-                                        'font-size': font_size
+                                        'font-size': font_size,
+                                        'text-background-padding':label_padding
                                     }
                                 },
                                 {
                                     selector: 'node',
                                     style: {
-                                        'text-outline-width': text_outline_width,
-                                        'color': 'white',
-                                        width: size,
-                                        height: size
+                                        'color': 'black',
+                                        width: node_shape_size,
+                                        height: node_shape_size
                                     }
                                 },
                                 {
