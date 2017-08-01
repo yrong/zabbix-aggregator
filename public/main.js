@@ -32,7 +32,7 @@ const replaceLinkLabelWithUnknown = (link)=>{
 }
 
 const renderMap = ()=>{
-    let font_size = display_params.font_size||'14%',node_shape_size=60,label_padding=10
+    let font_size = display_params.font_size||'14%',label_padding=10
     if(map_result){
         cy = cytoscape({
             container: $('#cy'),
@@ -51,8 +51,7 @@ const renderMap = ()=>{
                         selector: 'node',
                         style: {
                             'color': 'black',
-                            width: node_shape_size,
-                            height: node_shape_size
+                            "background-fit":"contain"
                         }
                     },
                     {
