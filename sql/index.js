@@ -11,8 +11,7 @@ const sqlFindWithFieldsAndWhere = (fields,table,join,where,pagination)=> {
         page = parseInt(pagination.page)-1
         per_page = parseInt(pagination.per_page) || 1000
         from = page * per_page
-        to = (page + 1) * per_page
-        sql = `${sql} LIMIT ${from},${to}`
+        sql = `${sql} LIMIT ${from},${per_page}`
     }
     return sql
 }
