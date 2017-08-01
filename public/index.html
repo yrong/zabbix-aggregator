@@ -2,44 +2,38 @@
 <html>
 <head>
     <meta charset="utf-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>cytoscape demo usage</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        .ontop {
-            position: absolute;
-            right: 0;
-            left: 0;
-        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.1.3/cytoscape.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-xs-6">
-            <label for="map_select">choose map:</label>
-            <select id="map_select">
-                <option></option>
-            </select>
-        </div>
-        <div class="col-xs-6 font-size">
-            <label for="font_size_select">font size:</label>
-            <select id="font_size_select">
-                <option value="15%">large</option>
-                <option value="10%">small</option>
-            </select>
-        </div>
+
+<div class="row">
+    <div class="col-xs-6">
+        <label for="map_select">choose map:</label>
+        <select id="map_select">
+            <option></option>
+        </select>
+    </div>
+    <div class="col-xs-6 font-size">
+        <label for="font_size_select">font size:</label>
+        <select id="font_size_select">
+            <option value="15%">large</option>
+            <option value="10%">small</option>
+        </select>
     </div>
 </div>
-<div class="ontop container">
-    <div class="row">
-        <div class="col-xs-12">
-            <div id="cy"></div>
-        </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="cy"></div>
     </div>
 </div>
 <script type="text/javascript" src="main.js"></script>
