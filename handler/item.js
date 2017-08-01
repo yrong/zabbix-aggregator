@@ -29,10 +29,18 @@ const macroReplace = (items)=>{
     return items;
 }
 
+const orderItemName = (names)=>{
+    const isCpuLoadOrMemUsage = (name)=>name.includes('Processor load')||name.includes('Free memory')
+    let load_mem = _.filter(names,isCpuLoadOrMemUsage)
+    let others = _.reject(names,isCpuLoadOrMemUsage)
+    return load_mem.concat(others)
+}
+
 const dataWrapper = (items,transposed,title)=>{
     items = macroReplace(items)
     let hostNames = _.uniq(_.map(items,(item)=>item[alias.host_name_alias]))
     let itemNames = _.pullAll(_.uniq(_.map(items,(item)=>item[alias.item_name_alias])),[null,undefined])
+    itemNames = orderItemName(itemNames)
     transposed = _.isInteger(transposed)?transposed:(hostNames.length>=itemNames.length)?0:1
     let metaData = transposed?{rows:itemNames,columns:hostNames,transposed}:{rows:hostNames,columns:itemNames,transposed}
     let stat = {}
