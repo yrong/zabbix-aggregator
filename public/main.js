@@ -118,7 +118,8 @@ $.ajax({
             map_selected = _.find(maps.data,function(map){
                 return map.sysmapid==$('#map_select').find('option:selected').val()
             });
-            $('#cy').width(map_selected.width).height(map_selected.height);
+            // $('#cy').width(map_selected.width).height(map_selected.height);
+            $('#cy').width($(window).width()).height($(window).height());
             $.ajax({
                 method: "POST",
                 url: `/api/sysmaps?sysmapid=${map_selected.sysmapid}&token=${auth_res.data.token}`,
