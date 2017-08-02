@@ -2,15 +2,19 @@
 
 let host = window.location.hostname
 let username='demo',password='fe01ce2a7fbac8fafaed7c982a04e229'
-let map_selected,map_result,display_params={},cy;
+let auth_token,map_result,display_params={},cy;
+let opscontrollerSocket = io( `http://${host}:3001/opscontroller` )
 
-const addMaps = (maps)=>{
-    _.each(maps, function(map) {
-        $('#map_select')
-            .append($("<option></option>")
-                .attr("value",map.sysmapid)
-                .text(map.name));
-    });
+const apiInvoke = (url, method, data, cb) => {
+    let options = {
+        url: url,
+        type: method,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+    }
+    if (data)
+        options.data = data
+    $.ajax(options).done(cb)
 }
 
 const mergeLinkWithTrigger = (triggers,link)=>{
@@ -31,113 +35,160 @@ const replaceLinkLabelWithUnknown = (link)=>{
     return link
 }
 
-const renderMap = ()=>{
-    let font_size = display_params.font_size||'14%',label_padding=10
-    if(map_result){
-        cy = cytoscape({
-            container: $('#cy'),
-            style:
-                [
-                    {
-                        selector: 'node,edge',
-                        style: {
-                            label: 'data(label)',
-                            'text-wrap': 'wrap',
-                            'font-size': font_size,
-                            'text-background-padding':label_padding
-                        }
-                    },
-                    {
-                        selector: 'node',
-                        style: {
-                            'color': 'black',
-                            "background-fit":"contain"
-                        }
-                    },
-                    {
-                        selector: 'edge',
-                        style: {
-                            'z-index': 5
-                        }
-                    },
-                    {
-                        selector: 'edge[value=1]',
-                        style: {
-                            'line-color': 'red'
-                        }
-                    },
-                ],
-        });
-        let elements = map_result.data.elements
-        _.each(elements,(element)=>{
-            var node = cy.add({
-                    data: { id: element.selementid.toString(),label:element.label },
-                    position:{x:element.x,y:element.y}
-                }
-            );
-            node.css("background-image", `url(${element.iconid_off})`)
-        })
-        let links = map_result.data.links
-        let triggers = map_result.data.triggers
-        const LINK_ID_OFFSET=10000
-        _.each(links,(link)=>{
-            link = mergeLinkWithTrigger(triggers,link)
-            link = replaceLinkLabelWithUnknown(link)
-            link.linkid += LINK_ID_OFFSET
-            cy.add({
-                data:{id:(link.linkid).toString(),source:link.selementid1.toString(),target:link.selementid2.toString(),value:link.value,label:link.label}
-            })
-        })
-        var layout = cy.layout({
-            name: 'preset',
-        });
-        layout.run();
-    }
+const addNodes = ()=>{
+    let elements = map_result.data.elements
+    _.each(elements,(element)=>{
+        var node = cy.add({
+                data: { id: element.selementid.toString(),label:element.label,elementtype:element.elementtype },
+                position:{x:element.x,y:element.y}
+            }
+        );
+        node.css("background-image", `url(${element.iconid_off})`)
+    })
 }
 
-$.ajax({
-    url: `http://${host}:3002/auth/login`,
-    type: 'POST',
-    dataType: 'json',
-    contentType: 'application/json; charset=utf-8',
-    timeout: 5000,
-    data: JSON.stringify({
-        "username":username,
-        "password":password
+const addLinks = ()=>{
+    let links = map_result.data.links
+    let triggers = map_result.data.triggers
+    const LINK_ID_OFFSET=10000
+    _.each(links,(link)=>{
+        link = mergeLinkWithTrigger(triggers,link)
+        link = replaceLinkLabelWithUnknown(link)
+        link.linkid += LINK_ID_OFFSET
+        cy.add({
+            data:{id:(link.linkid).toString(),source:link.selementid1.toString(),target:link.selementid2.toString(),value:link.value,label:link.label}
+        })
     })
-}).done(function (auth_res) {
-    $.ajax({
-        url: `/api/sysmaps?token=${auth_res.data.token}`,
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        timeout: 5000,
-    }).done(function (maps) {
-        addMaps(maps.data)
-        $('#map_select').change(function() {
-            map_selected = _.find(maps.data,function(map){
-                return map.sysmapid==$('#map_select').find('option:selected').val()
-            });
-            // $('#cy').width(map_selected.width).height(map_selected.height);
-            $.ajax({
-                method: "POST",
-                url: `/api/sysmaps?sysmapid=${map_selected.sysmapid}&token=${auth_res.data.token}`,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function(result){
-                    map_result = result
-                    renderMap()
-                }
-            })
+}
+
+const initCytoscape = ()=>{
+    let font_size = display_params.font_size||'14%',label_padding=10
+    cy = cytoscape({
+        container: $('#cy'),
+        style:
+            [
+                {
+                    selector: 'node,edge',
+                    style: {
+                        label: 'data(label)',
+                        'text-wrap': 'wrap',
+                        'font-size': font_size,
+                        'text-background-padding':label_padding
+                    }
+                },
+                {
+                    selector: 'node',
+                    style: {
+                        'color': 'black',
+                        "background-fit":"contain"
+                    }
+                },
+                {
+                    selector: 'edge[value=1]',
+                    style: {
+                        'line-color': 'red'
+                    }
+                },
+            ],
+    });
+}
+
+const addContextMenu = ()=>{
+    cy.contextMenus({
+        menuItems: [
+            {
+                id: 'ping',
+                content: 'ping',
+                selector: 'node[elementtype=0]',
+                onClickFunction: function (event) {
+                    var target = event.target || event.cyTarget;
+                    var data = target._private.data
+                    $.notifyDefaults({
+                        delay: 3000,
+                        placement: {
+                            from: "top",
+                            align: "right"
+                        },
+                        allow_dismiss: false
+                    });
+                    $.notify('start ping host,waiting...')
+                    data = {hosts:[data.label],script_type:'shell',cutomized_cmd:'local-ping'}
+                    opscontrollerSocket.emit( 'executeScript', data)
+                },
+                hasTrailingDivider: true
+            }
+        ]
+    });
+}
+
+const renderMapLayout = ()=>{
+    cy.layout({name: 'preset'}).run()
+}
+
+const renderMap = ()=>{
+    initCytoscape()
+    addNodes()
+    addLinks()
+    addContextMenu()
+    renderMapLayout()
+}
+
+const initMapSelect = (maps)=>{
+    _.each(maps, function(map) {
+        $('#map_select')
+            .append($("<option></option>")
+                .attr("value",map.sysmapid)
+                .text(map.name));
+    });
+    $('#map_select').change(function() {
+        let map_selected = _.find(maps,function(map){
+            return map.sysmapid==$('#map_select').find('option:selected').val()
         });
-        $('#font_size_select').change(function() {
-            display_params.font_size = $('#font_size_select').find('option:selected').val()
+        // $('#cy').width(map_selected.width).height(map_selected.height);
+        apiInvoke(`/api/sysmaps?sysmapid=${map_selected.sysmapid}&token=${auth_token}`,'POST',null,(map_res)=>{
+            map_result = map_res
             renderMap()
-        });
+        })
+    });
+    $('#font_size_select').change(function() {
+        display_params.font_size = $('#font_size_select').find('option:selected').val()
+        if(map_result)
+            renderMap()
+    });
+}
+
+const addOpsListener = ()=>{
+    opscontrollerSocket.on( 'executeScriptResponse', function( event ) {
+        var settings = {
+            icon: 'fa fa-paw',
+            type: 'success'
+        }
+        if(event.dir === 1){
+            $.notify({message:event.response},settings);
+        }else if(event.dir === 2){
+            $.notify({message:event.response},{type:'danger',allow_dismiss: true,delay:0});
+        }
     })
-}).fail(function(err) {
-    console.log(err);
+    opscontrollerSocket.on( 'executeScriptError', function( error ) {
+        var settings = {
+            icon: 'fa fa-paw',
+            type: 'danger',
+            allow_dismiss: true,
+            delay:0
+        }
+        $.notify({message:error},settings);
+    })
+}
+
+apiInvoke(`http://${host}:3002/auth/login`, 'POST', JSON.stringify({
+    "username": username,
+    "password": password
+}), (auth_res) => {
+    auth_token = auth_res.data.token
+    apiInvoke(`/api/sysmaps?token=${auth_token}`,'GET',null,(maps_res)=>{initMapSelect(maps_res.data)})
+    addOpsListener()
 })
+
 
 
 
