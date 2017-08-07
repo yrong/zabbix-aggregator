@@ -161,7 +161,7 @@ const initMapSelect = (maps)=>{
 }
 
 const isFinish = ()=>{
-    return (new Date().getTime() - last_event_ts) > 1000 || recv_events.length > 10
+    return (new Date().getTime() - last_event_ts) > 3000
 }
 
 const showEvents = ()=>{
