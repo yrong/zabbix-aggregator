@@ -4,7 +4,6 @@ let host = window.location.hostname
 let username='demo',password='fe01ce2a7fbac8fafaed7c982a04e229'
 let auth_token,map_result,display_params={},cy;
 let opscontrollerSocket = io( `http://${host}:3001/opscontroller` )
-let recv_events = [],last_event_ts
 
 const apiInvoke = (url, method, data, cb) => {
     let options = {
@@ -104,19 +103,9 @@ const addContextMenu = ()=>{
                 onClickFunction: function (event) {
                     var target = event.target || event.cyTarget;
                     var data = target._private.data
-                    recv_events = [],last_event_ts = new Date()
-                    $.notifyDefaults({
-                        delay: 3000,
-                        placement: {
-                            from: "top",
-                            align: "right"
-                        },
-                        allow_dismiss: false
-                    });
-                    $.notify(`start ping ${data.label},waiting...`)
                     data = {hosts:[data.label],script_type:'shell',cutomized_cmd:'local-ping'}
                     opscontrollerSocket.emit( 'executeScript', data)
-                    showEvents()
+                    $('#response_ta').empty()
                 },
                 hasTrailingDivider: true
             }
@@ -160,42 +149,10 @@ const initMapSelect = (maps)=>{
     });
 }
 
-const isFinish = ()=>{
-    return (new Date().getTime() - last_event_ts) > 3000
-}
-
-const showEvents = ()=>{
-
-    let finish = isFinish()
-
-    if(!finish)
-    {
-        setTimeout(function () {
-            showEvents();
-        }, 100);
-    }else{
-        if(recv_events.length){
-            let settings = {
-                icon: 'fa fa-paw',
-                type: 'success',
-                allow_dismiss: true,
-                delay:0
-            }
-            let events = []
-            _.each(recv_events,(event)=>{
-                events.push(event.response)
-                if(event.dir === 2)
-                    settings.type = 'danger'
-            })
-            $.notify({message:events.join('<br>')},settings);
-        }
-    }
-}
-
 const addOpsListener = ()=>{
     opscontrollerSocket.on( 'executeScriptResponse', function( event ) {
-        last_event_ts = new Date()
-        recv_events.push(event)
+        $('#myModal').modal('show')
+        $('#response_ta').append(event.response).append('<br>')
     })
     opscontrollerSocket.on( 'executeScriptError', function( error ) {
         var settings = {

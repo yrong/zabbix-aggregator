@@ -21,6 +21,7 @@
     </style>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.js"></script>
     <script src="https://cdn.bootcss.com/cytoscape/3.1.4/cytoscape.js"></script>
     <script src="https://cdn.bootcss.com/socket.io/2.0.3/socket.io.js"></script>
     <script src="https://cdn.bootcss.com/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
@@ -29,13 +30,13 @@
 <body>
 
 <div class="row">
-    <div class="col-xs-6">
+    <div class="col-md-6">
         <label for="map_select">choose map:</label>
         <select id="map_select">
             <option></option>
         </select>
     </div>
-    <div class="col-xs-6 font-size">
+    <div class="col-md-6">
         <label for="font_size_select">font size:</label>
         <select id="font_size_select">
             <option value="15%">large</option>
@@ -46,6 +47,19 @@
 
 <div id="cy"></div>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id="response_ta">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript" src="main.js"></script>
 </body>
