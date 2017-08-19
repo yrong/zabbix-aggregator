@@ -2,7 +2,8 @@
 
 const Router = require('koa-router')
 const _ = require('lodash')
-const logger = require('log4js_wrapper').getLogger()
+const Logger = require('log4js_wrapper')
+const logger = Logger.getLogger()
 const db = require('../lib/db')
 const sysmapSqlGenerator = require('../sql/sysmap')
 const itemSqlGenerator = require('../sql/item')
