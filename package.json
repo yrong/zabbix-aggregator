@@ -29,7 +29,6 @@
   "homepage": "https://github.com/geekplux/koa2-boilerplate#readme",
   "dependencies": {
     "config": "^1.24.0",
-    "es6-promise": "^4.1.1",
     "kcors": "^2.1.1",
     "koa": "^2.0.0-alpha.3",
     "koa-bodyparser": "^3.2.0",
@@ -40,7 +39,7 @@
     "koa-static": "^2.1.0",
     "koa-token-checker": "1.0.2-beta.4",
     "mysql2": "1.2.0",
-    "redis-crud-fork": "1.0.0-beta.5",
+    "redis-crud-fork": "1.0.0-beta.7",
     "scirichon-common": "1.0.0-beta.8"
   },
   "devDependencies": {

@@ -36,13 +36,13 @@ const orderItemName = (names)=>{
     return load_mem.concat(others)
 }
 
-const dataWrapper = (items,transposed,title)=>{
+const dataWrapper = (items,params)=>{
     items = macroReplace(items)
     let hostNames = _.uniq(_.map(items,(item)=>item[alias.host_name_alias]))
     let itemNames = _.pullAll(_.uniq(_.map(items,(item)=>item[alias.item_name_alias])),[null,undefined])
     itemNames = orderItemName(itemNames)
-    transposed = _.isInteger(transposed)?transposed:(hostNames.length>=itemNames.length)?0:1
-    let metaData = transposed?{rows:itemNames,columns:hostNames,transposed}:{rows:hostNames,columns:itemNames,transposed}
+    let transposed = _.isInteger(params.transposed)?params.transposed:(hostNames.length>=itemNames.length)?0:1
+    let metaData = transposed?{rows:itemNames,columns:hostNames}:{rows:hostNames,columns:itemNames}
     let stat = {}
     _.each(items,(item=>{
         let obj = {id:item[alias.item_id_alias],type:item[alias.item_value_type_alias],triggered:item[alias.trigger_prefix_value_alias]?item[alias.trigger_priority_alias]:0,value:item.value}
@@ -54,11 +54,11 @@ const dataWrapper = (items,transposed,title)=>{
             stat[row][col] = obj
         }
     }))
-    return [_.assign(metaData,{stat:stat,title:title})]
+    return _.assign(metaData,{stat:stat},params)
 }
 
 items.post('/search', async(ctx,next)=>{
-    let params = ctx.request.body
+    let params = _.omit(ctx.request.body,'token')
     if(params.template_id){
         params = _.assign(params,await TemplateModel.get(params.template_id))
     }
@@ -68,7 +68,7 @@ items.post('/search', async(ctx,next)=>{
         if(history_value_rows.length)
             item.value = history_value_rows[0].value
     }
-    item_rows = dataWrapper(item_rows,params.transposed,_.isString(params.title)?params.title:params.appName)
+    item_rows = dataWrapper(item_rows,params)
     ctx.body=item_rows
 })
 

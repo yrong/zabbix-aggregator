@@ -1,5 +1,231 @@
 [
   {
+    "name": "items/trends",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/history/23766?since=0&until=1465808199"
+  },
+  {
+    "name": "events/search host array match",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/events/search",
+    "body": {
+      "filter": {
+        "since": 0,
+        "until": 1465808199,
+        "host": [
+          "AS-3250-AD08R-2"
+        ],
+        "gpname": "Windows Servers"
+      },
+      "pagination": {
+        "page": 1,
+        "per_page": 20
+      }
+    }
+  },
+  {
+    "name": "items/search/Windows Server",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+    "body": {
+      "appName": "Windows Servers"
+    }
+  },
+  {
+    "name": "items/history",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/history/23766?since=1463808199&until=1465808199"
+  },
+  {
+    "name": "get template",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}"
+  },
+  {
+    "name": "login",
+    "method": "POST",
+    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
+    "body": {
+      "username": "{{auth_user}}",
+      "password": "{{auth_passwd}}"
+    }
+  },
+  {
+    "name": "triggers/count by value",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+    "body": {
+      "filter": {
+        "since": 1453808199,
+        "until": 1465808199
+      },
+      "groupBy": {
+        "category": [
+          "value"
+        ]
+      }
+    }
+  },
+  {
+    "name": "hosts",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts"
+  },
+  {
+    "name": "get all sysmap",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/sysmaps"
+  },
+  {
+    "name": "hosts compare with cmdb",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts/compare_with_cmdb"
+  },
+  {
+    "name": "groups filter by name",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups?name=Storage"
+  },
+  {
+    "name": "get all template",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates"
+  },
+  {
+    "name": "triggers/count by ITService and value",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+    "body": {
+      "filter": {
+        "since": 1453808199,
+        "until": 1465808199
+      },
+      "groupBy": {
+        "category": [
+          "itservice",
+          "value"
+        ],
+        "depth": 1
+      }
+    }
+  },
+  {
+    "name": "groups",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups"
+  },
+  {
+    "name": "triggers/count by ITServiceGroup and value",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+    "body": {
+      "filter": {
+        "since": 1453808199,
+        "until": 1465808199
+      },
+      "groupBy": {
+        "category": [
+          "itservice",
+          "value"
+        ],
+        "depth": 0
+      }
+    }
+  },
+  {
+    "name": "triggers/count by hostgroup and priority",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
+    "body": {
+      "filter": {
+        "value": 1
+      },
+      "groupBy": {
+        "category": [
+          "gpname",
+          "priority"
+        ]
+      }
+    }
+  },
+  {
+    "name": "update template",
+    "method": "PUT",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
+    "body": {
+      "appName": "Exchange Mailbox Database",
+      "hosts": [
+        "AS-3650-EXCDB-1",
+        "AS-3650-EXCDB-2",
+        "AS-VME-EXCCAS-1",
+        "BJ-X3650-EXC-1"
+      ],
+      "items": [
+        "Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency",
+        "Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency",
+        "Exchange Mailbox Database Log Bytes Write/sec",
+        "Exchange Mailbox Database Log Record Stalls/sec",
+        "Exchange Mailbox Database Log Threads Waiting"
+      ],
+      "transposed": 1,
+      "title": "test2"
+    }
+  },
+  {
+    "name": "group/host",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups/host?name=Storage"
+  },
+  {
+    "name": "hosts filter by name",
+    "method": "GET",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts?name=Router_ASB"
+  },
+  {
+    "name": "delete template",
+    "method": "DELETE",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
+    "body": {}
+  },
+  {
+    "name": "events/search host wildcard match",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/events/search",
+    "body": {
+      "filter": {
+        "since": 0,
+        "until": 1465808199,
+        "host": "AS*"
+      },
+      "pagination": {
+        "page": 3,
+        "per_page": 20
+      }
+    }
+  },
+  {
+    "name": "items/search/Exchange Mailbox Database by Template",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+    "body": {
+      "token": "{{token}}",
+      "template_id": "{{template_id}}"
+    }
+  },
+  {
+    "name": "items/search/storageDisk",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
+    "body": {
+      "appName": "storageDisk"
+    }
+  },
+  {
+    "name": "get nodes/links in sysmap",
+    "method": "POST",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/sysmaps?sysmapid=2"
+  },
+  {
     "name": "add template",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates",
@@ -23,78 +249,11 @@
     }
   },
   {
-    "name": "events/search host array match",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/events/search",
-    "body": {
-      "filter": {
-        "since": 0,
-        "until": 1465808199,
-        "host": [
-          "AS-3250-AD08R-2"
-        ],
-        "gpname": "Windows Servers"
-      },
-      "pagination": {
-        "page": 1,
-        "per_page": 20
-      }
-    }
-  },
-  {
-    "name": "get nodes/links in sysmap",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/sysmaps?sysmapid=2"
-  },
-  {
-    "name": "triggers/count by ITService and value",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
-    "body": {
-      "filter": {
-        "since": 1453808199,
-        "until": 1465808199
-      },
-      "groupBy": {
-        "category": [
-          "itservice",
-          "value"
-        ],
-        "depth": 1
-      }
-    }
-  },
-  {
-    "name": "get template",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}"
-  },
-  {
-    "name": "groups filter by name",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups?name=Storage"
-  },
-  {
-    "name": "items/trends",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/history/23766?since=0&until=1465808199"
-  },
-  {
-    "name": "get all sysmap",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/sysmaps"
-  },
-  {
-    "name": "hosts",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts"
-  },
-  {
-    "name": "items/search/Windows Server",
+    "name": "items/search/Network",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
     "body": {
-      "appName": "Windows Servers"
+      "groupName": "Network"
     }
   },
   {
@@ -105,97 +264,6 @@
       "appName": "Exchange Mailbox Services",
       "groupName": "Windows Servers"
     }
-  },
-  {
-    "name": "items/search/Exchange Mailbox Database",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
-    "body": {
-      "token": "{{token}}",
-      "appName": "Exchange Mailbox Database",
-      "hosts": [
-        "AS-3650-EXCDB-1",
-        "AS-3650-EXCDB-2",
-        "AS-VME-EXCCAS-1",
-        "BJ-X3650-EXC-1"
-      ],
-      "items": [
-        "Exchange Mailbox Database ==> Instances(*) I/O Database Reads Average Latency",
-        "Exchange Mailbox Database ==> Instances(*) I/O Database Writes Average Latency",
-        "Exchange Mailbox Database Log Bytes Write/sec",
-        "Exchange Mailbox Database Log Record Stalls/sec",
-        "Exchange Mailbox Database Log Threads Waiting"
-      ],
-      "transposed": 0,
-      "title": null
-    }
-  },
-  {
-    "name": "delete template",
-    "method": "DELETE",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
-    "body": {}
-  },
-  {
-    "name": "triggers/count by value",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
-    "body": {
-      "filter": {
-        "since": 1453808199,
-        "until": 1465808199
-      },
-      "groupBy": {
-        "category": [
-          "value"
-        ]
-      }
-    }
-  },
-  {
-    "name": "items/search/Network",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
-    "body": {
-      "groupName": "Network"
-    }
-  },
-  {
-    "name": "triggers/count by hostgroup and priority",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
-    "body": {
-      "filter": {
-        "value": 1
-      },
-      "groupBy": {
-        "category": [
-          "gpname",
-          "priority"
-        ]
-      }
-    }
-  },
-  {
-    "name": "get all template",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates"
-  },
-  {
-    "name": "hosts compare with cmdb",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts/compare_with_cmdb"
-  },
-  {
-    "name": "delete all templates",
-    "method": "DELETE",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/",
-    "body": {}
-  },
-  {
-    "name": "items/host",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/host?name=Router_ASB"
   },
   {
     "name": "triggers/count by lastchange and value new",
@@ -229,80 +297,17 @@
     }
   },
   {
-    "name": "triggers/count by ITServiceGroup and value",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/count",
-    "body": {
-      "filter": {
-        "since": 1453808199,
-        "until": 1465808199
-      },
-      "groupBy": {
-        "category": [
-          "itservice",
-          "value"
-        ],
-        "depth": 0
-      }
-    }
+    "name": "delete all templates",
+    "method": "DELETE",
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/",
+    "body": {}
   },
   {
-    "name": "hosts filter by name",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/hosts?name=Router_ASB"
-  },
-  {
-    "name": "group/host",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups/host?name=Storage"
-  },
-  {
-    "name": "items/search/storageDisk",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
-    "body": {
-      "appName": "storageDisk"
-    }
-  },
-  {
-    "name": "events/search host wildcard match",
-    "method": "POST",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/events/search",
-    "body": {
-      "filter": {
-        "since": 0,
-        "until": 1465808199,
-        "host": "AS*"
-      },
-      "pagination": {
-        "page": 3,
-        "per_page": 20
-      }
-    }
-  },
-  {
-    "name": "items/search/Exchange Mailbox Database by Template",
+    "name": "items/search/Exchange Mailbox Database",
     "method": "POST",
     "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/search",
     "body": {
       "token": "{{token}}",
-      "template_id": "{{template_id}}"
-    }
-  },
-  {
-    "name": "login",
-    "method": "POST",
-    "url": "http://{{auth_api_host}}:{{auth_api_port}}/auth/login",
-    "body": {
-      "username": "{{auth_user}}",
-      "password": "{{auth_passwd}}"
-    }
-  },
-  {
-    "name": "update template",
-    "method": "PUT",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/templates/{{template_id}}",
-    "body": {
       "appName": "Exchange Mailbox Database",
       "hosts": [
         "AS-3650-EXCDB-1",
@@ -317,18 +322,13 @@
         "Exchange Mailbox Database Log Record Stalls/sec",
         "Exchange Mailbox Database Log Threads Waiting"
       ],
-      "transposed": 1,
-      "title": "test2"
+      "transposed": 0,
+      "title": null
     }
   },
   {
-    "name": "items/history",
+    "name": "items/host",
     "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/history/23766?since=1463808199&until=1465808199"
-  },
-  {
-    "name": "groups",
-    "method": "GET",
-    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/groups"
+    "url": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/items/host?name=Router_ASB"
   }
 ]
