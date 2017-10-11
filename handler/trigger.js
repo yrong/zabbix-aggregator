@@ -40,12 +40,12 @@ const countByHostGroupAndPriority = async (filter,groupBy)=>{
     filter = await buildHostFilter(filter)
     groupBy = [alias.group_name_alias,alias.trigger_priority_alias].join()
     let stat = {},all;
-    let [groups] = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter,groupBy))
-    let [rows] = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter))
+    let groups = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter,groupBy))
+    let rows = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter))
     all = rows[0][alias.count_alias]
     for(let group of groups){
         filter[alias.group_name_alias]  = group[alias.group_name_alias], filter[alias.trigger_priority_alias] = group[alias.trigger_priority_alias]
-        let [rows] = await db.query(triggerSqlGenerator.sqlFindTriggers(filter))
+        rows = await db.query(triggerSqlGenerator.sqlFindTriggers(filter))
         stat[filter[alias.group_name_alias]] = stat[filter[alias.group_name_alias]]||{}
         stat[filter[alias.group_name_alias]][filter[alias.trigger_priority_alias]] = rows
     }
@@ -64,7 +64,7 @@ const countByLastChangeAndValue = async (filter,groupBy)=>{
     }
     groupBy = [alias.trigger_lastchange_timespan_alias,alias.trigger_value_alias].join()
     let result = {}
-    let [groups] = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter,groupBy))
+    let groups = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter,groupBy))
     for(let group of groups){
         interval = group[alias.trigger_lastchange_timespan_alias]
         date = moment.unix(filter.until).subtract((interval)*granularity,filter.time_unit).format(format)
@@ -76,7 +76,7 @@ const countByLastChangeAndValue = async (filter,groupBy)=>{
 const countTriggerByValue = async (filter)=>{
     let groupBy = [alias.trigger_value_alias].join(),results,result={}
     results = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter,groupBy))
-    for(let entry of results[0]){
+    for(let entry of results){
         result[entry[alias.trigger_value_alias]] = entry[alias.count_alias]
     }
     return result
@@ -141,7 +141,7 @@ triggers.post('/count', async (ctx)=>{
 
 const activeTriggerHandler = async(ctx)=>{
     let params = _.assign({},ctx.params,ctx.query,ctx.request.body),filter = await buildHostFilter(ctx.request.body.filter)
-    let [rows] = await db.query(triggerSqlGenerator.sqlFindTriggers(filter,params.pagination))
+    let rows = await db.query(triggerSqlGenerator.sqlFindTriggers(filter,params.pagination))
     ctx.body=rows
 }
 

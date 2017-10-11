@@ -62,9 +62,9 @@ items.post('/search', async(ctx,next)=>{
     if(params.template_id){
         params = _.assign(params,await TemplateModel.get(params.template_id))
     }
-    let [item_rows] = await db.query(itemSqlGenerator.sqlSearchItems(params.appName,params.hosts,params.items,params.groupName))
+    let item_rows = await db.query(itemSqlGenerator.sqlSearchItems(params.appName,params.hosts,params.items,params.groupName))
     for (let item of item_rows){
-        let [history_value_rows] = await db.query(historyValueSqlGenerator.sqlGetLatestItemValueInHistory(item[alias.item_value_type_alias],item[alias.item_id_alias]))
+        let history_value_rows = await db.query(historyValueSqlGenerator.sqlGetLatestItemValueInHistory(item[alias.item_value_type_alias],item[alias.item_id_alias]))
         if(history_value_rows.length)
             item.value = history_value_rows[0].value
     }
@@ -94,13 +94,13 @@ items.get('/history/:itemId', async(ctx,next)=>{
         ctx.throw("missing params!")
     }
     params.since = parseInt(params.since),params.until = parseInt(params.until)
-    let [item] = await db.query(itemSqlGenerator.sqlGetItem(params.itemId))
+    let item = await db.query(itemSqlGenerator.sqlGetItem(params.itemId))
     item = item[0]
     let threshhold = item[alias.trigger_expression_alias].match(TriggerThreshholdRegex)
     if(_.isArray(threshhold)){
         item.threshold = parseInt(threshhold[1])
     }
-    let [timeSpan] = await db.query(historyValueSqlGenerator.sqlGetItemTimeSpan(item[alias.item_value_type_alias],params.itemId))
+    let timeSpan = await db.query(historyValueSqlGenerator.sqlGetItemTimeSpan(item[alias.item_value_type_alias],params.itemId))
     if(params.since>= timeSpan[0][alias.history_clock_min_alias]){
         result = await db.query(historyValueSqlGenerator.sqlGetValuesWithinTimeRange(item[alias.item_value_type_alias],params.itemId,params.since,params.until))
     }else{
@@ -108,7 +108,6 @@ items.get('/history/:itemId', async(ctx,next)=>{
     }
     item.type = getDataTypeDesc(item[alias.item_value_type_alias])
     item = _.omit(item,[alias.item_id_alias,alias.item_value_type_alias,alias.trigger_expression_alias])
-    result = result[0]
     result = _.map(result,(rec)=>{
         return [rec[alias.history_clock_alias],rec[alias.history_value_alias]]
     })

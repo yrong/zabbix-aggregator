@@ -12,7 +12,7 @@ hosts.get('/', async (ctx, next)=>{
     if(params.name){
         sql += ` and name like "%${params.name}%"`
     }
-    let [hosts] = await db.query(sql)
+    let hosts = await db.query(sql)
     ctx.body = hosts
 });
 
@@ -23,7 +23,7 @@ hosts.get('/compare_with_cmdb', async (ctx, next)=>{
         cmdb_hosts = _.map(results.data,(result)=>result.name)
     }
     let sql = `select name from hosts where status!=3 and flags=0 and host not like "%zabbix%"`
-    let [hosts] = await db.query(sql)
+    let hosts = await db.query(sql)
     if(hosts&&hosts.length){
         zabbix_hosts = _.map(hosts,(result)=>result.name)
     }

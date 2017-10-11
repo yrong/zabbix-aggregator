@@ -10,7 +10,7 @@ let events = new Router();
 events.post('/search', async (ctx, next)=>{
     let params = _.assign({},ctx.params,ctx.query,ctx.request.body),sql
     sql = eventsSqlGenerator.sqlGetTriggerEvents(params)
-    let [events] = await db.query(sql)
+    let events = await db.query(sql)
     ctx.body = events
 });
 

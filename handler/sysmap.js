@@ -13,7 +13,7 @@ let sysmaps = new Router();
 
 sysmaps.get('/', async (ctx)=>{
     let sql = sysmapSqlGenerator.sqlGetSysMaps()
-    let [maps] = await db.query(sql)
+    let maps = await db.query(sql)
     ctx.body = maps
 });
 
@@ -40,13 +40,13 @@ const replaceLinkLabel = async (link)=>{
                 continue
             }
             sql = itemSqlGenerator.sqlGetItemFromItemKeyandHostName(macro[2],macro[1])
-            let [item] = await db.query(sql)
+            let item = await db.query(sql)
             if(item.length != 1){
                 logger.warn(`item not found with host "${macro[1]}" and item_key "${macro[2]}"`)
                 continue
             }
             sql = itemHistorySqlGenerator.sqlGetLatestItemValueInHistory(item[0].value_type,item[0].itemid)
-            let [item_value] = await db.query(sql)
+            let item_value = await db.query(sql)
             if(item_value.length !=1){
                 logger.warn(`item ${item[0].itemid} history value not found`)
                 continue
@@ -62,15 +62,15 @@ sysmaps.post('/', async (ctx)=>{
     if(!sysmapid)
         throw new Error('missing sysmapid as parameter')
     sql = sysmapSqlGenerator.sqlGetElementsInSysMap(sysmapid)
-    let [elements] = await db.query(sql)
+    let elements = await db.query(sql)
     elements = _.map(elements,(element)=>{return replaceElementLabelAndImage(element)})
     sql = sysmapSqlGenerator.sqlGetLinksInSysMap(sysmapid)
-    let [links] = await db.query(sql)
+    let links = await db.query(sql)
     for (let link of links){
         link = await replaceLinkLabel(link)
     }
     sql = sysmapSqlGenerator.sqlGetLinkTriggersInSysMap(sysmapid)
-    let [triggers] = await db.query(sql)
+    let triggers = await db.query(sql)
     ctx.body = {elements,links,triggers}
 });
 
