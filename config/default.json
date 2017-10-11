@@ -21,7 +21,7 @@
 //    "port": 3306,
 //    "user": "ron",
 //    "password": "ForDev",
-//    "database": "zabbix_20170710"
+//    "database": "zabbix"
 //  },
   "mysql": {
     "host": "localhost",
