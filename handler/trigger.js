@@ -12,7 +12,6 @@ const priorityList=["Information","Warning","Average","High","Disaster"]
 const HostsNotExist = `("NOTEXIST")`
 const moment = require('moment')
 const common = require('scirichon-common')
-const cmdb_api_config = config.get('cmdb');
 
 const categories_by_value = ['value'],categories_by_itservice_value = ['itservice','value'].sort(),
     categories_by_hostgroup_priority = ['gpname','priority'].sort(),categories_by_lastchange_value =['lastchange','value'].sort()
@@ -20,16 +19,14 @@ const categories_by_value = ['value'],categories_by_itservice_value = ['itservic
 let triggers = new Router();
 
 const buildHostFilter = async (filter)=>{
-    let hosts,results;
-    if(_.isArray(filter.itservicegroup)&&filter.itservicegroup.length){
-        results = await common.apiInvoker('GET',cmdb_api_config.base_url,'/api/cfgItems',{cfgHostsByITServiceGroup:filter.itservicegroup.join()})
-        filter.host = HostsNotExist
-    }else if(_.isArray(filter.itservice)&&filter.itservice.length){
-        results = await common.apiInvoker('GET',cmdb_api_config.base_url,'/api/cfgItems',{cfgHostsByITService:filter.itservice.join()})
+    let hosts,results,cmdb_base_url=`http://${config.get('privateIP')||'localhost'}:${config.get('cmdb.port')}`;
+    if(_.isArray(filter.itservice)&&filter.itservice.length){
+        results = await common.apiInvoker('POST',cmdb_base_url,'/api/searchByCypher',{category:"ConfigurationItem",cypherQueryFile:'queryHostsByITService',uuid:filter.itservice})
+        results = results.data||results
         filter.host = HostsNotExist
     }
-    if(results&&results.data&&results.data.length){
-        hosts = _.map(results.data,(result)=>result.name)
+    if(results&&results.length){
+        hosts = _.map(results,(result)=>result.name)
         filter = filter || {}
         filter.host = hosts
     }
@@ -83,9 +80,10 @@ const countTriggerByValue = async (filter)=>{
 }
 
 const countTriggerByITServiceGroup = async (filter)=>{
-    let results = await cmdb_api_helper.getITServiceGroups(),result={}
-    for(let group of results.data){
-        filter.itservicegroup = [group.name]
+    let results = await cmdb_api_helper.apiInvokeFromCmdb('/api/it_services/group'),result={}
+    results = results.data||results
+    for(let group of results){
+        filter.itservice = [group.uuid]
         filter = await buildHostFilter(filter)
         result[group.name] = await countTriggerByValue(filter)
     }
@@ -93,12 +91,13 @@ const countTriggerByITServiceGroup = async (filter)=>{
 }
 
 const countTriggerByITService = async (filter)=>{
-    let results = await cmdb_api_helper.getITServiceGroups(),result={}
+    let results = await cmdb_api_helper.apiInvokeFromCmdb('/api/it_services/group'),result={}
+    results = results.data||results
     filter = _.omit(filter,['host','itservicegroup'])
-    for(let group of results.data){
+    for(let group of results){
         for(let service of group.members){
             result[group.name] = result[group.name] || {}
-            filter.itservice = [service.name]
+            filter.itservice = [service.uuid]
             filter = await buildHostFilter(filter)
             result[group.name][service.name] = await countTriggerByValue(filter)
         }
