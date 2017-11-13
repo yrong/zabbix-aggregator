@@ -34,7 +34,6 @@
     "koa-bodyparser": "^3.2.0",
     "koa-compose": "^3.1.0",
     "koa-router": "^7.0.1",
-    "log4js_wrapper": "1.0.3-beta.4",
     "mkdirp": "^0.5.1",
     "mysql": "^2.15.0",
     "redis-crud-fork": "1.0.0-beta.7",
@@ -42,7 +41,7 @@
     "scirichon-acl-checker": "1.0.1-beta.3",
     "scirichon-cache": "1.0.3-beta.1",
     "scirichon-common": "1.0.1-beta.6",
-    "scirichon-response-wrapper": "1.0.0-beta.5",
+    "scirichon-response-wrapper": "1.0.0-beta.6",
     "scirichon-token-checker": "1.0.0-beta.6"
   },
   "devDependencies": {
