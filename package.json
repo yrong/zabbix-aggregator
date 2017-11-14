@@ -6,7 +6,7 @@
   "scripts": {
     "compare": "NODE_ENV=development mocha ./test/compare.js",
     "test": "NODE_ENV=development mocha ./test/index.js",
-    "start": "NODE_ENV=production NODE_NAME=scmpz node server.js",
+    "start": "NODE_ENV=production NODE_NAME=scmp-z node server.js",
     "dump_image": "node ./dump_image.js",
     "build": "webpack"
   },
