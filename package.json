@@ -8,8 +8,7 @@
     "test": "NODE_ENV=development mocha ./test/index.js",
     "start": "NODE_ENV=production NODE_NAME=scmpz node server.js",
     "dump_image": "node ./dump_image.js",
-    "build": "webpack",
-    "prepare": "/bin/bash ./script/prepare.sh"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
