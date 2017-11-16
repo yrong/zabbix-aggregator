@@ -8,7 +8,10 @@ const itemSqlGenerator = require('../sql/item')
 const historyValueSqlGenerator = require('../sql/history')
 const trendValueSqlGenerator = require('../sql/trends')
 const Model = require('redis-crud-fork')
-const TemplateModel = Model('Template')
+const Redis = require('redis')
+const config = require('config')
+const TemplateModel = Model(Redis.createClient({db:1,host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,
+    port:config.get('redis.port')}),'Template')
 
 let items = new Router();
 const DiskSpaceUsageItem = 'Free disk space on $1 (percentage)'

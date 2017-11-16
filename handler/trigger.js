@@ -6,12 +6,12 @@ const db = require('../lib/db')
 const triggerSqlGenerator = require('../sql/trigger')
 const alias = require('../sql/alias')
 const config = require('config')
-const cmdb_api_helper = require('../helper/cmdb_api_helper')
 const groupList = ["Network","Windows Servers","Linux servers","Virtual machines","Exchange Servers","Out of Band","ESX","Storage","TSM Backup Jobs"]
 const priorityList=["Information","Warning","Average","High","Disaster"]
 const HostsNotExist = `("NOTEXIST")`
 const moment = require('moment')
 const common = require('scirichon-common')
+const cmdb_api_url = `http://${config.get('privateIP')||'localhost'}:${config.get('cmdb.port')}`
 
 const categories_by_value = ['value'],categories_by_itservice_value = ['itservice','value'].sort(),
     categories_by_hostgroup_priority = ['gpname','priority'].sort(),categories_by_lastchange_value =['lastchange','value'].sort()
@@ -80,7 +80,7 @@ const countTriggerByValue = async (filter)=>{
 }
 
 const countTriggerByITServiceGroup = async (filter)=>{
-    let results = await cmdb_api_helper.apiInvokeFromCmdb('/api/it_services/group'),result={}
+    let results = await common.apiInvoker('GET',cmdb_api_url,'/api/it_services/group'),result={}
     results = results.data||results
     for(let group of results){
         filter.itservice = [group.uuid]
@@ -91,7 +91,7 @@ const countTriggerByITServiceGroup = async (filter)=>{
 }
 
 const countTriggerByITService = async (filter)=>{
-    let results = await cmdb_api_helper.apiInvokeFromCmdb('/api/it_services/group'),result={}
+    let results = await common.apiInvoker('GET',cmdb_api_url,'/api/it_services/group'),result={}
     results = results.data||results
     filter = _.omit(filter,['host','itservicegroup'])
     for(let group of results){

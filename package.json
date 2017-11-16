@@ -35,10 +35,9 @@
     "koa-router": "^7.0.1",
     "mkdirp": "^0.5.1",
     "mysql": "^2.15.0",
-    "redis-crud-fork": "1.0.0-beta.7",
-    "redis-json-schema": "1.0.0-beta.2",
+    "redis":"^2.8.0",
+    "redis-crud-fork": "1.0.0-beta.8",
     "scirichon-acl-checker": "1.0.1-beta.3",
-    "scirichon-cache": "1.0.3-beta.1",
     "scirichon-common": "1.0.1-beta.6",
     "scirichon-response-wrapper": "1.0.0-beta.6",
     "scirichon-token-checker": "1.0.0-beta.6"

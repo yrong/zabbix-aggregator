@@ -3,7 +3,9 @@
 const Router = require('koa-router')
 const _ = require('lodash')
 const db = require('../lib/db')
-const cmdb_api_helper = require('../helper/cmdb_api_helper')
+const config = require('config')
+const cmdb_api_url = `http://${config.get('privateIP')||'localhost'}:${config.get('cmdb.port')}`
+const common = require('scirichon-common')
 
 let hosts = new Router();
 hosts.get('/', async (ctx, next)=>{
@@ -18,7 +20,7 @@ hosts.get('/', async (ctx, next)=>{
 
 hosts.get('/compare_with_cmdb', async (ctx, next)=>{
     let results,cmdb_hosts=[],zabbix_hosts=[]
-    results = await cmdb_api_helper.apiInvokeFromCmdb('/api/cfgItems',{subcategory:'PhysicalServer,VirtualServer'})
+    results = await common.apiInvoker('GET',cmdb_api_url,'/api/cfgItems',{subcategory:'PhysicalServer,VirtualServer'})
     if(results.data&&results.data.length){
         cmdb_hosts = _.map(results.data,(result)=>result.name)
     }

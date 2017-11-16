@@ -2,9 +2,11 @@
 'use strict';
 
 const Router = require('koa-router')
-const _ = require('lodash')
+const Redis = require('redis')
 const Model = require('redis-crud-fork')
-const TemplateModel = Model('Template')
+const config = require('config')
+const TemplateModel = Model(Redis.createClient({db:1,host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,
+    port:config.get('redis.port')}),'Template')
 
 let template = new Router();
 

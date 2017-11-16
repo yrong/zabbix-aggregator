@@ -44,7 +44,7 @@ ajv-keywords@^1.1.1:
   version "1.5.1"
   resolved "https://registry.npmjs.org/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
 
-ajv@^4.7.0, ajv@^4.9.0, ajv@^4.9.1:
+ajv@^4.7.0, ajv@^4.9.1:
   version "4.11.8"
   resolved "https://registry.npmjs.org/ajv/-/ajv-4.11.8.tgz#82ffb02b29e662ae53bdc20af15947706739c536"
   dependencies:
@@ -694,7 +694,7 @@ bluebird@^2.6.2:
   version "2.11.0"
   resolved "https://registry.npmjs.org/bluebird/-/bluebird-2.11.0.tgz#534b9033c022c9579c56ba3b3e5a5caafbb650e1"
 
-bluebird@^3.0.2, bluebird@^3.4.6, bluebird@^3.5.0, bluebird@^3.5.1:
+bluebird@^3.0.2, bluebird@^3.5.0, bluebird@^3.5.1:
   version "3.5.1"
   resolved "https://registry.npmjs.org/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
@@ -1196,7 +1196,7 @@ debug@^0.7.2:
   version "0.7.4"
   resolved "https://registry.npmjs.org/debug/-/debug-0.7.4.tgz#06e1ea8082c2cb14e39806e22e2f6f757f92af39"
 
-debug@^2.2.0, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
+debug@^2.2.0, debug@^2.6.8:
   version "2.6.9"
   resolved "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -1378,16 +1378,6 @@ error-ex@^1.2.0, error-ex@^1.3.1:
 error-inject@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/error-inject/-/error-inject-1.0.0.tgz#e2b3d91b54aed672f309d950d154850fa11d4f37"
-
-es6-promise@^4.0.3:
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/es6-promise/-/es6-promise-4.1.1.tgz#8811e90915d9a0dba36274f0b242dbda78f9c92a"
-
-es6-promisify@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.npmjs.org/es6-promisify/-/es6-promisify-5.0.0.tgz#5109d62f3e56ea967c4b63505aef08291c8a5203"
-  dependencies:
-    es6-promise "^4.0.3"
 
 escape-html@1.0.3, escape-html@~1.0.1:
   version "1.0.3"
@@ -1636,10 +1626,6 @@ gauge@~2.7.3:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
-
-generic-pool@3.1.7:
-  version "3.1.7"
-  resolved "https://registry.npmjs.org/generic-pool/-/generic-pool-3.1.7.tgz#dac22b2c7a7a04e41732f7d8d2d25a303c88f662"
 
 get-caller-file@^1.0.1:
   version "1.0.2"
@@ -2017,10 +2003,6 @@ is-glob@^4.0.0:
   dependencies:
     is-extglob "^2.1.1"
 
-is-json@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/is-json/-/is-json-2.0.1.tgz#6be166d144828a131d686891b983df62c39491ff"
-
 is-number@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/is-number/-/is-number-2.1.0.tgz#01fcbbb393463a548f2f466cce16dece49db908f"
@@ -2310,14 +2292,6 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash.isarray@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/lodash.isarray/-/lodash.isarray-4.0.0.tgz#2aca496b28c4ca6d726715313590c02e6ea34403"
-
-lodash.pick@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.npmjs.org/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
-
 lodash@4.17.2:
   version "4.17.2"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
@@ -2577,19 +2551,6 @@ newman@^3.5.2:
     shelljs "0.7.8"
     word-wrap "1.2.3"
     xmlbuilder "9.0.4"
-
-node-cache-redis-fork@2.2.0-beta.3:
-  version "2.2.0-beta.3"
-  resolved "https://registry.npmjs.org/node-cache-redis-fork/-/node-cache-redis-fork-2.2.0-beta.3.tgz#1d6931353a4e6f49749e1285820ed09bdf408e0b"
-  dependencies:
-    debug "^2.6.6"
-    es6-promisify "^5.0.0"
-    generic-pool "3.1.7"
-    is-json "^2.0.1"
-    lodash.isarray "^4.0.0"
-    lodash.pick "^4.4.0"
-    redis "^2.7.1"
-    retry-as-promised "^2.2.0"
 
 node-dir@^0.1.10:
   version "0.1.17"
@@ -3178,28 +3139,15 @@ redis-commands@^1.2.0:
   version "1.3.1"
   resolved "https://registry.npmjs.org/redis-commands/-/redis-commands-1.3.1.tgz#81d826f45fa9c8b2011f4cd7a0fe597d241d442b"
 
-redis-crud-fork@1.0.0-beta.7:
-  version "1.0.0-beta.7"
-  resolved "https://registry.npmjs.org/redis-crud-fork/-/redis-crud-fork-1.0.0-beta.7.tgz#0abd8302c331778d7a5c7ea3f0587e81f40e2800"
-  dependencies:
-    bluebird "^3.5.0"
-    config "^1.24.0"
-    lodash "^4.17.4"
-    redis "^2.7.1"
-
-redis-json-schema@1.0.0-beta.2:
-  version "1.0.0-beta.2"
-  resolved "https://registry.npmjs.org/redis-json-schema/-/redis-json-schema-1.0.0-beta.2.tgz#1e1c7c29437559a730452de833c13dc3373605a8"
-  dependencies:
-    ajv "^4.9.0"
-    lodash "^4.17.4"
-    redis-crud-fork "1.0.0-beta.7"
+redis-crud-fork@1.0.0-beta.8:
+  version "1.0.0-beta.8"
+  resolved "https://registry.npmjs.org/redis-crud-fork/-/redis-crud-fork-1.0.0-beta.8.tgz#6ff803b251f092bb7a5d108c75d24f43b30fd057"
 
 redis-parser@^2.6.0:
   version "2.6.0"
   resolved "https://registry.npmjs.org/redis-parser/-/redis-parser-2.6.0.tgz#52ed09dacac108f1a631c07e9b69941e7a19504b"
 
-redis@^2.7.1, redis@^2.8.0:
+redis@^2.8.0:
   version "2.8.0"
   resolved "https://registry.npmjs.org/redis/-/redis-2.8.0.tgz#202288e3f58c49f6079d97af7a10e1303ae14b02"
   dependencies:
@@ -3356,13 +3304,6 @@ resolve@^1.1.6:
   dependencies:
     path-parse "^1.0.5"
 
-retry-as-promised@^2.2.0:
-  version "2.3.2"
-  resolved "https://registry.npmjs.org/retry-as-promised/-/retry-as-promised-2.3.2.tgz#cd974ee4fd9b5fe03cbf31871ee48221c07737b7"
-  dependencies:
-    bluebird "^3.4.6"
-    debug "^2.6.9"
-
 right-align@^0.1.1:
   version "0.1.3"
   resolved "https://registry.npmjs.org/right-align/-/right-align-0.1.3.tgz#61339b722fe6a3515689210d24e14c96148613ef"
@@ -3413,19 +3354,6 @@ scirichon-acl-checker@1.0.1-beta.3:
     acl-fork "0.4.10-beta.3"
     config "^1.25.1"
     scirichon-common "1.0.1-beta.6"
-
-scirichon-cache@1.0.3-beta.1:
-  version "1.0.3-beta.1"
-  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.3-beta.1.tgz#4255074c5e542c2cdc209f1568e8ee313ed6322e"
-  dependencies:
-    config "^1.25.1"
-    lodash "^4.17.4"
-    node-cache-redis-fork "2.2.0-beta.3"
-    redis-json-schema "1.0.0-beta.2"
-    request "^2.81.0"
-    request-promise "^4.1.1"
-    scirichon-common "1.0.1-beta.6"
-    uuid-validate "0.0.2"
 
 scirichon-common@1.0.1-beta.5:
   version "1.0.1-beta.5"
