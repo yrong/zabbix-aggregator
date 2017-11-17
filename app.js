@@ -17,5 +17,7 @@ app
 
 app.listen(config.get('scmpz.port'), () => console.log('server started'))
 
-module.exports = app
+process.on('uncaughtException', (err) => {
+    logger.error(`Caught exception: ${err}`)
+})
 
