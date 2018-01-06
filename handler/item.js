@@ -123,7 +123,7 @@ items.get('/host', async(ctx,next)=>{
         ctx.throw("missing param!")
     }
     let sql = `select hosts.hostid,items.itemid,items.name from hosts inner join items on hosts.hostid=items.hostid where hosts.name="${params.name}";`
-    let [items] = await db.query(sql)
+    let items = await db.query(sql)
     ctx.body= items
 })
 

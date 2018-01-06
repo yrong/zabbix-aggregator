@@ -4,11 +4,16 @@
   "description": "scmp-z",
   "main": "app.js",
   "scripts": {
+    "setenv": "source ../config/.env&&export NODE_NAME=scmp-z&&export SCMPZ_VERSION=`git rev-parse HEAD`",
+    "prebuild": "yarn install&&rm -rf build",
+    "buildDockerImage": "rm -rf Dockerfile&&ln ../config/deploy/Dockerfile .&&npm run prebuild&&EDITION=docker webpack",
+    "build": "webpack",
     "compare": "NODE_ENV=development mocha ./test/compare.js",
     "test": "NODE_ENV=development mocha ./test/index.js",
     "start": "NODE_ENV=production NODE_NAME=scmp-z node server.js",
     "dump_image": "node ./dump_image.js",
-    "build": "webpack"
+    "dockerStartApp": "docker-compose -f ../config/deploy/app.yml up -d scmp-z",
+    "dockerStopApp": "docker-compose -f ../config/deploy/app.yml stop scmp-z"
   },
   "repository": {
     "type": "git",
@@ -34,26 +39,16 @@
     "koa-compose": "^3.1.0",
     "koa-router": "^7.0.1",
     "mkdirp": "^0.5.1",
+    "moment": "^2.13.0",
     "mysql": "^2.15.0",
     "redis":"^2.8.0",
     "redis-crud-fork": "1.0.0-beta.8",
-    "scirichon-acl-checker": "1.0.1-beta.3",
-    "scirichon-common": "1.0.1-beta.6",
+    "scirichon-acl-checker": "1.0.1-beta.5",
+    "scirichon-common": "1.0.1-beta.7",
     "scirichon-response-wrapper": "1.0.0-beta.6",
-    "scirichon-token-checker": "1.0.0-beta.6"
+    "scirichon-token-checker": "1.0.0-beta.9"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "clean-webpack-plugin": "^0.1.16",
-    "copy-webpack-plugin": "^4.0.1",
-    "git-revision-webpack-plugin": "^2.4.1",
-    "uglifyjs-webpack-plugin": "^1.0.1",
-    "chai": "^3.5.0",
-    "mocha": "^2.3.4",
-    "newman": "^3.5.2",
-    "webpack": "^2.3.2",
-    "webpack-shell-plugin": "^0.5.0"
+    "webpack-builder-advanced": "1.0.0-beta.1"
   }
 }
