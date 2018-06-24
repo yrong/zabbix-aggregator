@@ -3414,38 +3414,40 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
-scirichon-acl-checker@1.0.1-beta.5:
-  version "1.0.1-beta.5"
-  resolved "https://registry.npmjs.org/scirichon-acl-checker/-/scirichon-acl-checker-1.0.1-beta.5.tgz#9039c863e8cc5828b8f577274d7ed53803c0070b"
+scirichon-acl-checker@1.0.2-beta.4:
+  version "1.0.2-beta.4"
+  resolved "https://registry.npmjs.org/scirichon-acl-checker/-/scirichon-acl-checker-1.0.2-beta.4.tgz#391fc253ba1029cd4669e113d04b712f09cbdb06"
   dependencies:
     acl-fork "0.4.10-beta.3"
+    lodash "^4.17.4"
     redis "^2.8.0"
-    scirichon-common "1.0.1-beta.7"
+    scirichon-common "1.0.3-beta.1"
 
-scirichon-common@1.0.1-beta.7:
-  version "1.0.1-beta.7"
-  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.1-beta.7.tgz#8681dfc751d4cacdc8a4c16a3b9e7f88c7c8116e"
-  dependencies:
-    lodash "^4.17.4"
-    request "^2.81.0"
-    request-promise "^4.1.1"
-
-scirichon-response-wrapper@1.0.0-beta.6:
-  version "1.0.0-beta.6"
-  resolved "https://registry.npmjs.org/scirichon-response-wrapper/-/scirichon-response-wrapper-1.0.0-beta.6.tgz#3a71e8e258b5d422e2e878f8706243141b72addc"
-  dependencies:
-    lodash "^4.17.4"
-    log4js_wrapper "1.0.3-beta.5"
-
-scirichon-token-checker@1.0.0-beta.9:
-  version "1.0.0-beta.9"
-  resolved "https://registry.npmjs.org/scirichon-token-checker/-/scirichon-token-checker-1.0.0-beta.9.tgz#1eb605388117931b992679837e171ae77918309f"
+scirichon-common@1.0.3-beta.1:
+  version "1.0.3-beta.1"
+  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.3-beta.1.tgz#ada7471ea38b6303dfbfcc2d7e367125a7d042e2"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "1.0.1-beta.7"
+
+scirichon-response-wrapper@1.0.0-beta.9:
+  version "1.0.0-beta.9"
+  resolved "https://registry.npmjs.org/scirichon-response-wrapper/-/scirichon-response-wrapper-1.0.0-beta.9.tgz#74fff82dff87f37781b8db3050d3123fa7293e94"
+  dependencies:
+    lodash "^4.17.4"
+    log4js_wrapper "1.0.3-beta.5"
+
+scirichon-token-checker@1.0.1-beta.5:
+  version "1.0.1-beta.5"
+  resolved "https://registry.npmjs.org/scirichon-token-checker/-/scirichon-token-checker-1.0.1-beta.5.tgz#ea7d9534cfe1534d43070fdde3840476ac482a11"
+  dependencies:
+    config "^1.25.1"
+    lodash "^4.17.4"
+    request "^2.81.0"
+    request-promise "^4.1.1"
+    scirichon-common "1.0.3-beta.1"
 
 "semver@2 || 3 || 4 || 5", semver@5.4.1, semver@^5.3.0:
   version "5.4.1"
@@ -3950,9 +3952,9 @@ watchpack@^1.4.0:
     chokidar "^1.7.0"
     graceful-fs "^4.1.2"
 
-webpack-builder-advanced@1.0.0-beta.1:
-  version "1.0.0-beta.1"
-  resolved "https://registry.npmjs.org/webpack-builder-advanced/-/webpack-builder-advanced-1.0.0-beta.1.tgz#37f04d0977ebd9afe2cb9c18a5f1cd36b3700cc4"
+webpack-builder-advanced@1.0.0-beta.2:
+  version "1.0.0-beta.2"
+  resolved "https://registry.npmjs.org/webpack-builder-advanced/-/webpack-builder-advanced-1.0.0-beta.2.tgz#bfe5175af4330c13915bc2191f1ffece1b225d66"
   dependencies:
     babel-core "^6.26.0"
     babel-loader "^7.1.2"

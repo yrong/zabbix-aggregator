@@ -3,9 +3,8 @@
 const Router = require('koa-router')
 const _ = require('lodash')
 const db = require('../lib/db')
-const config = require('config')
-const cmdb_api_url = `http://${config.get('privateIP')||'localhost'}:${config.get('cmdb.port')}`
 const common = require('scirichon-common')
+const cmdb_api_url = common.getServiceApiUrl('cmdb')
 
 let hosts = new Router();
 hosts.get('/', async (ctx, next)=>{

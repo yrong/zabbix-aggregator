@@ -11,7 +11,7 @@ const priorityList=["Information","Warning","Average","High","Disaster"]
 const HostsNotExist = `("NOTEXIST")`
 const moment = require('moment')
 const common = require('scirichon-common')
-const cmdb_api_url = `http://${config.get('privateIP')||'localhost'}:${config.get('cmdb.port')}`
+const cmdb_api_url = common.getServiceApiUrl('cmdb')
 
 const categories_by_value = ['value'],categories_by_itservice_value = ['itservice','value'].sort(),
     categories_by_hostgroup_priority = ['gpname','priority'].sort(),categories_by_lastchange_value =['lastchange','value'].sort()
@@ -19,9 +19,9 @@ const categories_by_value = ['value'],categories_by_itservice_value = ['itservic
 let triggers = new Router();
 
 const buildHostFilter = async (filter)=>{
-    let hosts,results,cmdb_base_url=`http://${config.get('privateIP')||'localhost'}:${config.get('cmdb.port')}`;
+    let hosts,results;
     if(_.isArray(filter.itservice)&&filter.itservice.length){
-        results = await common.apiInvoker('POST',cmdb_base_url,'/api/searchByCypher',{category:"ConfigurationItem",cypherQueryFile:'queryHostsByITService',uuid:filter.itservice})
+        results = await common.apiInvoker('POST',cmdb_api_url,'/api/searchByCypher',{category:"ConfigurationItem",cypherQueryFile:'queryHostsByITService',uuid:filter.itservice})
         results = results.data||results
         filter.host = HostsNotExist
     }
@@ -91,15 +91,19 @@ const countTriggerByITServiceGroup = async (filter)=>{
 }
 
 const countTriggerByITService = async (filter)=>{
-    let results = await common.apiInvoker('GET',cmdb_api_url,'/api/it_services/group'),result={}
+    let results = await common.apiInvoker('POST',cmdb_api_url,'/api/members','',{category:'ITServiceGroup'}),result={}
     results = results.data||results
     filter = _.omit(filter,['host','itservicegroup'])
-    for(let group of results){
-        for(let service of group.members){
-            result[group.name] = result[group.name] || {}
-            filter.itservice = [service.uuid]
-            filter = await buildHostFilter(filter)
-            result[group.name][service.name] = await countTriggerByValue(filter)
+    if(results&&results.length){
+        for(let group of results){
+            if(group.members){
+                for(let service of group.members){
+                    result[group.name] = result[group.name] || {}
+                    filter.itservice = [service.uuid]
+                    filter = await buildHostFilter(filter)
+                    result[group.name][service.name] = await countTriggerByValue(filter)
+                }
+            }
         }
     }
     return result
