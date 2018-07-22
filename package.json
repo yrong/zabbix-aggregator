@@ -43,10 +43,10 @@
     "mysql": "^2.15.0",
     "redis":"^2.8.0",
     "redis-crud-fork": "^1.0.1",
-    "scirichon-acl-checker": "^1.0.3",
-    "scirichon-common": "^1.0.4",
-    "scirichon-response-wrapper": "^1.0.1",
-    "scirichon-token-checker": "^1.0.2"
+    "scirichon-acl-checker": "^1.0.9",
+    "scirichon-common": "^1.0.7",
+    "scirichon-response-wrapper": "^1.0.2",
+    "scirichon-token-checker": "^1.0.7"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"
