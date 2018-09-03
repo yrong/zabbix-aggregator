@@ -5,7 +5,7 @@ const getHistoryTableName = (type)=>HistoryTable[type]
 
 const sqlGetLatestItemValueInHistory = (type,itemid)=>{
     let tableName = getHistoryTableName(type)
-    let sql = `SELECT value as ${alias.history_value_alias} FROM ${tableName} h WHERE h.itemid=${itemid} ORDER BY h.clock DESC limit 1;`
+    let sql = `SELECT value as ${alias.history_value_alias},clock as clock FROM ${tableName} h WHERE h.itemid=${itemid} ORDER BY h.clock DESC limit 1;`
     return sql
 }
 

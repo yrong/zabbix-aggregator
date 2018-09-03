@@ -48,7 +48,7 @@ const dataWrapper = (items,params)=>{
     let metaData = transposed?{rows:itemNames,columns:hostNames}:{rows:hostNames,columns:itemNames}
     let stat = {}
     _.each(items,(item=>{
-        let obj = {id:item[alias.item_id_alias],type:item[alias.item_value_type_alias],triggered:item[alias.trigger_prefix_value_alias]?item[alias.trigger_priority_alias]:0,value:item.value}
+        let obj = {id:item[alias.item_id_alias],type:item[alias.item_value_type_alias],triggered:item[alias.trigger_prefix_value_alias]?item[alias.trigger_priority_alias]:0,value:item.value,clock:item.clock}
         let row = item[alias.host_name_alias],col = item[alias.item_name_alias]
         if(transposed)
             [row,col] = [col,row]
@@ -68,8 +68,10 @@ items.post('/search', async(ctx,next)=>{
     let item_rows = await db.query(itemSqlGenerator.sqlSearchItems(params.appName,params.hosts,params.items,params.groupName))
     for (let item of item_rows){
         let history_value_rows = await db.query(historyValueSqlGenerator.sqlGetLatestItemValueInHistory(item[alias.item_value_type_alias],item[alias.item_id_alias]))
-        if(history_value_rows.length)
+        if(history_value_rows.length){
             item.value = history_value_rows[0].value
+            item.clock = history_value_rows[0].clock
+        }
     }
     item_rows = dataWrapper(item_rows,params)
     ctx.body=item_rows
