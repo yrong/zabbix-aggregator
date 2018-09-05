@@ -2,10 +2,10 @@
 
 const Router = require('koa-router')
 const _ = require('lodash')
+const config = require('config')
 const db = require('../lib/db')
 const triggerSqlGenerator = require('../sql/trigger')
 const alias = require('../sql/alias')
-const config = require('config')
 const groupList = ["Network","Windows Servers","Linux servers","Virtual machines","Exchange Servers","Out of Band","ESX","Storage","TSM Backup Jobs"]
 const priorityList=["Information","Warning","Average","High","Disaster"]
 const HostsNotExist = `("NOTEXIST")`
@@ -148,7 +148,20 @@ const activeTriggerHandler = async(ctx)=>{
     ctx.body=rows
 }
 
+const triggers_statistic_index_name = config.get('scmpz.statistic_tbl_name')
+const statisticTriggerHandler = async(ctx)=>{
+    let params = _.assign({},ctx.query,ctx.params,ctx.request.body)
+    if(!params.body){
+        throw new Error('missing body field')
+    }
+    let searchObj = _.assign({index: triggers_statistic_index_name},params)
+    let result = await db.esClient.search(searchObj)
+    ctx.body= _.pick(result,['hits','aggregations'])
+}
+
 triggers.post('/search', activeTriggerHandler)
+
+triggers.post('/advancedSearch',statisticTriggerHandler)
 
 
 

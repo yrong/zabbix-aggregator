@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "setenv": "source ../config/.env&&export NODE_NAME=scmp-z&&export SCMPZ_VERSION=`git rev-parse HEAD`",
-    "prebuild": "yarn install&&rm -rf build",
     "dump_image": "node ./dump_image.js",
-    "init":"/bin/sh script/init.sh"
+    "init":"INIT=1 node daemon.js",
+    "gather":"node daemon.js"
   },
   "repository": {
     "type": "git",

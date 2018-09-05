@@ -3,10 +3,12 @@
     "doc": {
       "properties": {
         "lastchange": {
-          "type": "date"
+          "type": "date",
+          "format": "epoch_second"
         },
         "writtentime": {
-          "type": "date"
+          "type": "date",
+          "format": "epoch_second"
         }
       }
     }
