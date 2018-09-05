@@ -1,0 +1,14 @@
+{
+  "mappings": {
+    "doc": {
+      "properties": {
+        "lastchange": {
+          "type": "date"
+        },
+        "writtentime": {
+          "type": "date"
+        }
+      }
+    }
+  }
+}
