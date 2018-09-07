@@ -154,7 +154,7 @@ const statisticTriggerHandler = async(ctx)=>{
     if(!params.body){
         throw new Error('missing body field')
     }
-    let searchObj = _.assign({index: triggers_statistic_index_name},params)
+    let searchObj = _.assign({index: triggers_statistic_index_name},_.omit(params,['token']))
     let result = await db.esClient.search(searchObj)
     ctx.body= _.pick(result,['hits','aggregations'])
 }

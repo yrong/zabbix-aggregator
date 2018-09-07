@@ -136,7 +136,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"body\":{\n  \t\"aggs\":{\n\t  \t\"writtentime\" : {\n\t              \"date_histogram\" : {\n\t                  \"field\" : \"writtentime\",\n\t                  \"interval\" : \"quarter\",\n\t                  \"format\" : \"yyyy-MM-dd\"\n\t              },\n\t\t\t\t   \"aggs\": {\n\t\t\t\t          \"triggerpriority\" : {\n\t\t\t\t              \"terms\" : { \"field\" : \"triggerpriority\" }\n\t\t\t\t          }\n\t\t\t\t }\n\t    }\n  \t},\n   \"size\":0 \n }\n}"
+							"raw": "{\n  \"body\":{\n  \t\"aggs\":{\n\t  \t\"writtentime\" : {\n\t              \"date_histogram\" : {\n\t                  \"field\" : \"writtentime\",\n\t                  \"interval\" : \"quarter\",\n\t                  \"format\" : \"yyyy-MM-dd\"\n\t              },\n\t\t\t\t   \"aggs\": {\n\t\t\t\t          \"triggerpriority\" : {\n\t\t\t\t              \"terms\" : { \"field\" : \"triggerpriority\" }\n\t\t\t\t          }\n\t\t\t\t }\n\t    }\n  \t}\n },\n \"size\":0,\n \"token\":\"{{token}}\"\n\n}"
 						},
 						"url": {
 							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/advancedSearch",
