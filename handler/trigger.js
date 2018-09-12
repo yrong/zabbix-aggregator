@@ -149,19 +149,70 @@ const activeTriggerHandler = async(ctx)=>{
 }
 
 const triggers_statistic_index_name = config.get('scmpz.statistic_tbl_name')
+
+const searchES = async(params)=>{
+    params.size = params.size || 0
+    let searchObj = _.assign({index: triggers_statistic_index_name},_.omit(params,['token','interval']))
+    let result = await db.esClient.search(searchObj)
+    return _.pick(result,['hits','aggregations'])
+}
+
 const statisticTriggerHandler = async(ctx)=>{
     let params = _.assign({},ctx.query,ctx.params,ctx.request.body)
     if(!params.body){
         throw new Error('missing body field')
     }
-    let searchObj = _.assign({index: triggers_statistic_index_name},_.omit(params,['token']))
-    let result = await db.esClient.search(searchObj)
-    ctx.body= _.pick(result,['hits','aggregations'])
+    ctx.body= await searchES(params)
 }
+
+const WrittenTimeAndPriorityHandler = async(ctx)=>{
+    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,priority_buckets,abnormalItemsCount
+    params.body = params.body||{}
+    if(!params.body.aggs){
+        params.body.aggs = {
+            "writtentime" : {
+                "date_histogram" : {
+                    "field" : "writtentime",
+                    "interval" : params.interval||"day",
+                    "format" : "yyyy-MM-dd hh:mm",
+                    "time_zone":"PRC"
+                },
+                "aggs": {
+                    "writtentime" : {
+                        "cardinality" : {
+                            "field" : "writtentime"
+                        }
+                    },
+                    "triggerpriority" : {
+                        "terms" : { "field" : "triggerpriority" }
+                    }
+                }
+            }
+
+        }
+    }
+    result = await searchES(params)
+    time_buckets = result&&result.aggregations&&result.aggregations.writtentime&&result.aggregations.writtentime.buckets
+    for(let time_bucket of time_buckets){
+        abnormalItemsCount = 0
+        priority_buckets = time_bucket.triggerpriority&&time_bucket.triggerpriority.buckets
+        for(let priority_bucket of priority_buckets){
+            if(priority_bucket.key>1){
+                abnormalItemsCount += priority_bucket.doc_count
+            }
+        }
+        time_bucket.abnormalItemsCount = abnormalItemsCount
+        time_bucket.normalItemsCount = time_bucket.doc_count - abnormalItemsCount
+    }
+    ctx.body = result
+}
+
 
 triggers.post('/search', activeTriggerHandler)
 
 triggers.post('/advancedSearch',statisticTriggerHandler)
+
+triggers.post('/aggrsByWrittenTimeAndPriority',WrittenTimeAndPriorityHandler)
 
 
 
