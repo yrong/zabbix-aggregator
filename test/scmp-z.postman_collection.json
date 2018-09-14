@@ -182,10 +182,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"token\":\"{{token}}\"\n}"
+							"raw": "{\n \"token\":\"{{token}}\",\n \"body\":{\n \"query\": {\n        \"range\" : {\n            \"writtentime\" : {\n                \"gte\": \"now-3d/d\",\n                \"lt\": \"now/d\"\n            }\n        }\n    }\n }\n}"
 						},
 						"url": {
-							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority?interval=month",
+							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority?interval=day",
 							"protocol": "http",
 							"host": [
 								"{{scmpz_api_host}}"
@@ -199,7 +199,7 @@
 							"query": [
 								{
 									"key": "interval",
-									"value": "month"
+									"value": "day"
 								}
 							]
 						}
