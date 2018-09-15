@@ -166,14 +166,38 @@ const statisticTriggerHandler = async(ctx)=>{
 }
 
 const WrittenTimeAndPriorityHandler = async(ctx)=>{
-    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,priority_buckets,abnormalItemsCount
-    params.body = params.body||{}
+    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,priority_buckets,abnormalItemsCount,interval,since,until
+    params.body = params.body||{},interval = params.interval||"day"
+    if (!params.body.query) {
+        if(interval==='day'){
+            since = 'now-1M/M'
+            until = 'now/M'
+        }
+        else if(interval==='hour'){
+            since = 'now-1d/d'
+            until = 'now/d'
+        }
+        else if(interval==='month'){
+            since = 'now-1y/y'
+            until = 'now/y'
+        }else{
+            throw new Error('interval not support yet')
+        }
+        params.body.query = {
+            "range": {
+                "writtentime": {
+                    "gt": since,
+                    "lte": until
+                }
+            }
+        }
+    }
     if(!params.body.aggs){
         params.body.aggs = {
             "writtentime" : {
                 "date_histogram" : {
                     "field" : "writtentime",
-                    "interval" : params.interval||"day",
+                    "interval" : interval,
                     "format" : "yyyy-MM-dd hh:mm",
                     "time_zone":"PRC"
                 },

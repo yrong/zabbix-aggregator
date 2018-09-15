@@ -182,7 +182,59 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"token\":\"{{token}}\",\n \"body\":{\n \"query\": {\n        \"range\" : {\n            \"writtentime\" : {\n                \"gte\": \"now-3d/d\",\n                \"lt\": \"now/d\"\n            }\n        }\n    }\n }\n}"
+							"raw": "{\n \"token\":\"{{token}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority?interval=day",
+							"protocol": "http",
+							"host": [
+								"{{scmpz_api_host}}"
+							],
+							"port": "{{scmpz_api_port}}",
+							"path": [
+								"api",
+								"triggers",
+								"aggrsByWrittenTimeAndPriority"
+							],
+							"query": [
+								{
+									"key": "interval",
+									"value": "day"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "triggers/aggrsByWrittenTimeAndPriorityWithQueryCondition",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"ok\"] = responseCode.code == 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"token\":\"{{token}}\",\n \"body\":{\n \"query\": {\n        \"range\" : {\n            \"writtentime\" : {\n                \"gte\": \"now-5d/d\",\n                \"lt\": \"now/d\"\n            }\n        }\n    }\n }\n}"
 						},
 						"url": {
 							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority?interval=day",
