@@ -11,7 +11,7 @@ const gather = async ()=>{
             left join hosts on items.hostid=hosts.hostid
             left join hosts_groups on hosts.hostid=hosts_groups.hostid
             left join groups on hosts_groups.groupid=groups.groupid
-            where groups.name not like "%zabbix%" and groups.name != "Templates"`
+            where groups.name not like "%zabbix%" and groups.name != "Templates" and hosts.status<>1 and hosts.status<>3 and triggers.status=0 and items.status=0`
     let results = await db.query(sql)
     await search.batchCreate(triggers_statistic_index_name,results,true)
     console.log('add to es')
