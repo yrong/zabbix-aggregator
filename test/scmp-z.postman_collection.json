@@ -136,7 +136,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"body\":{\n  \t\"aggs\":{\n\t  \t\"writtentime\" : {\n\t              \"date_histogram\" : {\n\t                  \"field\" : \"writtentime\",\n\t                  \"interval\" : \"day\",\n\t                  \"format\" : \"yyyy-MM-dd hh:mm\",\n\t                  \"time_zone\":\"PRC\"\n\t              },\n\t             \n\t\t\t\t   \"aggs\": {\n\t\t\t\t\t   \t\"writtentime\" : {\n\t\t\t\t\t            \"cardinality\" : {\n\t\t\t\t\t              \"field\" : \"writtentime\"\n\t\t\t\t\t            }\n\t\t\t\t\t        },\n\t\t\t\t          \"triggerpriority\" : {\n\t\t\t\t              \"terms\" : { \"field\" : \"triggerpriority\" }\n\t\t\t\t          }\n\t\t\t\t }\n\t    }\n\t    \n  \t}\n },\n \"size\":0,\n \"token\":\"{{token}}\"\n}"
+							"raw": "{\n  \"body\":{\n  \t\"aggs\":{\n\t  \t\"writtentime\" : {\n\t              \"date_histogram\" : {\n\t                  \"field\" : \"writtentime\",\n\t                  \"interval\" : \"day\",\n\t                  \"format\" : \"yyyy-MM-dd hh:mm\",\n\t                  \"time_zone\":\"PRC\"\n\t              },\n\t             \n\t\t\t\t   \"aggs\": {\n\t\t\t\t\t   \t\"writtentime\" : {\n\t\t\t\t\t            \"cardinality\" : {\n\t\t\t\t\t              \"field\" : \"writtentime\"\n\t\t\t\t\t            }\n\t\t\t\t\t        },\n\t\t\t\t\t      \n\t\t\t\t      \t  \"triggervalue\":{\"terms\":{\"field\" : \"triggervalue\"},\n\t\t\t\t      \t  \"aggs\":{\n\t\t\t\t\t          \"triggerpriority\" : {\n\t\t\t\t\t              \"terms\" : { \"field\" : \"triggerpriority\" }\n\t\t\t\t\t          }\n\t\t\t\t      \t  }\n\t\t\t\t      \t  }\n\t\t\t\t\t      \n\t\t\t\t }\n\t    }\n\t    \n  \t}\n },\n \"size\":0,\n \"token\":\"{{token}}\"\n}"
 						},
 						"url": {
 							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/advancedSearch",
@@ -234,7 +234,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"token\":\"{{token}}\",\n \"body\":{\n \"query\": {\n        \"range\" : {\n            \"writtentime\" : {\n                \"gte\": \"now-5d/d\",\n                \"lt\": \"now/d\"\n            }\n        }\n    }\n }\n}"
+							"raw": "{\n \"token\":\"{{token}}\",\n \"body\":{\n \"query\": {\n        \"range\" : {\n            \"writtentime\" : {\n                \"gt\": \"now-5d/d\",\n                \"lte\": \"now/d\"\n            }\n        }\n    }\n }\n}"
 						},
 						"url": {
 							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority?interval=day",

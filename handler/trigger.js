@@ -166,7 +166,7 @@ const statisticTriggerHandler = async(ctx)=>{
 }
 
 const WrittenTimeAndPriorityHandler = async(ctx)=>{
-    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,priority_buckets,abnormalItemsCount,interval,since,until
+    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,value_buckets,priority_buckets,abnormalItemsCount,interval,since,until
     params.body = params.body||{},interval = params.interval||"day"
     if (!params.body.query) {
         if(interval==='day'){
@@ -184,31 +184,42 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
             throw new Error('interval not support yet')
         }
         params.body.query = {
-            "range": {
-                "writtentime": {
-                    "gt": since,
-                    "lte": until
-                }
+            "bool": {
+                "must": [
+                    {
+                        "range": {
+                            "writtentime": {
+                                "gt": since,
+                                "lte": until
+                            }
+                        }
+                    }
+                ]
             }
         }
     }
-    if(!params.body.aggs){
+    if (!params.body.aggs) {
         params.body.aggs = {
-            "writtentime" : {
-                "date_histogram" : {
-                    "field" : "writtentime",
-                    "interval" : interval,
-                    "format" : "yyyy-MM-dd hh:mm",
-                    "time_zone":"PRC"
+            "writtentime": {
+                "date_histogram": {
+                    "field": "writtentime",
+                    "interval": interval,
+                    "format": "yyyy-MM-dd hh:mm",
+                    "time_zone": "PRC"
                 },
                 "aggs": {
-                    "writtentime" : {
-                        "cardinality" : {
-                            "field" : "writtentime"
+                    "writtentime": {
+                        "cardinality": {
+                            "field": "writtentime"
                         }
                     },
-                    "triggerpriority" : {
-                        "terms" : { "field" : "triggerpriority" }
+                    "triggervalue": {
+                        "terms": {"field": "triggervalue"},
+                        "aggs": {
+                            "triggerpriority": {
+                                "terms": {"field": "triggerpriority"}
+                            }
+                        }
                     }
                 }
             }
@@ -217,16 +228,27 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
     }
     result = await searchES(params)
     time_buckets = result&&result.aggregations&&result.aggregations.writtentime&&result.aggregations.writtentime.buckets
-    for(let time_bucket of time_buckets){
-        abnormalItemsCount = 0
-        priority_buckets = time_bucket.triggerpriority&&time_bucket.triggerpriority.buckets
-        for(let priority_bucket of priority_buckets){
-            if(priority_bucket.key>1){
-                abnormalItemsCount += priority_bucket.doc_count
+    if(!_.isEmpty(time_buckets)){
+        for(let time_bucket of time_buckets){
+            abnormalItemsCount = 0
+            value_buckets = time_bucket.triggervalue&&time_bucket.triggervalue.buckets
+            if(!_.isEmpty(value_buckets)) {
+                for (let value_bucket of value_buckets) {
+                    if (value_bucket.key == 1) {
+                        priority_buckets = value_bucket.triggerpriority && value_bucket.triggerpriority.buckets
+                        if(!_.isEmpty(priority_buckets)) {
+                            for (let priority_bucket of priority_buckets) {
+                                if (priority_bucket.key > 1) {
+                                    abnormalItemsCount += priority_bucket.doc_count
+                                }
+                            }
+                            time_bucket.abnormalItemsCount = abnormalItemsCount/time_bucket.writtentime.value
+                            time_bucket.normalItemsCount = (time_bucket.doc_count - abnormalItemsCount)/time_bucket.writtentime.value
+                        }
+                    }
+                }
             }
         }
-        time_bucket.abnormalItemsCount = abnormalItemsCount
-        time_bucket.normalItemsCount = time_bucket.doc_count - abnormalItemsCount
     }
     ctx.body = result
 }
