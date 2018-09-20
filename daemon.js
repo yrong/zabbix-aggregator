@@ -5,7 +5,7 @@ const config = require('config')
 const triggers_statistic_index_name = triggers_statistic_tbl_name = config.get('scmpz.statistic_tbl_name')
 
 const gather = async ()=>{
-    let sql = `select hosts.hostid,hosts.host as hostname,items.itemid,items.name as itemname,triggers.triggerid,triggers.value as triggervalue,triggers.priority as triggerpriority,lastchange,UNIX_TIMESTAMP() as writtentime 
+    let sql = `select hosts.hostid,hosts.host as hostname,items.itemid,items.name as itemname,triggers.triggerid,triggers.value as triggervalue,triggers.priority as triggerpriority,triggers.status as triggerstatus,lastchange,UNIX_TIMESTAMP() as writtentime 
             from items left join functions on functions.itemid=items.itemid
             left join triggers on triggers.triggerid=functions.triggerid
             left join hosts on items.hostid=hosts.hostid
@@ -34,6 +34,7 @@ const initialize = async ()=>{
                \`triggerid\`   bigint unsigned,
                \`triggervalue\`   integer,
                \`triggerpriority\`   integer,
+               \`triggerstatus\`   integer,
                \`lastchange\`       integer,
                \`writtentime\`       integer
             );`

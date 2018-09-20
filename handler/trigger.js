@@ -166,7 +166,7 @@ const statisticTriggerHandler = async(ctx)=>{
 }
 
 const WrittenTimeAndPriorityHandler = async(ctx)=>{
-    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,value_buckets,priority_buckets,abnormalItemsCount,interval,since,until
+    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,status_buckets,value_buckets,priority_buckets,abnormalItemsCount,interval,since,until
     params.body = params.body||{},interval = params.interval||"day"
     if (!params.body.query) {
         if(interval==='day'){
@@ -213,17 +213,21 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
                             "field": "writtentime"
                         }
                     },
-                    "triggervalue": {
-                        "terms": {"field": "triggervalue"},
+                    "triggerstatus": {
+                        "terms": {"field": "triggerstatus"},
                         "aggs": {
-                            "triggerpriority": {
-                                "terms": {"field": "triggerpriority"}
+                            "triggervalue": {
+                                "terms": {"field": "triggervalue"},
+                                "aggs": {
+                                    "triggerpriority": {
+                                        "terms": {"field": "triggerpriority"}
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-
         }
     }
     result = await searchES(params)
@@ -231,19 +235,26 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
     if(!_.isEmpty(time_buckets)){
         for(let time_bucket of time_buckets){
             abnormalItemsCount = 0
-            value_buckets = time_bucket.triggervalue&&time_bucket.triggervalue.buckets
-            if(!_.isEmpty(value_buckets)) {
-                for (let value_bucket of value_buckets) {
-                    if (value_bucket.key == 1) {
-                        priority_buckets = value_bucket.triggerpriority && value_bucket.triggerpriority.buckets
-                        if(!_.isEmpty(priority_buckets)) {
-                            for (let priority_bucket of priority_buckets) {
-                                if (priority_bucket.key > 1) {
-                                    abnormalItemsCount += priority_bucket.doc_count
+            status_buckets = time_bucket.triggerstatus&&time_bucket.triggerstatus.buckets
+            if(!_.isEmpty(status_buckets)) {
+                for (let status_bucket of status_buckets) {
+                    if (status_bucket.key == 0) {
+                        value_buckets = status_bucket.triggervalue&&status_bucket.triggervalue.buckets
+                        if(!_.isEmpty(value_buckets)) {
+                            for (let value_bucket of value_buckets) {
+                                if (value_bucket.key == 1) {
+                                    priority_buckets = value_bucket.triggerpriority && value_bucket.triggerpriority.buckets
+                                    if(!_.isEmpty(priority_buckets)) {
+                                        for (let priority_bucket of priority_buckets) {
+                                            if (priority_bucket.key > 1) {
+                                                abnormalItemsCount += priority_bucket.doc_count
+                                            }
+                                        }
+                                        time_bucket.abnormalItemsCount = abnormalItemsCount/time_bucket.writtentime.value
+                                        time_bucket.normalItemsCount = (time_bucket.doc_count - abnormalItemsCount)/time_bucket.writtentime.value
+                                    }
                                 }
                             }
-                            time_bucket.abnormalItemsCount = abnormalItemsCount/time_bucket.writtentime.value
-                            time_bucket.normalItemsCount = (time_bucket.doc_count - abnormalItemsCount)/time_bucket.writtentime.value
                         }
                     }
                 }

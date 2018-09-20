@@ -14,18 +14,24 @@ const TemplateModel = Model(Redis.createClient({db:1,host:`${process.env['REDIS_
     port:config.get('redis.port')}),'Template')
 
 let items = new Router();
-const DiskSpaceUsageItem = 'Free disk space on $1 (percentage)'
-const DiskSpaceUsageRegex = /^vfs.fs.size\[(.*?):,pfree\]$/
 const TriggerThreshholdRegex = /[<>=]{1,2}(\d+)$/
+const ItemNameVarSingleRegex = /\$\d/
+const ItemNameVarRegex = /\$\d/g
+const ItemKeyVarRegex = /\[.*?\]/g
 
 const macroReplace = (items)=>{
+    let itemName,itemNameVars,itemKeyVars,itemVarIndex
     items = _.map(items,(item)=>{
-        if(item[alias.item_name_alias] === DiskSpaceUsageItem){
-            let matched = item[alias.item_key_alias].match(DiskSpaceUsageRegex)
-            if(matched && matched[1])
-                item[alias.item_name_alias] = matched[1]
-            else
-                item[alias.item_name_alias] = undefined
+        itemName = _.clone(item[alias.item_name_alias])
+        itemNameVars = itemName.match(ItemNameVarRegex)
+        itemKeyVars = item[alias.item_key_alias].match(ItemKeyVarRegex)
+        if(itemNameVars && itemKeyVars){
+            itemKeyVars = itemKeyVars[0].substr(1,itemKeyVars[0].length-2).split(',')
+            for(let varIndex of itemNameVars){
+                itemVarIndex = parseInt(varIndex.substr(1))-1
+                itemName = itemName.replace(ItemNameVarSingleRegex,itemKeyVars[itemVarIndex])
+            }
+            item[alias.item_name_alias] = itemName
         }
         return item
     })
