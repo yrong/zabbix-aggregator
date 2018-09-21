@@ -155,7 +155,7 @@
 					"response": []
 				},
 				{
-					"name": "triggers/aggrsByWrittenTimeAndPriority",
+					"name": "triggers/aggrsByWrittenTimeWithGroup",
 					"event": [
 						{
 							"listen": "test",
@@ -182,10 +182,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"token\":\"{{token}}\"\n}"
+							"raw": "{\n  \"interval\":\"day\",\n \"group\":8\n}"
 						},
 						"url": {
-							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority?interval=day",
+							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority",
 							"protocol": "http",
 							"host": [
 								"{{scmpz_api_host}}"
@@ -195,19 +195,13 @@
 								"api",
 								"triggers",
 								"aggrsByWrittenTimeAndPriority"
-							],
-							"query": [
-								{
-									"key": "interval",
-									"value": "day"
-								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "triggers/aggrsByWrittenTimeAndPriorityWithQueryCondition",
+					"name": "triggers/aggrsByWrittenTimeWithHosts",
 					"event": [
 						{
 							"listen": "test",
@@ -234,7 +228,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"token\":\"{{token}}\",\n \"body\":{\n \"query\": {\n        \"range\" : {\n            \"writtentime\" : {\n                \"gt\": \"now-5d/d\",\n                \"lte\": \"now/d\"\n            }\n        }\n    }\n }\n}"
+							"raw": "{\n \"interval\":\"day\",\n \"hosts\":[10109]\n}"
 						},
 						"url": {
 							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority?interval=day",
