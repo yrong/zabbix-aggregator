@@ -152,7 +152,7 @@ const triggers_statistic_index_name = config.get('scmpz.statistic_tbl_name')
 
 const searchES = async(params)=>{
     params.size = params.size || 0
-    let searchObj = _.assign({index: triggers_statistic_index_name},_.omit(params,['token','interval']))
+    let searchObj = _.assign({index: triggers_statistic_index_name},_.omit(params,['token','interval','group','hosts']))
     let result = await db.esClient.search(searchObj)
     return _.pick(result,['hits','aggregations'])
 }
@@ -165,9 +165,16 @@ const statisticTriggerHandler = async(ctx)=>{
     ctx.body= await searchES(params)
 }
 
+const getHostsByGroup = async(groupid)=>{
+    let sql = `select hosts.hostid from hosts inner join hosts_groups on hosts.hostid=hosts_groups.hostid where hosts_groups.groupid=${groupid}`
+    let hosts = await db.query(sql)
+    return _.map(hosts,(host)=>host.hostid)
+}
+
 const WrittenTimeAndPriorityHandler = async(ctx)=>{
-    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,status_buckets,value_buckets,priority_buckets,abnormalItemsCount,interval,since,until
-    params.body = params.body||{},interval = params.interval||"day"
+    let params = _.assign({},ctx.query,ctx.params,ctx.request.body),result,time_buckets,status_buckets,value_buckets,
+        priority_buckets,abnormalItemsCount,interval,since,until,timeRangeCond,hostsCond,hosts,conds=[]
+    params.body = params.body||{},interval = params.interval||"day",hosts = params.hosts
     if (!params.body.query) {
         if(interval==='day'){
             since = 'now-1M/M'
@@ -183,18 +190,29 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
         }else{
             throw new Error('interval not support yet')
         }
+        timeRangeCond = {
+            "range": {
+                "writtentime": {
+                    "gt": since,
+                    "lte": until
+                }
+            }
+        }
+        conds.push(timeRangeCond)
+        if(params.group){
+            hosts = await getHostsByGroup(params.group)
+        }
+        if(hosts&&hosts.length){
+            hostsCond = {
+                "terms":{
+                    "hostid":hosts
+                }
+            }
+            conds.push(hostsCond)
+        }
         params.body.query = {
             "bool": {
-                "must": [
-                    {
-                        "range": {
-                            "writtentime": {
-                                "gt": since,
-                                "lte": until
-                            }
-                        }
-                    }
-                ]
+                "must": conds
             }
         }
     }
