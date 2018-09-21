@@ -4,22 +4,34 @@ const search = require('scirichon-search')
 const config = require('config')
 const triggers_statistic_index_name = triggers_statistic_tbl_name = config.get('scmpz.statistic_tbl_name')
 
-const gather = async ()=>{
-    let sql = `select hosts.hostid,hosts.host as hostname,items.itemid,items.name as itemname,triggers.triggerid,triggers.value as triggervalue,triggers.priority as triggerpriority,triggers.status as triggerstatus,lastchange,UNIX_TIMESTAMP() as writtentime 
+
+const gatherSql = `select hosts.hostid,hosts.host as hostname,items.itemid,items.name as itemname,triggers.triggerid,triggers.value as triggervalue,triggers.priority as triggerpriority,triggers.status as triggerstatus,lastchange,UNIX_TIMESTAMP() as writtentime 
             from items left join functions on functions.itemid=items.itemid
             left join triggers on triggers.triggerid=functions.triggerid
             left join hosts on items.hostid=hosts.hostid
-            where hosts.status<>1 and hosts.status<>3 and items.status=0`
-    let results = await db.query(sql)
-    await search.batchCreate(triggers_statistic_index_name,results,true)
-    console.log('add to es')
+            where hosts.status<>1 and hosts.status<>3 and items.status=0 and items.flags in(0,4) and items.type<>9`
+
+
+const store2Mysql = async()=>{
+    let results = await db.query(gatherSql)
     results = _.map(results,(result)=>_.values(result))
     sql = `insert into ${triggers_statistic_tbl_name} values ?`
     await db.query(sql,results,true)
     console.log('add to mysql')
 }
 
-const initialize = async ()=>{
+const store2Search = async()=>{
+    let results = await db.query(gatherSql)
+    await search.batchCreate(triggers_statistic_index_name,results,true)
+    console.log('add to es')
+}
+
+const gather = async ()=>{
+    // await store2Mysql()
+    await store2Search()
+}
+
+const initializeMysql = async ()=>{
     let sql = `drop table \`${triggers_statistic_tbl_name}\``
     try{
         await db.query(sql)
@@ -28,7 +40,7 @@ const initialize = async ()=>{
     }
     sql = `create table \`${triggers_statistic_tbl_name}\` (
                \`hostid\` bigint unsigned NOT NULL,
-                \`hostname\` varchar(255),     
+                \`hostname\` varchar(255),
                \`itemid\` bigint unsigned  NOT NULL,
                \`itemname\` varchar(255),
                \`triggerid\`   bigint unsigned,
@@ -39,6 +51,9 @@ const initialize = async ()=>{
                \`writtentime\`       integer
             );`
     await db.query(sql)
+}
+
+const initializeSearch = async()=>{
     const mappings =
         {
             "mappings": {
@@ -80,6 +95,11 @@ const initialize = async ()=>{
         })
     })
     await Promise.resolve(init_es)
+}
+
+const initialize = async ()=>{
+    // await initializeMysql()
+    await initializeSearch()
 }
 
 if (require.main === module) {

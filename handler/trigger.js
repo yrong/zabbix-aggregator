@@ -252,6 +252,8 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
                                         }
                                         time_bucket.abnormalItemsCount = abnormalItemsCount/time_bucket.writtentime.value
                                         time_bucket.normalItemsCount = (time_bucket.doc_count - abnormalItemsCount)/time_bucket.writtentime.value
+                                        time_bucket.doc_count = (time_bucket.doc_count)/time_bucket.writtentime.value
+                                        time_bucket.health = time_bucket.normalItemsCount/time_bucket.doc_count
                                     }
                                 }
                             }
