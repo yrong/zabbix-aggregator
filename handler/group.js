@@ -21,10 +21,10 @@ groups.get('/host', async (ctx, next)=>{
     if(!_.isString(params.name)){
         ctx.throw("missing param!")
     }
-    let sql = `select groups.groupid,hosts.name from groups
+    let sql = `select groups.groupid,hosts.name,hosts.hostid from groups
             inner join hosts_groups on groups.groupid=hosts_groups.groupid
             inner join hosts on hosts.hostid=hosts_groups.hostid
-            where groups.name="${params.name}"`
+            where groups.name="${params.name}" and hosts.status=0 and hosts.flags=0 and hosts.host not like "%zabbix%"`
     let group_hosts = await db.query(sql)
     ctx.body = group_hosts
 });

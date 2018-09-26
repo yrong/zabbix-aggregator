@@ -202,6 +202,7 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
         if(params.group){
             hosts = await getHostsByGroup(params.group)
         }
+        hosts = params.hosts||hosts
         if(hosts&&hosts.length){
             hostsCond = {
                 "terms":{

@@ -2,7 +2,7 @@ const _ = require('lodash')
 const sqlGenerator = require('./index')
 const alias = require('./alias')
 
-const Item_Table_Name='items',Host_Monitored = 0
+const Item_Table_Name='items'
 
 
 const sqlSearchItems = (appName,hostList,itemList,groupName)=>{
@@ -16,7 +16,7 @@ const sqlSearchItems = (appName,hostList,itemList,groupName)=>{
     let fields = `hosts.hostid,hosts.name as ${alias.host_name_alias}, groups.name as ${alias.group_name_alias},items.name as ${alias.item_name_alias}, items.key_ as ${alias.item_key_alias}, 
     items.itemid as ${alias.item_id_alias}, items.value_type as ${alias.item_value_type_alias},
     triggers.value as ${alias.trigger_prefix_value_alias}, triggers.priority as ${alias.trigger_priority_alias},triggers.lastchange,triggers.description,triggers.triggerid`
-    let wherePart = `hosts.status=${Host_Monitored} and hosts.name not like "Template%"`
+    let wherePart = `hosts.status=0 and hosts.name not like "Template%" and items.status=0 and triggers.status=0`
     if(appName === 'WinOS'||appName === 'Windows Servers')
         wherePart = wherePart + ` and applications.name="os-rpt" or applications.name="fs-rpt"`
     else if(appName)

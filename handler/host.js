@@ -9,7 +9,7 @@ const cmdb_api_url = common.getServiceApiUrl('cmdb')
 let hosts = new Router();
 hosts.get('/', async (ctx, next)=>{
     let params = _.assign({},ctx.params,ctx.query,ctx.request.body)
-    let sql = `select hostid,name from hosts where status!=3 and flags=0 and host not like "%zabbix%"`
+    let sql = `select hostid,name from hosts where status=0 and flags=0 and host not like "%zabbix%"`
     if(params.name){
         sql += ` and name like "%${params.name}%"`
     }
@@ -23,7 +23,7 @@ hosts.get('/compare_with_cmdb', async (ctx, next)=>{
     if(results.data&&results.data.length){
         cmdb_hosts = _.map(results.data,(result)=>result.name)
     }
-    let sql = `select name from hosts where status!=3 and flags=0 and host not like "%zabbix%"`
+    let sql = `select name from hosts where status=0 and flags=0 and host not like "%zabbix%"`
     let hosts = await db.query(sql)
     if(hosts&&hosts.length){
         zabbix_hosts = _.map(hosts,(result)=>result.name)
