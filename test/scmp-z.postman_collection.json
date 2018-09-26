@@ -182,7 +182,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"interval\":\"day\",\n \"group\":8\n}"
+							"raw": "{\n  \"interval\":\"month\",\n \"group\":8,\n \"since\":\"now-3M/M\",\n \"until\":\"now/M\"\n}"
 						},
 						"url": {
 							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority",
@@ -228,10 +228,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"interval\":\"day\",\n \"hosts\":[10109]\n}"
+							"raw": "{\n \"interval\":\"quarter\",\n \"hosts\":[10109]\n}"
 						},
 						"url": {
-							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority?interval=day",
+							"raw": "http://{{scmpz_api_host}}:{{scmpz_api_port}}/api/triggers/aggrsByWrittenTimeAndPriority",
 							"protocol": "http",
 							"host": [
 								"{{scmpz_api_host}}"
@@ -241,12 +241,6 @@
 								"api",
 								"triggers",
 								"aggrsByWrittenTimeAndPriority"
-							],
-							"query": [
-								{
-									"key": "interval",
-									"value": "day"
-								}
 							]
 						}
 					},

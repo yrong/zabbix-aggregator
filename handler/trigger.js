@@ -152,7 +152,7 @@ const triggers_statistic_index_name = config.get('scmpz.statistic_tbl_name')
 
 const searchES = async(params)=>{
     params.size = params.size || 0
-    let searchObj = _.assign({index: triggers_statistic_index_name},_.omit(params,['token','interval','group','hosts']))
+    let searchObj = _.assign({index: triggers_statistic_index_name},_.omit(params,['token','interval','group','hosts','since','until']))
     let result = await db.esClient.search(searchObj)
     return _.pick(result,['hits','aggregations'])
 }
@@ -187,18 +187,20 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
         else if(interval==='month'){
             since = 'now-1y/y'
             until = 'now/y'
-        }else{
-            throw new Error('interval not support yet')
         }
-        timeRangeCond = {
-            "range": {
-                "writtentime": {
-                    "gt": since,
-                    "lte": until
+        since = params.since||since
+        until = params.until||until
+        if(since&&until){
+            timeRangeCond = {
+                "range": {
+                    "writtentime": {
+                        "gt": since,
+                        "lte": until
+                    }
                 }
             }
+            conds.push(timeRangeCond)
         }
-        conds.push(timeRangeCond)
         if(params.group){
             hosts = await getHostsByGroup(params.group)
         }
