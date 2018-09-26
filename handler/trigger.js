@@ -267,6 +267,7 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
                                     priority_buckets = value_bucket.triggerpriority && value_bucket.triggerpriority.buckets
                                     if(!_.isEmpty(priority_buckets)) {
                                         for (let priority_bucket of priority_buckets) {
+                                            priority_bucket.avg_doc_count = priority_bucket.doc_count/time_bucket.writtentime.value
                                             if (priority_bucket.key > 1) {
                                                 abnormalItemsCount += priority_bucket.doc_count
                                             }
