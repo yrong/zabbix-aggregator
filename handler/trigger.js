@@ -110,12 +110,14 @@ const countTriggerByITService = async (filter)=>{
 }
 
 triggers.post('/count', async (ctx)=>{
-    let groupBy = ctx.request.body.groupBy,filter = ctx.request.body.filter||{},result,result_depth,category_list
-    result = await countTriggerByValue(filter)
-    if(!groupBy||!groupBy.category||!groupBy.category.length)
-        throw new Error('count missing groupBy field!')
-    category_list = groupBy.category.sort()
-    if(_.isEqual(category_list,categories_by_value)){
+    let groupBy = ctx.request.body.groupBy,filter = ctx.request.body.filter||{},result,result_depth,
+        category_list = groupBy&&groupBy.category&&groupBy.category.sort()
+    if(!groupBy){
+        result = await db.query(triggerSqlGenerator.sqlCountTriggersByGroup(filter))
+        result = result[0]
+    }
+    else if(_.isEqual(category_list,categories_by_value)){
+        result = await countTriggerByValue(filter)
     }else if(_.isEqual(category_list,categories_by_hostgroup_priority)){
         result = await countByHostGroupAndPriority(filter,groupBy)
     }else if(_.isEqual(category_list,categories_by_lastchange_value)){
@@ -127,6 +129,7 @@ triggers.post('/count', async (ctx)=>{
             throw new Error('groupBy latest should be integer')
         result = await countByLastChangeAndValue(filter,groupBy)
     }else if(_.isEqual(category_list,categories_by_itservice_value)){
+        result = await countTriggerByValue(filter)
         result_depth = await countTriggerByITServiceGroup(filter)
         if(groupBy.depth === 0){
         }
@@ -147,6 +150,8 @@ const activeTriggerHandler = async(ctx)=>{
     let rows = await db.query(triggerSqlGenerator.sqlFindTriggers(filter,params.pagination))
     ctx.body=rows
 }
+
+triggers.post('/search', activeTriggerHandler)
 
 const triggers_statistic_index_name = config.get('scmpz.statistic_tbl_name')
 
@@ -287,9 +292,6 @@ const WrittenTimeAndPriorityHandler = async(ctx)=>{
     }
     ctx.body = result
 }
-
-
-triggers.post('/search', activeTriggerHandler)
 
 triggers.post('/advancedSearch',statisticTriggerHandler)
 
