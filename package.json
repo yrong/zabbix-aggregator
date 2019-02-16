@@ -38,11 +38,11 @@
     "mysql": "^2.15.0",
     "redis":"^2.8.0",
     "redis-crud-fork": "^1.0.1",
-    "scirichon-acl-checker": "1.0.9-beta.1",
-    "scirichon-common": "1.0.7-beta.1",
-    "scirichon-response-wrapper": "^1.0.2",
-    "scirichon-token-checker": "1.0.7-beta.1",
-    "scirichon-search":"1.0.6-beta.4"
+    "scirichon-acl-checker": "1.0.9-beta.2",
+    "scirichon-common": "1.0.7-beta.2",
+    "scirichon-response-wrapper": "1.0.2-beta.1",
+    "scirichon-token-checker": "1.0.7-beta.2",
+    "scirichon-search":"1.0.6-beta.6"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"
