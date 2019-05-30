@@ -42,7 +42,7 @@
     "scirichon-common": "1.0.7-beta.2",
     "scirichon-response-wrapper": "1.0.2-beta.1",
     "scirichon-token-checker": "1.0.7-beta.2",
-    "scirichon-search":"1.0.6-beta.6"
+    "scirichon-search":"1.0.6-beta.9"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"

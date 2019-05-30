@@ -5,8 +5,8 @@ const Router = require('koa-router')
 const Redis = require('redis')
 const Model = require('redis-crud-fork')
 const config = require('config')
-const TemplateModel = Model(Redis.createClient({db:1,host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,
-    port:config.get('redis.port')}),'Template')
+const _ = require('lodash')
+const TemplateModel = Model(Redis.createClient(_.assign({db:1},config.get('redis'))),'Template')
 
 let template = new Router();
 

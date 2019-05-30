@@ -1330,6 +1330,11 @@ double-ended-queue@^2.1.0-0:
 duplexify@^3.1.2, duplexify@^3.4.2:
   version "3.5.1"
   resolved "https://registry.npmjs.org/duplexify/-/duplexify-3.5.1.tgz#4e1516be68838bc90a49994f0b39a6e5960befcd"
+  dependencies:
+    end-of-stream "^1.0.0"
+    inherits "^2.0.1"
+    readable-stream "^2.0.0"
+    stream-shift "^1.0.0"
 
 ecc-jsbn@~0.1.1:
   version "0.1.1"
@@ -1369,7 +1374,13 @@ emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
 
-end-of-stream@^1.0.0, end-of-stream@^1.1.0:
+end-of-stream@^1.0.0:
+  version "1.4.1"
+  resolved "https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.1.tgz#ed29634d19baba463b6ce6b80a37213eab71ec43"
+  dependencies:
+    once "^1.4.0"
+
+end-of-stream@^1.1.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.0.tgz#7a90d833efda6cfa6eac0f4949dbb0fad3a63206"
   dependencies:
@@ -1893,8 +1904,8 @@ home-or-tmp@^2.0.0:
     os-tmpdir "^1.0.1"
 
 hosted-git-info@^2.1.4:
-  version "2.5.0"
-  resolved "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
+  version "2.7.1"
+  resolved "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
 
 htmlparser2@^3.9.0:
   version "3.9.2"
@@ -2773,6 +2784,11 @@ nopt@^4.0.1:
 normalize-package-data@^2.3.2:
   version "2.4.0"
   resolved "https://registry.npmjs.org/normalize-package-data/-/normalize-package-data-2.4.0.tgz#12f95a307d58352075a04907b84ac8be98ac012f"
+  dependencies:
+    hosted-git-info "^2.1.4"
+    is-builtin-module "^1.0.0"
+    semver "2 || 3 || 4 || 5"
+    validate-npm-package-license "^3.0.1"
 
 normalize-path@^2.0.0, normalize-path@^2.0.1:
   version "2.1.1"
@@ -3500,27 +3516,18 @@ scirichon-acl-checker@1.0.9-beta.2:
     redis "^2.8.0"
     scirichon-common "1.0.7-beta.2"
 
-scirichon-cache@1.0.11-beta.3:
-  version "1.0.11-beta.3"
-  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.11-beta.3.tgz#d17ae7fe97b5a6d223a095d34cb474d562096209"
+scirichon-cache@1.0.11-beta.4:
+  version "1.0.11-beta.4"
+  resolved "https://registry.npmjs.org/scirichon-cache/-/scirichon-cache-1.0.11-beta.4.tgz#f725cab7eba4bad0ef460c1b0d8ab7c7cbd1ab04"
   dependencies:
     config "^1.25.1"
     lodash "^4.17.4"
     node-cache-redis-fork "^2.2.2"
     request "^2.81.0"
     request-promise "^4.1.1"
-    scirichon-common "1.0.7-beta.1"
+    scirichon-common "1.0.7-beta.2"
     scirichon-json-schema "1.0.3-beta.1"
     uuid-validate "^0.0.2"
-
-scirichon-common@1.0.7-beta.1:
-  version "1.0.7-beta.1"
-  resolved "https://registry.npmjs.org/scirichon-common/-/scirichon-common-1.0.7-beta.1.tgz#0138fbc56e4092bed308e904d7ad4320ad58b82a"
-  dependencies:
-    config "^1.25.1"
-    lodash "^4.17.4"
-    request "^2.81.0"
-    request-promise "^4.1.1"
 
 scirichon-common@1.0.7-beta.2:
   version "1.0.7-beta.2"
@@ -3540,12 +3547,12 @@ scirichon-json-schema@1.0.3-beta.1:
     redis "^2.8.0"
     redis-crud-fork "^1.0.1"
 
-scirichon-response-mapper@1.0.7-beta.4:
-  version "1.0.7-beta.4"
-  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.7-beta.4.tgz#9779cfd23ee1a76391347da40ecb238606f06362"
+scirichon-response-mapper@1.0.7-beta.6:
+  version "1.0.7-beta.6"
+  resolved "https://registry.npmjs.org/scirichon-response-mapper/-/scirichon-response-mapper-1.0.7-beta.6.tgz#9af4c853c7b3ca39a1fdf43351de1c9344326480"
   dependencies:
     lodash "^4.17.4"
-    scirichon-cache "1.0.11-beta.3"
+    scirichon-cache "1.0.11-beta.4"
     scirichon-common "1.0.7-beta.2"
     scirichon-json-schema "1.0.3-beta.1"
 
@@ -3556,17 +3563,17 @@ scirichon-response-wrapper@1.0.2-beta.1:
     lodash "^4.17.4"
     log4js-wrapper-advanced "^1.0.4"
 
-scirichon-search@1.0.6-beta.6:
-  version "1.0.6-beta.6"
-  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6-beta.6.tgz#a0000b87ff8f248cf5fda80c68c634cf05162ea7"
+scirichon-search@1.0.6-beta.9:
+  version "1.0.6-beta.9"
+  resolved "https://registry.npmjs.org/scirichon-search/-/scirichon-search-1.0.6-beta.9.tgz#366f188beb5407b2204937b83de5ff60f8ddb608"
   dependencies:
     config "^1.25.1"
     elasticsearch "^15.0.0"
     lodash "^4.17.4"
-    scirichon-cache "1.0.11-beta.3"
+    scirichon-cache "1.0.11-beta.4"
     scirichon-common "1.0.7-beta.2"
     scirichon-json-schema "1.0.3-beta.1"
-    scirichon-response-mapper "1.0.7-beta.4"
+    scirichon-response-mapper "1.0.7-beta.6"
 
 scirichon-token-checker@1.0.7-beta.2:
   version "1.0.7-beta.2"
@@ -3575,7 +3582,11 @@ scirichon-token-checker@1.0.7-beta.2:
     lodash "^4.17.4"
     scirichon-common "1.0.7-beta.2"
 
-"semver@2 || 3 || 4 || 5", semver@5.4.1, semver@^5.3.0:
+"semver@2 || 3 || 4 || 5":
+  version "5.7.0"
+  resolved "https://registry.npmjs.org/semver/-/semver-5.7.0.tgz#790a7cf6fea5459bac96110b29b60412dc8ff96b"
+
+semver@5.4.1, semver@^5.3.0:
   version "5.4.1"
   resolved "https://registry.npmjs.org/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
 
@@ -3672,19 +3683,27 @@ source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
-spdx-correct@~1.0.0:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/spdx-correct/-/spdx-correct-1.0.2.tgz#4b3073d933ff51f3912f03ac5519498a4150db40"
+spdx-correct@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/spdx-correct/-/spdx-correct-3.1.0.tgz#fb83e504445268f154b074e218c87c003cd31df4"
   dependencies:
-    spdx-license-ids "^1.0.2"
+    spdx-expression-parse "^3.0.0"
+    spdx-license-ids "^3.0.0"
 
-spdx-expression-parse@~1.0.0:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/spdx-expression-parse/-/spdx-expression-parse-1.0.4.tgz#9bdf2f20e1f40ed447fbe273266191fced51626c"
+spdx-exceptions@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/spdx-exceptions/-/spdx-exceptions-2.2.0.tgz#2ea450aee74f2a89bfb94519c07fcd6f41322977"
 
-spdx-license-ids@^1.0.2:
-  version "1.2.2"
-  resolved "https://registry.npmjs.org/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
+spdx-expression-parse@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/spdx-expression-parse/-/spdx-expression-parse-3.0.0.tgz#99e119b7a5da00e05491c9fa338b7904823b41d0"
+  dependencies:
+    spdx-exceptions "^2.1.0"
+    spdx-license-ids "^3.0.0"
+
+spdx-license-ids@^3.0.0:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/spdx-license-ids/-/spdx-license-ids-3.0.4.tgz#75ecd1a88de8c184ef015eafb51b5b48bfd11bb1"
 
 sprintf-js@~1.0.2:
   version "1.0.3"
@@ -4050,11 +4069,11 @@ uvm@1.7.0:
     uuid "3.0.1"
 
 validate-npm-package-license@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz#2804babe712ad3379459acfbe24746ab2c303fbc"
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
   dependencies:
-    spdx-correct "~1.0.0"
-    spdx-expression-parse "~1.0.0"
+    spdx-correct "^3.0.0"
+    spdx-expression-parse "^3.0.0"
 
 vary@^1.0.0:
   version "1.1.2"

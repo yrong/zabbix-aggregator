@@ -10,8 +10,7 @@ const trendValueSqlGenerator = require('../sql/trends')
 const Model = require('redis-crud-fork')
 const Redis = require('redis')
 const config = require('config')
-const TemplateModel = Model(Redis.createClient({db:1,host:`${process.env['REDIS_HOST']||config.get('redis.host')}`,
-    port:config.get('redis.port')}),'Template')
+const TemplateModel = Model(Redis.createClient(_.assign({db:1},config.get('redis'))),'Template')
 
 let items = new Router();
 const TriggerThreshholdRegex = /[<>=]{1,2}(\d+)$/
