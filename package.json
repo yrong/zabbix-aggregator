@@ -26,23 +26,22 @@
   },
   "homepage": "https://github.com/geekplux/koa2-boilerplate#readme",
   "dependencies": {
-    "config": "^1.24.0",
+    "config": "^3.2.2",
     "elasticsearch": "^15.0.0",
-    "kcors": "^2.1.1",
-    "koa": "^2.0.0",
+    "kcors": "^2.2.2",
+    "koa": "^2.7.0",
     "koa-bodyparser": "^3.2.0",
     "koa-compose": "^3.1.0",
     "koa-router": "^7.0.1",
     "mkdirp": "^0.5.1",
-    "moment": "^2.13.0",
-    "mysql": "^2.15.0",
+    "moment": "^2.24.0",
+    "mysql": "^2.17.1",
     "redis":"^2.8.0",
-    "redis-crud-fork": "^1.0.1",
-    "scirichon-acl-checker": "1.0.9-beta.2",
-    "scirichon-common": "1.0.7-beta.2",
-    "scirichon-response-wrapper": "1.0.2-beta.1",
-    "scirichon-token-checker": "1.0.7-beta.2",
-    "scirichon-search":"1.0.6-beta.9"
+    "redis-crud-fork": "^1.0.2",
+    "scirichon-authenticator": "1.0.0-beta.3",
+    "scirichon-common": "1.0.7-beta.6",
+    "scirichon-response-wrapper": "1.0.2-beta.3",
+    "scirichon-search":"1.0.6-beta.12"
   },
   "devDependencies": {
     "webpack-builder-advanced": "^1.0.1"
